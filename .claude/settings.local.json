@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '{ print length, NR }' \"/Users/nadja/Library/CloudStorage/OneDrive-PRAcademyLtd/ICRH/brand_assets/ICRH-Europe-brand-guidelines.html\")",
+      "Bash(node -e ' *)",
+      "Bash(sips -c 200 900 --out \"/private/tmp/claude-501/-Users-nadja-Library-CloudStorage-OneDrive-PRAcademyLtd-ICRH/e05331a4-e46a-4aa9-bd35-be1e82abd856/scratchpad/header-crop.png\" \"temporary screenshots/screenshot-1-desktop.png\")"
+    ]
+  }
+}
