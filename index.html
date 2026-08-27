@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ICRH Europe — A cross-border network for internal communication research</title>
+<title>ICRH Europe – A cross-border network for internal communication research</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -133,6 +133,59 @@
   .play-btn:hover { transform: scale(1.08); }
 
   .divider-dot { width: 4px; height: 4px; border-radius: 999px; background: currentColor; opacity: 0.5; }
+
+  .search-icon-btn {
+    width: 2.75rem; height: 2.75rem; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+    color: #173A63; transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  .search-icon-btn:hover { background: rgba(24,36,55,0.06); }
+  .search-icon-btn:focus-visible { outline: 2px solid #225491; outline-offset: 2px; }
+
+  .search-box {
+    position: relative; transition: width 0.35s var(--ease-spring), opacity 0.3s var(--ease-spring); overflow: hidden;
+  }
+  .search-box[data-open="false"] { width: 0; opacity: 0; pointer-events: none; }
+  .search-box[data-open="true"] { width: 280px; opacity: 1; pointer-events: auto; }
+
+  .search-input {
+    width: 280px; padding: 0.65rem 2.5rem 0.65rem 1rem; border-radius: 999px;
+    border: 1.5px solid rgba(24,36,55,0.14); background: #fff; font-size: 0.9rem; color: #182437; font-family: 'Inter', sans-serif;
+  }
+  .search-input:focus { outline: none; border-color: #225491; box-shadow: 0 0 0 4px rgba(34,84,145,0.12); }
+  .search-input::placeholder { color: #9AA6B8; }
+
+  .search-close-btn {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%); color: #9AA6B8; padding: 5px; border-radius: 999px;
+    display: flex; transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .search-close-btn:hover { color: #173A63; background: rgba(24,36,55,0.06); }
+  .search-close-btn:focus-visible { outline: 2px solid #225491; outline-offset: 2px; }
+
+  .search-results {
+    position: absolute; top: calc(100% + 10px); right: 0; width: 380px; max-height: 26rem; overflow-y: auto;
+    background: #fff; border-radius: 14px; border: 1px solid rgba(24,36,55,0.08);
+    opacity: 0; transform: translateY(-6px); pointer-events: none;
+    transition: opacity 0.25s var(--ease-spring), transform 0.25s var(--ease-spring); z-index: 60;
+  }
+  .search-results[data-open="true"] {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+    box-shadow: 0 4px 10px -2px rgba(23,58,99,0.10), 0 24px 56px -16px rgba(23,58,99,0.35);
+  }
+  .search-result { display: block; padding: 0.75rem 1rem; border-bottom: 1px solid rgba(24,36,55,0.05); transition: background-color 0.2s ease; }
+  .search-result:last-child { border-bottom: none; }
+  .search-result:hover, .search-result:focus-visible { background: rgba(34,84,145,0.06); outline: none; }
+  .search-result-title { display: block; font-weight: 600; font-size: 0.86rem; color: #173A63; line-height: 1.35; }
+  .search-result-meta { display: block; font-size: 0.75rem; color: #4E5C72; margin-top: 2px; }
+  .search-empty { padding: 1.25rem 1rem; font-size: 0.85rem; color: #4E5C72; text-align: center; }
+
+  .search-results-mobile { max-height: 16rem; overflow-y: auto; border-radius: 14px; border: 1px solid rgba(24,36,55,0.08); background: #fff; }
+  .search-results-mobile:empty { display: none; border: none; }
+
+  .search-target-highlight { animation: search-highlight-flash 1.8s ease-out; border-radius: 18px; }
+  @keyframes search-highlight-flash {
+    0% { background-color: rgba(242,183,67,0.35); box-shadow: 0 0 0 4px rgba(242,183,67,0.35); }
+    100% { background-color: transparent; box-shadow: 0 0 0 4px rgba(242,183,67,0); }
+  }
 </style>
 </head>
 <body class="antialiased">
@@ -153,7 +206,19 @@
         <a href="#who-we-are" class="nav-link">About</a>
       </nav>
 
-      <div class="hidden md:block">
+      <div class="hidden md:flex items-center gap-2">
+        <div id="searchWrap" class="relative flex items-center">
+          <div id="searchBox" data-open="false" class="search-box">
+            <input id="searchInput" type="text" placeholder="Search the site…" class="search-input" autocomplete="off">
+            <button id="searchClose" aria-label="Close search" class="search-close-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          </div>
+          <button id="searchToggle" aria-label="Search the site" aria-expanded="false" class="search-icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+          </button>
+          <div id="searchResults" class="search-results" data-open="false"></div>
+        </div>
         <a href="#join" class="btn btn-gold shadow-gold">Join the network</a>
       </div>
 
@@ -165,6 +230,11 @@
 
   <div id="mobilePanel" data-open="false" class="mobile-panel md:hidden absolute top-20 left-0 right-0 bg-paper border-b border-ink/5 shadow-elevated">
     <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-5">
+      <div class="relative">
+        <input id="mobileSearchInput" type="text" placeholder="Search the site…" class="search-input" autocomplete="off" style="width:100%;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA6B8" stroke-width="2" style="position:absolute; right:14px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+      </div>
+      <div id="mobileSearchResults" class="search-results-mobile"></div>
       <a href="publications.html" class="nav-link">Publications</a>
       <a href="#events" class="nav-link">Events</a>
       <a href="#research" class="nav-link">Research</a>
@@ -184,7 +254,7 @@
           Where internal communication research meets practice.
         </h1>
         <p class="text-lg text-powder max-w-xl mb-10" style="line-height:1.7;">
-          ICRH Europe connects researchers and practitioners across borders — sharing evidence, sparking dialogue, and shaping how organisations communicate with the people inside them.
+          ICRH Europe connects researchers and practitioners across borders – sharing evidence, sparking dialogue, and shaping how organisations communicate with the people inside them.
         </p>
         <div class="flex flex-wrap gap-4">
           <a href="#join" class="btn btn-gold shadow-gold">Join the network</a>
@@ -198,7 +268,7 @@
         </div>
         <a href="#report" class="hidden sm:flex absolute -bottom-8 -left-8 bg-white rounded-xl shadow-floating p-5 max-w-[15rem] items-start gap-3 card">
           <span class="tag tag-gold shrink-0 mt-0.5">New</span>
-          <span class="text-sm font-medium text-navydeep leading-snug">Valuing Internal Communication — read the full report</span>
+          <span class="text-sm font-medium text-navydeep leading-snug">Valuing Internal Communication – read the full report</span>
         </a>
       </div>
     </div>
@@ -255,7 +325,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>
         </div>
         <h3 class="text-xl font-semibold text-navydeep mb-3">Events</h3>
-        <p class="text-inksoft mb-5" style="line-height:1.7;">Live and recorded webinars — upcoming sessions to register for, and a growing archive of past talks to watch back.</p>
+        <p class="text-inksoft mb-5" style="line-height:1.7;">Live and recorded webinars – upcoming sessions to register for, and a growing archive of past talks to watch back.</p>
         <span class="tag tag-slate">Webinars &amp; replays</span>
       </div>
 
@@ -264,7 +334,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
         </div>
         <h3 class="text-xl font-semibold text-navydeep mb-3">Research</h3>
-        <p class="text-inksoft mb-5" style="line-height:1.7;">Two active programmes — the Global Excellence Study and Organisational Resilience — with named research leads and published schedules.</p>
+        <p class="text-inksoft mb-5" style="line-height:1.7;">Two active programmes – the Global Excellence Study and Organisational Resilience – with named research leads and published schedules.</p>
         <span class="tag tag-slate">Ongoing studies</span>
       </div>
     </div>
@@ -272,7 +342,7 @@
 </section>
 
 <!-- Wider ICRH Community -->
-<section class="relative overflow-hidden">
+<section id="community" class="relative overflow-hidden scroll-mt-20">
   <div class="absolute inset-0" style="background: radial-gradient(90% 120% at 85% 20%, #3A305D 0%, #225491 60%, #173A63 100%);"></div>
   <div class="bg-grain absolute inset-0"></div>
   <div class="max-w-7xl mx-auto px-6 py-24 md:py-28 relative z-10">
@@ -283,7 +353,7 @@
       </div>
       <div>
         <p class="text-lg text-powder mb-8" style="line-height:1.7;">
-          ICRH Europe sits inside the broader ICRH community — a global network sharing research, events, and ideas beyond Europe's borders. Membership is open, and current members are listed on our About page.
+          ICRH Europe sits inside the broader ICRH community – a global network sharing research, events, and ideas beyond Europe's borders. Membership is open, and current members are listed on our About page.
         </p>
         <a href="#join" class="btn btn-outline">Explore the global network</a>
       </div>
@@ -292,7 +362,7 @@
 </section>
 
 <!-- Supporters -->
-<section class="max-w-7xl mx-auto px-6 py-20 md:py-24">
+<section id="supporters" class="max-w-7xl mx-auto px-6 py-20 md:py-24 scroll-mt-20">
   <div class="text-center mb-12">
     <span class="tag tag-navy inline-block mb-4">Thank you</span>
     <h2 class="text-2xl md:text-3xl font-semibold text-navydeep mb-3">Supporters</h2>
@@ -366,7 +436,7 @@
 
       <div>
         <div class="tag tag-gold inline-block mb-5" style="background:rgba(242,183,67,0.16); color:#F2B743;">Connect</div>
-        <a href="#" aria-label="ICRH Europe on LinkedIn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-300">
+        <a href="https://www.linkedin.com/groups/13196156/" target="_blank" rel="noopener" aria-label="ICRH Europe on LinkedIn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-300">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
         </a>
       </div>
@@ -392,5 +462,6 @@
     menuBtn.setAttribute('aria-expanded', 'false');
   }));
 </script>
+<script src="assets/js/search.js"></script>
 </body>
 </html>

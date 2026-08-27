@@ -1,0 +1,191 @@
+const SEARCH_INDEX = [
+  { title: 'Home', meta: 'A cross-border network for internal communication research', badge: 'Page', url: 'index.html' },
+  { title: 'Publications', meta: 'Books, industry reports and academic journal articles', badge: 'Page', url: 'publications.html' },
+
+  { title: 'Who we are', meta: 'Academics and practitioners working on internal communication', badge: 'About', url: 'index.html#who-we-are' },
+  { title: 'Publications', meta: 'Books, journal articles and industry reports from across the network', badge: 'What we do', url: 'index.html#publications' },
+  { title: 'Events', meta: 'Live and recorded webinars, and a growing archive of past talks', badge: 'What we do', url: 'index.html#events' },
+  { title: 'Research', meta: 'Global Excellence Study and Organisational Resilience programmes', badge: 'What we do', url: 'index.html#research' },
+  { title: 'Wider ICRH community', meta: 'The global ICRH network beyond Europe', badge: 'About', url: 'index.html#community' },
+  { title: 'Supporters', meta: 'PR Academy and allthingsIC', badge: 'About', url: 'index.html#supporters' },
+  { title: 'Valuing Internal Communication', meta: 'Featured report, free to download', badge: 'Featured report', url: 'index.html#report' },
+  { title: 'Join the network', meta: 'Get publications, event invitations and research updates by email', badge: 'Newsletter', url: 'index.html#join' },
+
+  { title: 'Books', meta: '4 books from across the network', badge: 'Publications', url: 'publications.html#books' },
+  { title: 'Reports', meta: 'Freely available industry reports', badge: 'Publications', url: 'publications.html#reports' },
+  { title: 'Journal articles', meta: 'Academic journal articles on internal communication', badge: 'Publications', url: 'publications.html#journal-articles' },
+
+  { title: 'Communicative organizations: how to create better relationships and trust', meta: 'Heide, M., Simonsson, C., and Andersson, R. – 2026 · Liber', badge: 'Book', url: 'publications.html#books-1' },
+  { title: 'Successful Change Communication: How to Inform, Involve and Inspire Employees', meta: 'Miller, R. – 2026 · Kogan Page', badge: 'Book', url: 'publications.html#books-2' },
+  { title: 'Digital Communications at Work: Designing Channels for Employee Engagement and Experience', meta: "O'Dea, S. and Philips, J. – 2026 · Kogan Page", badge: 'Book', url: 'publications.html#books-3' },
+  { title: 'Exploring Internal Communication: Towards Dialogue in the Workplace', meta: 'Ruck, K. and Flegg, M. – 2026 · 5th Edition, Routledge', badge: 'Book', url: 'publications.html#books-4' },
+
+  { title: 'The Definitive Annual Report on Employee Experience and Internal Comms Trends', meta: 'Gallagher – 2026', badge: 'Report', url: 'publications.html#reports-1' },
+  { title: 'IC Index 2026: The reality check', meta: 'IoIC – 2026', badge: 'Report', url: 'publications.html#reports-2' },
+  { title: 'The future of Internal Communication: Opportunity for internal communicators in the future of work', meta: 'IoIC – 2026', badge: 'Report', url: 'publications.html#reports-3' },
+  { title: 'Internal Communication in Denmark – where does the profession stand today, and where is it heading?', meta: 'Resonans Partners – 2026', badge: 'Report', url: 'publications.html#reports-4' },
+  { title: 'Credibility Gap', meta: 'OAK Engage – 2026', badge: 'Report', url: 'publications.html#reports-5' },
+
+  { title: 'Does more say more? Organizational heritage storytelling and the amount of historic information', meta: 'Brugman, B. C. and Groten, M. – 2026 · Corporate Communications: An International Journal', badge: 'Article', url: 'publications.html#articles-1' },
+  { title: 'Perspectives and Challenges of Internal Communication: Insights from Senior Management', meta: 'Cuenca-Fontbona, J., Estanyol, E. and Echaburu-Mulet, B. – 2026 · International Journal of Strategic Communication', badge: 'Article', url: 'publications.html#articles-2' },
+  { title: 'The development of internal communication in Norway, 1960–1990: from organised to extended liberal (late) modernity', meta: 'Dahlen, O. P. – 2026 · Corporate Communications: An International Journal', badge: 'Article', url: 'publications.html#articles-3' },
+  { title: "Communication managers' perspective on informal communication: risks, opportunities and challenges of remote work environments", meta: 'Denner, N., Liebold, C., Viererbl, B and Koch, T. – 2026 · Corporate Communications: An International Journal', badge: 'Article', url: 'publications.html#articles-4' },
+  { title: 'Puzzlements, Proposals, and Questions: Constructing Communicative Coworkership on Internal Social Media', meta: 'Gode, H. E. and Madsen, V. T. – 2026 · International Journal of Business Communication', badge: 'Article', url: 'publications.html#articles-5' },
+  { title: 'Communicating appreciation in the workplace: importance and perception of appreciation from managers and co-workers and its effects on organisational citizenship behaviour', meta: 'Hagelstein, J., Wahl, I., Stranzl, J., Einwiller, S. and Ruppel, C. – 2026 · Journal of Communication Management', badge: 'Article', url: 'publications.html#articles-6' },
+  { title: 'Informal communication in hybrid working life: a blind spot in internal communication', meta: 'Heide, M. and Simonsson, C. – 2026 · Corporate Communications: An International Journal', badge: 'Article', url: 'publications.html#articles-7' },
+  { title: '"Shouting straight into space": enablers and barriers of voicing in digital meetings', meta: 'Holster, E., Nikolic, M. and Heide, M. – 2026 · Corporate Communications: An International Journal', badge: 'Article', url: 'publications.html#articles-8' },
+  { title: 'Perceptions of informal communication in the workplace: why chatty colleagues seem friendly but less competent', meta: 'Koch, T., Haber, S., Denner, N. and Viererbl, B. – 2026 · Journal of Communication Management', badge: 'Article', url: 'publications.html#articles-9' },
+  { title: 'Nordic Values in Organizational Communication Maturity: Conceptualization and Measurement', meta: 'Miller, V. D., Shank, S. E., Jr, Johansson, C. and Grandien, C. – 2026 · International Journal of Strategic Communication', badge: 'Article', url: 'publications.html#articles-10' },
+  { title: 'Employee activism: A situational and communicative perspective', meta: 'Ned, N-S., Wahl, I. and Einwiller, S. A. – 2026 · Journal Of Marketing Communications', badge: 'Article', url: 'publications.html#articles-11' },
+  { title: 'Seeking social change from the inside out: a cross-country study on employee activism', meta: 'Ravazzani, S., Jin, Y., Conti, S., Rachwalski, A. and Robinson, S. G. – 2026 · Journal of Communication Management', badge: 'Article', url: 'publications.html#articles-12' },
+  { title: 'Bouncing Along: Exploring dynamic internal narratives and interactions that enhance organisational resilience in a permacrisis world', meta: 'Ruck, K., Madsen, V. and Borucka, A. – 2026 · EUPREA Congress Short-Length Paper', badge: 'Article', url: 'publications.html#articles-13' },
+  { title: 'From process to outcomes: rethinking the effectiveness of internal communication', meta: 'Sinitsyna, E. and Argade, P. – 2026 · International Journal of Organization Theory & Behavior', badge: 'Article', url: 'publications.html#articles-14' },
+  { title: '"It leaves a bitter aftertaste": uncovering the tensions of employees\' communication engagement and impression vulnerability on social media', meta: 'Sossini, A. – 2026 · Journal of Communication Management', badge: 'Article', url: 'publications.html#articles-15' },
+  { title: 'Appreciation From a Management Perspective: Exploring the Complexity of Managers Communication Responsibility Through a Diary Study', meta: 'Stranzl, J., Mazzei, A., Simonsson, C. and Verčič, A. T. – 2026', badge: 'Article', url: 'publications.html#articles-16' },
+  { title: 'Internal communication satisfaction: Introducing the ICSQ short-form scale (ICSQ-S)', meta: 'Verčič, A. T. and Vokić, N. P. – 2026 · Public Relations Review', badge: 'Article', url: 'publications.html#articles-17' },
+  { title: 'How Do Digital Tools Change the Way Employees Communicate at Work?', meta: 'Verčič, A. T. and Verčič, D. – 2026 · Institute for Public Relations (IPR)', badge: 'Article', url: 'publications.html#articles-18' },
+  { title: 'Internal Communication Satisfaction, Engagement, and Life Satisfaction: A Process Model', meta: 'Verčič, A. T. and Verčič, D. – 2026 · Journal of Public Relations Research', badge: 'Article', url: 'publications.html#articles-19' },
+  { title: 'DEI communication and climate for inclusion in Germany and the U.S.: The mediating role of managerial integrity', meta: 'Wahl, I. and Einwiller, S. A. – 2026 · Public Relations Review', badge: 'Article', url: 'publications.html#articles-20' },
+  { title: 'Comparing employee appreciation in Germany and the US', meta: 'Wahl, I. and Einwiller, S. A. – 2026 · Journal of Communication Management', badge: 'Article', url: 'publications.html#articles-21' },
+  { title: "Fostering Employees' Organizational Identification and Organizational Citizenship Behavior Through Diversity Communication", meta: 'Wahl, I., Einwiller, S. A. and Bartels, J. – 2026 · Management Communication Quarterly', badge: 'Article', url: 'publications.html#articles-22' },
+  { title: 'How to Measure the Appreciation Climate in an Organization: Development and Validation of the Organizational Appreciation Climate Scale (OACS)', meta: 'Wahl, I., Einwiller, S. A. and Johansen, W. – 2026 · International Journal of Business Communication', badge: 'Article', url: 'publications.html#articles-23' },
+  { title: 'Blind Spots in Employee Communication Research Regarding LGBT+ and Guidance for Future Research: A Scoping Review of Quantitative Research', meta: 'Wahl, I., Siegel, M. and Einwiller, S. – 2026 · International Journal of Business Communication', badge: 'Article', url: 'publications.html#articles-24' },
+  { title: 'Generative AI risks: are European communication professionals ready? A study on individual and organizational readiness', meta: 'Wang, Y., Ravazzani, S. and Anton, A. – 2026 · Journal of Communication Management', badge: 'Article', url: 'publications.html#articles-25' },
+  { title: 'A matrix approach to developing a digital internal communication strategy', meta: 'Wuersch, L., Neher, A., Peter, M.K., Maley, J.F. and Wong, A. – 2026 · International Journal of Business Communication', badge: 'Article', url: 'publications.html#articles-26' },
+];
+
+(function () {
+  function norm(s) {
+    return (s || '').toLowerCase();
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function scoreEntry(entry, terms) {
+    const titleHay = norm(entry.title);
+    const fullHay = norm(entry.title + ' ' + entry.meta + ' ' + entry.badge);
+    let score = 0;
+    for (const t of terms) {
+      if (titleHay.includes(t)) score += 2;
+      else if (fullHay.includes(t)) score += 1;
+      else return -1;
+    }
+    return score;
+  }
+
+  function runSearch(query) {
+    const q = norm(query).trim();
+    if (!q) return [];
+    const terms = q.split(/\s+/).filter(Boolean);
+    return SEARCH_INDEX
+      .map((entry) => ({ entry, score: scoreEntry(entry, terms) }))
+      .filter((r) => r.score >= 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 8)
+      .map((r) => r.entry);
+  }
+
+  function renderResults(container, query) {
+    const q = query.trim();
+    container.innerHTML = '';
+    if (!q) {
+      container.setAttribute('data-open', 'false');
+      return;
+    }
+    const results = runSearch(q);
+    if (results.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'search-empty';
+      empty.textContent = `No results for “${q}”`;
+      container.appendChild(empty);
+    } else {
+      results.forEach((entry) => {
+        const a = document.createElement('a');
+        a.href = entry.url;
+        a.className = 'search-result';
+        a.innerHTML =
+          '<span class="search-result-title">' + escapeHtml(entry.title) + '</span>' +
+          '<span class="search-result-meta">' + escapeHtml(entry.badge) + (entry.meta ? ' · ' + escapeHtml(entry.meta) : '') + '</span>';
+        container.appendChild(a);
+      });
+    }
+    container.setAttribute('data-open', 'true');
+  }
+
+  function initDesktopSearch() {
+    const wrap = document.getElementById('searchWrap');
+    const toggle = document.getElementById('searchToggle');
+    const box = document.getElementById('searchBox');
+    const input = document.getElementById('searchInput');
+    const closeBtn = document.getElementById('searchClose');
+    const results = document.getElementById('searchResults');
+    if (!wrap || !toggle || !box || !input || !closeBtn || !results) return;
+
+    function open() {
+      box.setAttribute('data-open', 'true');
+      toggle.setAttribute('aria-expanded', 'true');
+      window.requestAnimationFrame(() => input.focus());
+    }
+    function close() {
+      box.setAttribute('data-open', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
+      results.setAttribute('data-open', 'false');
+      input.value = '';
+      results.innerHTML = '';
+    }
+
+    toggle.addEventListener('click', () => {
+      const isOpen = box.getAttribute('data-open') === 'true';
+      if (isOpen) close();
+      else open();
+    });
+    closeBtn.addEventListener('click', close);
+    input.addEventListener('input', () => renderResults(results, input.value));
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target)) close();
+    });
+  }
+
+  function initMobileSearch() {
+    const input = document.getElementById('mobileSearchInput');
+    const results = document.getElementById('mobileSearchResults');
+    if (!input || !results) return;
+    input.addEventListener('input', () => renderResults(results, input.value));
+  }
+
+  function highlightHashTarget() {
+    if (!location.hash) return;
+    let el;
+    try {
+      el = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    } catch (e) {
+      return;
+    }
+    if (!el) return;
+
+    window.requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    if (el.classList.contains('card') || el.classList.contains('pub-entry')) {
+      el.classList.remove('search-target-highlight');
+      void el.offsetWidth;
+      el.classList.add('search-target-highlight');
+      el.addEventListener('animationend', () => el.classList.remove('search-target-highlight'), { once: true });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initDesktopSearch();
+    initMobileSearch();
+    highlightHashTarget();
+  });
+  window.addEventListener('hashchange', highlightHashTarget);
+})();
