@@ -1,5 +1,6 @@
 node_modules/
 temporary screenshots/
 .DS_Store
+website_drafts+assets/
 Publications/*.docx
 Publications/Reports/gallagher-employee-communications-report-2026-global.png

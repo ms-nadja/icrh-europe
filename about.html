@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About – ICRH Europe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: '#225491',
+          navydeep: '#173A63',
+          gold: '#F2B743',
+          golddeep: '#B9800C',
+          slateblue: '#7C92BE',
+          powder: '#C4CEE2',
+          indigo: '#3A305D',
+          paper: '#F6F8FB',
+          ink: '#182437',
+          inksoft: '#4E5C72',
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          sans: ['Inter', 'sans-serif'],
+          mono: ['"IBM Plex Mono"', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  :root { --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: #182437; background: #F6F8FB; }
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+  p { line-height: 1.7; }
+
+  .bg-grain { position: relative; isolation: isolate; }
+  .bg-grain::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .shadow-elevated {
+    box-shadow: 0 1px 2px rgba(23,58,99,0.06), 0 8px 20px -8px rgba(34,84,145,0.22);
+  }
+  .shadow-floating {
+    box-shadow: 0 4px 10px -2px rgba(23,58,99,0.10), 0 24px 56px -16px rgba(23,58,99,0.35);
+  }
+  .shadow-gold {
+    box-shadow: 0 6px 16px -4px rgba(185,128,12,0.45);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.95rem;
+    padding: 0.85rem 1.6rem; border-radius: 999px;
+    transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-spring), background-color 0.25s ease;
+    will-change: transform;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-gold { background: #F2B743; color: #173A63; }
+  .btn-gold:hover { background: #F7C666; transform: translateY(-2px); box-shadow: 0 10px 24px -6px rgba(185,128,12,0.5); }
+  .btn-gold:focus-visible { outline: 2px solid #B9800C; outline-offset: 3px; }
+
+  .btn-outline { border: 1.5px solid rgba(255,255,255,0.55); color: #fff; }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); border-color: #fff; }
+  .btn-outline:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  .btn-navy { background: #225491; color: #fff; }
+  .btn-navy:hover { background: #1c4577; transform: translateY(-2px); box-shadow: 0 10px 24px -6px rgba(34,84,145,0.45); }
+  .btn-navy:focus-visible { outline: 2px solid #225491; outline-offset: 3px; }
+
+  .nav-link { position: relative; color: #4E5C72; font-weight: 500; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px;
+    background: #F2B743; transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s var(--ease-spring);
+  }
+  .nav-link:hover { color: #173A63; }
+  .nav-link:hover::after { transform: scaleX(1); }
+  .nav-link:focus-visible { outline: 2px solid #225491; outline-offset: 4px; border-radius: 2px; }
+  .nav-link.is-active { color: #173A63; }
+  .nav-link.is-active::after { transform: scaleX(1); background: #F2B743; }
+
+  .card {
+    background: #fff; border-radius: 18px; border: 1px solid rgba(24,36,55,0.06);
+    transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring);
+  }
+  .card:hover { transform: translateY(-4px); }
+
+  .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 999px; }
+  .tag-navy { background: rgba(34,84,145,0.1); color: #225491; }
+  .tag-gold { background: rgba(242,183,67,0.18); color: #B9800C; }
+  .tag-slate { background: rgba(124,146,190,0.16); color: #4E5C72; }
+
+  .mobile-panel { transition: opacity 0.3s var(--ease-spring), transform 0.3s var(--ease-spring); }
+  .mobile-panel[data-open="false"] { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+  .mobile-panel[data-open="true"] { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  input:focus-visible, a:focus-visible, button:focus-visible { outline-offset: 2px; }
+
+  .search-icon-btn {
+    width: 2.75rem; height: 2.75rem; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+    color: #173A63; transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  .search-icon-btn:hover { background: rgba(24,36,55,0.06); }
+  .search-icon-btn:focus-visible { outline: 2px solid #225491; outline-offset: 2px; }
+
+  .search-box {
+    position: relative; transition: width 0.35s var(--ease-spring), opacity 0.3s var(--ease-spring); overflow: hidden;
+  }
+  .search-box[data-open="false"] { width: 0; opacity: 0; pointer-events: none; }
+  .search-box[data-open="true"] { width: 280px; opacity: 1; pointer-events: auto; }
+
+  .search-input {
+    width: 280px; padding: 0.65rem 2.5rem 0.65rem 1rem; border-radius: 999px;
+    border: 1.5px solid rgba(24,36,55,0.14); background: #fff; font-size: 0.9rem; color: #182437; font-family: 'Inter', sans-serif;
+  }
+  .search-input:focus { outline: none; border-color: #225491; box-shadow: 0 0 0 4px rgba(34,84,145,0.12); }
+  .search-input::placeholder { color: #9AA6B8; }
+
+  .search-close-btn {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%); color: #9AA6B8; padding: 5px; border-radius: 999px;
+    display: flex; transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .search-close-btn:hover { color: #173A63; background: rgba(24,36,55,0.06); }
+  .search-close-btn:focus-visible { outline: 2px solid #225491; outline-offset: 2px; }
+
+  .search-results {
+    position: absolute; top: calc(100% + 10px); right: 0; width: 380px; max-height: 26rem; overflow-y: auto;
+    background: #fff; border-radius: 14px; border: 1px solid rgba(24,36,55,0.08);
+    opacity: 0; transform: translateY(-6px); pointer-events: none;
+    transition: opacity 0.25s var(--ease-spring), transform 0.25s var(--ease-spring); z-index: 60;
+  }
+  .search-results[data-open="true"] {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+    box-shadow: 0 4px 10px -2px rgba(23,58,99,0.10), 0 24px 56px -16px rgba(23,58,99,0.35);
+  }
+  .search-result { display: block; padding: 0.75rem 1rem; border-bottom: 1px solid rgba(24,36,55,0.05); transition: background-color 0.2s ease; }
+  .search-result:last-child { border-bottom: none; }
+  .search-result:hover, .search-result:focus-visible { background: rgba(34,84,145,0.06); outline: none; }
+  .search-result-title { display: block; font-weight: 600; font-size: 0.86rem; color: #173A63; line-height: 1.35; }
+  .search-result-meta { display: block; font-size: 0.75rem; color: #4E5C72; margin-top: 2px; }
+  .search-empty { padding: 1.25rem 1rem; font-size: 0.85rem; color: #4E5C72; text-align: center; }
+
+  .search-results-mobile { max-height: 16rem; overflow-y: auto; border-radius: 14px; border: 1px solid rgba(24,36,55,0.08); background: #fff; }
+  .search-results-mobile:empty { display: none; border: none; }
+
+  .search-target-highlight { animation: search-highlight-flash 1.8s ease-out; border-radius: 18px; }
+  @keyframes search-highlight-flash {
+    0% { background-color: rgba(242,183,67,0.35); box-shadow: 0 0 0 4px rgba(242,183,67,0.35); }
+    100% { background-color: transparent; box-shadow: 0 0 0 4px rgba(242,183,67,0); }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-paper/90 backdrop-blur-md border-b border-ink/5">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between h-20">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <img src="assets/img/icrh-logo.png" alt="ICRH Europe" class="h-11 w-11 transition-transform duration-300" style="transition-timing-function: var(--ease-spring);">
+        <span class="font-display font-semibold text-lg text-navydeep">ICRH <span class="text-navy">Europe</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-9">
+        <a href="publications.html" class="nav-link">Publications</a>
+        <a href="index.html#events" class="nav-link">Events</a>
+        <a href="index.html#research" class="nav-link">Research</a>
+        <a href="about.html" class="nav-link is-active">About</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-2">
+        <div id="searchWrap" class="relative flex items-center">
+          <div id="searchBox" data-open="false" class="search-box">
+            <input id="searchInput" type="text" placeholder="Search the site…" class="search-input" autocomplete="off">
+            <button id="searchClose" aria-label="Close search" class="search-close-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          </div>
+          <button id="searchToggle" aria-label="Search the site" aria-expanded="false" class="search-icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+          </button>
+          <div id="searchResults" class="search-results" data-open="false"></div>
+        </div>
+        <a href="index.html#join" class="btn btn-gold shadow-gold">Join the network</a>
+      </div>
+
+      <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden p-2 -mr-2 text-navydeep">
+        <svg id="menuIcon" width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobilePanel" data-open="false" class="mobile-panel md:hidden absolute top-20 left-0 right-0 bg-paper border-b border-ink/5 shadow-elevated">
+    <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-5">
+      <div class="relative">
+        <input id="mobileSearchInput" type="text" placeholder="Search the site…" class="search-input" autocomplete="off" style="width:100%;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA6B8" stroke-width="2" style="position:absolute; right:14px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+      </div>
+      <div id="mobileSearchResults" class="search-results-mobile"></div>
+      <a href="publications.html" class="nav-link">Publications</a>
+      <a href="index.html#events" class="nav-link">Events</a>
+      <a href="index.html#research" class="nav-link">Research</a>
+      <a href="about.html" class="nav-link is-active">About</a>
+      <a href="index.html#join" class="btn btn-gold shadow-gold w-full mt-1">Join the network</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="bg-grain relative overflow-hidden" style="background: radial-gradient(120% 140% at 15% -10%, #2C63A8 0%, #173A63 55%, #14294A 100%);">
+  <div class="max-w-5xl mx-auto px-6 pt-16 pb-20 md:pt-20 md:pb-24 relative z-10">
+    <a href="index.html" class="inline-flex items-center gap-2 text-sm text-powder/80 hover:text-white transition-colors mb-6">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      ICRH Europe
+    </a>
+    <span class="tag tag-gold inline-block mb-6" style="background:rgba(242,183,67,0.16); color:#F2B743;">Who we are</span>
+    <h1 class="text-4xl sm:text-5xl font-bold text-white leading-[1.05] mb-6">About ICRH Europe</h1>
+    <p class="text-lg text-powder max-w-2xl" style="line-height:1.7;">
+      The Internal Communication Research Hub (ICRH) is a community of academics and practitioners interested in internal communication, employee engagement and dialogue in the workplace.
+    </p>
+  </div>
+</section>
+
+<!-- Who we are -->
+<section id="who-we-are" class="max-w-5xl mx-auto px-6 py-14 md:py-16 scroll-mt-20">
+  <div class="grid md:grid-cols-[1fr_1.3fr] gap-14 items-start">
+    <div>
+      <span class="tag tag-navy inline-block mb-4">Overview</span>
+      <h2 class="text-2xl md:text-3xl font-semibold text-navydeep mb-2">The Internal Communication Research Hub</h2>
+    </div>
+    <div>
+      <p class="text-lg text-ink mb-6" style="line-height:1.7;">
+        ICRH-Europe is a community of academics and practitioners who are interested in internal communication, employee engagement and dialogue in the workplace.
+      </p>
+      <p class="text-lg text-ink mb-8" style="line-height:1.7;">
+        We're part of the wider ICRH community, extending its work across Europe.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <span class="tag tag-navy">Cross-border</span>
+        <span class="tag tag-gold">Evidence-based</span>
+        <span class="tag tag-slate">Open to all</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Leadership -->
+<section id="leadership" class="bg-white border-y border-ink/5 scroll-mt-20">
+  <div class="max-w-5xl mx-auto px-6 py-14 md:py-16">
+    <div class="max-w-2xl mb-10">
+      <span class="tag tag-navy inline-block mb-4">Leadership</span>
+      <h2 class="text-2xl md:text-3xl font-semibold text-navydeep">Who leads the network</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <div id="kevin-ruck" class="card shadow-elevated p-8 scroll-mt-24">
+        <div class="flex items-center gap-5 mb-5">
+          <img src="assets/img/team/kevin-ruck.jpeg" alt="Dr Kevin Ruck" class="w-20 h-20 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="text-xl font-semibold text-navydeep">Dr Kevin Ruck</h3>
+            <p class="text-sm text-inksoft mt-1">Lead, ICRH-Europe</p>
+          </div>
+        </div>
+        <span class="tag tag-slate inline-block mb-4">UK</span>
+        <p class="text-inksoft" style="line-height:1.7;">Kevin leads ICRH-Europe, connecting the network's academics and practitioners across the continent and extending the wider ICRH community's work into Europe.</p>
+      </div>
+
+      <div id="linjuan-rita-men" class="card shadow-elevated p-8 scroll-mt-24">
+        <div class="flex items-center gap-5 mb-5">
+          <img src="assets/img/team/linjuan-rita-men.jpeg" alt="Professor Linjuan Rita Men" class="w-20 h-20 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="text-xl font-semibold text-navydeep">Linjuan Rita Men</h3>
+            <p class="text-sm text-inksoft mt-1">Public Relations Professor, ICRH</p>
+          </div>
+        </div>
+        <span class="tag tag-slate inline-block mb-4">University of Florida, USA</span>
+        <p class="text-inksoft" style="line-height:1.7;">ICRH is housed within the University of Florida College of Journalism and Communications. It is led by Professor Linjuan Rita Men, a renowned expert in internal communication, employee engagement, leadership communication and emerging technology.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Volunteers -->
+<section id="team" class="max-w-6xl mx-auto px-6 py-14 md:py-16 scroll-mt-20">
+  <div class="max-w-2xl mb-10">
+    <span class="tag tag-navy inline-block mb-4">The network</span>
+    <h2 class="text-2xl md:text-3xl font-semibold text-navydeep mb-4">ICRH-Europe volunteers</h2>
+    <p class="text-inksoft" style="line-height:1.7;">The ICRH-Europe group consists of volunteers drawn from academia and practice across Europe.</p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div id="edyta-blachowska" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/edyta-blachowska.jpeg" alt="Edyta Blachowska" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Edyta Blachowska</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Director of Internal Communication, Bank Gospodarstwa Krajowego</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Warsaw, Poland</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Edyta has more than 15 years of experience in internal communication and specialises in strategic communication planning, creative internal campaigns and plain language.</p>
+        <a href="https://www.linkedin.com/in/edyta-blachowska-scmp-5b709790/" target="_blank" rel="noopener" aria-label="Edyta Blachowska on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="ada-borucka" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/ada-borucka.jpeg" alt="Ada Borucka" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Ada Borucka</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Founder &amp; Managing Partner, iComms/PinPoint</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Poznań, Poland</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Ada has more than 20 years of experience in helping companies create effective communication strategies. She focuses on building engaged, high-performing teams by offering expert support to executives and leaders, especially when they face tough communication challenges.</p>
+        <a href="https://www.linkedin.com/in/adrianaborucka/" target="_blank" rel="noopener" aria-label="Ada Borucka on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="nora-denner" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/nora-denner.jpeg" alt="Nora Denner" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Nora Denner</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Interim Professor for Strategic Communication, Ludwig-Maximilians-Universität München</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">München, Germany</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Nora&#x27;s main research interests include internal/informal communication, communication of corporate responsibility, personalized communication and media content as well as effects of personalization and mis- and disinformation.</p>
+        <a href="https://www.linkedin.com/in/nora-denner-31221a205/" target="_blank" rel="noopener" aria-label="Nora Denner on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="sabine-einwiller" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/sabine-einwiller.jpeg" alt="Sabine Einwiller" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Sabine Einwiller</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Professor of Public Relations Research, Chair of the Department of Communication, University of Vienna</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Vienna, Austria</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Sabine has researched and published widely on topics of corporate communication and stakeholder psychology. In particular, her research focuses on the effects of negative publicity and crisis communication, complaint management, employee communication and reputation management and measurement. She has also consulted on these topics for various major corporations.</p>
+        <a href="https://www.linkedin.com/in/sabine-einwiller-37a477151/" target="_blank" rel="noopener" aria-label="Sabine Einwiller on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="elisenda-estanyol-i-casals" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/elisenda-estanyol.jpeg" alt="Elisenda Estanyol i Casals" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Elisenda Estanyol i Casals</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Academic Director, Master in Corporate Communication, Protocol and Events, Universitat Oberta de Catalunya (UOC)</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Barcelona, Spain</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Elisenda&#x27;s research interests are focused on sustainability, CSR, ESG, event management, protocol, creativity, and social media. She also worked for more than 10 years in public relations consultancies (Llorente &amp; Cuenca, Hill + Knowlton Strategies) and in-house communication departments (CAATEEB, DiR).</p>
+        <a href="https://www.linkedin.com/in/elisenda-estanyol-99419928/" target="_blank" rel="noopener" aria-label="Elisenda Estanyol i Casals on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="jenni-field" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/jenni-field.png" alt="Jenni Field" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Jenni Field</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Founder and CEO, Redefining Communications</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">UK</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Jenni works with CEOs, senior leadership teams and communication directors as a leadership and communication consultant. Organisations bring her in when internal communication isn&#x27;t working, change keeps stalling, or leaders aren&#x27;t being followed the way the org chart says they should be.</p>
+        <a href="https://www.linkedin.com/in/jennifield/" target="_blank" rel="noopener" aria-label="Jenni Field on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="juan-cuenca-fontbona" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/juan-cuenca-fontbona.jpeg" alt="Juan Cuenca Fontbona" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Juan Cuenca Fontbona</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Profesor Titular, Facultad de Comunicación y Relaciones Internacionales Blanquerna, Universidad Ramon Llull</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Barcelona, Spain</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Joan&#x27;s research focuses on internal communication, organisational change and resilience, employee wellbeing and strategic communication, including the CISEELAP project on internal communication in public administration. He currently leads the EUPRERA Internal Communication and Management Network, is a board member of DIRCI, and a member of DIRCOM, combining academic research with professional practice.</p>
+        <span class="mt-4"></span>
+      </div>
+
+      <div id="mats-heide" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/mats-heide.png" alt="Mats Heide" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Mats Heide</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Researcher, Professor, Department of Strategic Communication, Lund University</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Lund, Sweden</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Mats has a particular expertise in internal communication, strategic listening, change communication, internal crisis communication, crisis communication, value creation and communication, and the communicative organization. He has more than 25 years of experience as a researcher and educator, and actively publishes research in books, articles, and reports.</p>
+        <a href="https://www.linkedin.com/in/matsheide/" target="_blank" rel="noopener" aria-label="Mats Heide on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="jeanne-link" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/jeanne-link.png" alt="Jeanne Link" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Jeanne Link</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Research Associate in Strategic Communication and Doctoral Candidate, Universität Leipzig</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Leipzig, Germany</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Jeanne&#x27;s research interest lies in corporate communications. She studied Media Studies in Dresden and Krakow and received her Master&#x27;s degree in Communication Management at Leipzig University.</p>
+        <a href="https://www.linkedin.com/in/jeannelink/" target="_blank" rel="noopener" aria-label="Jeanne Link on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="vibeke-thois-madsen" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/vibeke-thois-madsen.jpeg" alt="Vibeke Thøis Madsen" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Vibeke Thøis Madsen</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Senior Associate Professor in Internal Strategic Communication, DMJX Danish School of Media and Journalism</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Aarhus, Denmark</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Vibeke is passionate about exploring coworkers as communicators on both internal and external social media. Her PhD focused on coworkers as communicators on internal social media, where she explored challenges with introducing a social intranet, coworker self-censorship on internal social media and what happens to the organization when coworkers communicate with each other across the organization. Since 2000 she has worked with internal and external digital communication in organizations.</p>
+        <a href="https://www.linkedin.com/in/vibeke-th%C3%B8is-madsen-3930b23/" target="_blank" rel="noopener" aria-label="Vibeke Thøis Madsen on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="rachel-miller" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/rachel-miller.png" alt="Rachel Miller" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Rachel Miller</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Founder, All Things IC</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">UK</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Rachel has advised leaders on internal communication and change communication for more than three decades, helping them create the clarity, understanding and alignment needed to achieve organisational goals.</p>
+        <a href="https://www.linkedin.com/in/rachelmiller01/" target="_blank" rel="noopener" aria-label="Rachel Miller on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="begona-echaburu-mulet" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/begona-echaburu-mulet.jpeg" alt="Begoña Echaburu Mulet" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Begoña Echaburu Mulet</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Research Team Manager on Talent and People Management, MIK Research Center-Mondragon University Enpresagintza</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Basque Country, Spain</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Begoña specialises in HRM Strategy and Talent Management, working at the intersection of research and organizational practice. Her work bridges basic research, applied research, and business reality with a clear purpose: translating rigorous evidence into strategic people decisions while generating meaningful research from real-world organizational challenges.</p>
+        <a href="https://www.linkedin.com/in/bego%C3%B1aechaburumulet/" target="_blank" rel="noopener" aria-label="Begoña Echaburu Mulet on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="louis-de-schorlemer" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/louis-de-schorlemer.jpeg" alt="Louis de Schorlemer" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Louis de Schorlemer</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Managing Partner, Corporate Diplomat &amp; Lecturer, Luxembourg School of Business</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Luxembourg</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Louis is a board member, senior advisor and lecturer with extensive experience at the intersection of governance, transformation and reputation. Drawing on corporate experience across listed and privately held companies and almost 100 M&amp;A transactions, he brings independent judgement and a long-term perspective to boards navigating M&amp;A, succession and strategic change, with particular expertise in stakeholder alignment, leadership and family business.</p>
+        <a href="https://www.linkedin.com/in/louis-de-schorlemer-strategic-communication/" target="_blank" rel="noopener" aria-label="Louis de Schorlemer on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="holger-sievert" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/holger-sievert.jpeg" alt="Holger Sievert" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Holger Sievert</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Study Dean and Professor for Communication Management, Macromedia University</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Cologne, Germany</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Holger studied in Münster and Aix-en-Provence in France and later held extended Visiting Research Fellowships at the Universities of Cambridge and Lugano. Professionally, he spent many years in leading positions at the management consultancy Roland Berger Strategy Consultants, Bertelsmann AG and the Bertelsmann Foundation, and as a director of an owner-managed German agency group.</p>
+        <a href="https://www.linkedin.com/in/profsiev/" target="_blank" rel="noopener" aria-label="Holger Sievert on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="charlotte-simonsson" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/charlotte-simonsson.jpeg" alt="Charlotte Simonsson" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Charlotte Simonsson</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Associate Professor, Dept of Communication, Lund University</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Lund, Sweden</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Charlotte&#x27;s interests are in change processes, communication between managers and employees, dialogue, employee engagement, communication strategies and storytelling. As a consultant she worked with communication audits of various kinds as well as coaching and training of managers and communication professionals.</p>
+        <a href="https://www.linkedin.com/in/charlotte-simonsson-b5678717/" target="_blank" rel="noopener" aria-label="Charlotte Simonsson on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="elena-sinitsyna" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/elena-sinitsyna.jpeg" alt="Elena Sinitsyna" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Elena Sinitsyna</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">PhD Candidate, HSE University</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Moscow, Russia</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Elena is general manager of Prout Group, an events management company, and a PhD candidate researching internal communication.</p>
+        <a href="https://www.linkedin.com/in/elena-sinitsyna-36b98795/" target="_blank" rel="noopener" aria-label="Elena Sinitsyna on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="julia-stranzl" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/julia-stranzl.jpeg" alt="Julia Stranzl" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Julia Stranzl</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Assistant Professor, Institute for Communication Management and Media, University of Vienna</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Vienna, Austria</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Julia completed her doctorate at the Institute of Communication at the University of Vienna on the topic of “Appreciation in the workplace”. She is currently an assistant professor at the Vienna University of Economics and Business where she is continuing her work on organizational communication and employee communication in times of change and crisis.</p>
+        <a href="https://www.linkedin.com/in/julia-stranzl-7b4682147/" target="_blank" rel="noopener" aria-label="Julia Stranzl on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="ana-tkalac-vercic" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/ana-tkalac-vercic.jpeg" alt="Ana Tkalac Verčič" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Ana Tkalac Verčič</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Professor, Department of Marketing, Faculty of Economics and Business, University of Zagreb</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Zagreb, Croatia</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Ana&#x27;s scientific and teaching work includes various communication disciplines, primarily the fields of marketing communication, public relations, advertising and internal communication. She is a lecturer and co-lecturer of numerous courses and has published numerous papers in recognized international scientific journals. She is the recipient of the “Mijo Mirković” award for authorship of the university textbook “Public Relations”.</p>
+        <a href="https://www.linkedin.com/in/ana-tkalac-ver%C4%8Di%C4%8D-4a30571/" target="_blank" rel="noopener" aria-label="Ana Tkalac Verčič on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="christopher-wade" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/christopher-wade.jpeg" alt="Christopher Wade" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Christopher Wade</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">VP Internal &amp; Employee Engagement Communications, Fresenius Medical Care</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Berlin, Germany</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Chris is a C-suite comms professional with more than 20 years&#x27; experience in delivering measurable results at embedding company culture and strategy in Fortune 500 companies – contributing to a positive reputation and securing long-term relationships with internal and external stakeholders.</p>
+        <a href="https://www.linkedin.com/in/christopher-o-wade/" target="_blank" rel="noopener" aria-label="Christopher Wade on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div id="ingrid-wahl" class="card shadow-elevated p-6 flex flex-col scroll-mt-24">
+        <div class="flex items-start gap-4 mb-4">
+          <img src="assets/img/team/ingrid-wahl.jpeg" alt="Ingrid Wahl" class="w-16 h-16 rounded-full object-cover shadow-elevated border-2 border-white shrink-0">
+          <div>
+            <h3 class="font-display font-semibold text-navydeep leading-snug">Ingrid Wahl</h3>
+            <p class="text-xs text-inksoft mt-1" style="line-height:1.5;">Senior Researcher (post doc), Corporate Communication Research Group, University of Vienna</p>
+          </div>
+        </div>
+        <span class="tag tag-slate self-start mb-4">Vienna, Austria</span>
+        <p class="text-sm text-inksoft flex-1" style="line-height:1.7;">Ingrid combines perspectives from communication and organizational psychology to explore how communication shapes employees&#x27; experiences and organizational life. Her research examines how internal organizational communication can foster inclusion, appreciation, and well-being, with a particular focus on diversity, equity, and inclusion (DEI) communication and cross-cultural comparisons.</p>
+        <a href="https://www.linkedin.com/in/ingrid-wahl-220a35261/" target="_blank" rel="noopener" aria-label="Ingrid Wahl on LinkedIn" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors mt-4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>  </div>
+</section>
+
+<!-- Join / Newsletter -->
+<section id="join" class="max-w-4xl mx-auto px-6 py-20 md:py-24 text-center scroll-mt-20">
+  <span class="tag tag-navy inline-block mb-5">Stay connected</span>
+  <h2 class="text-3xl md:text-4xl font-semibold text-navydeep mb-4">Join the network</h2>
+  <p class="text-lg text-inksoft max-w-xl mx-auto mb-10" style="line-height:1.7;">Get new publications, event invitations, and research updates from ICRH Europe in your inbox.</p>
+  <a href="index.html#join" class="btn btn-gold shadow-gold">Join the network</a>
+</section>
+
+<!-- Footer -->
+<footer class="bg-grain relative" style="background:#173A63;">
+  <div class="max-w-7xl mx-auto px-6 py-16 relative z-10">
+    <div class="grid md:grid-cols-[1.4fr_1fr_1fr] gap-12 mb-14">
+      <div>
+        <a href="index.html" class="flex items-center gap-3 mb-5">
+          <img src="assets/img/icrh-logo.png" alt="ICRH Europe" class="h-10 w-10">
+          <span class="font-display font-semibold text-lg text-white">ICRH <span class="text-powder">Europe</span></span>
+        </a>
+        <p class="text-powder/80 max-w-xs" style="line-height:1.7;">A cross-border network for internal communication research and practice.</p>
+      </div>
+
+      <div>
+        <div class="tag tag-gold inline-block mb-5" style="background:rgba(242,183,67,0.16); color:#F2B743;">Explore</div>
+        <ul class="flex flex-col gap-3">
+          <li><a href="publications.html" class="text-powder hover:text-white transition-colors">Publications</a></li>
+          <li><a href="index.html#events" class="text-powder hover:text-white transition-colors">Events</a></li>
+          <li><a href="index.html#research" class="text-powder hover:text-white transition-colors">Research</a></li>
+          <li><a href="about.html" class="text-powder hover:text-white transition-colors">About</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="tag tag-gold inline-block mb-5" style="background:rgba(242,183,67,0.16); color:#F2B743;">Connect</div>
+        <a href="https://www.linkedin.com/groups/13196156/" target="_blank" rel="noopener" aria-label="ICRH Europe on LinkedIn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-300">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono text-xs text-powder/60">
+      <span>© 2026 ICRH Europe</span>
+      <span>icrh-europe.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobilePanel');
+  menuBtn.addEventListener('click', () => {
+    const open = panel.getAttribute('data-open') === 'true';
+    panel.setAttribute('data-open', String(!open));
+    menuBtn.setAttribute('aria-expanded', String(!open));
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    panel.setAttribute('data-open', 'false');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+<script src="assets/js/search.js"></script>
+</body>
+</html>

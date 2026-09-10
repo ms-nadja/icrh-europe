@@ -142,6 +142,7 @@
   }
 
   .pub-entry + .pub-entry { border-top: 1px solid rgba(24,36,55,0.07); }
+  .pub-entry[hidden] { display: none; }
 
   .mobile-panel { transition: opacity 0.3s var(--ease-spring), transform 0.3s var(--ease-spring); }
   .mobile-panel[data-open="false"] { opacity: 0; transform: translateY(-8px); pointer-events: none; }
@@ -201,6 +202,44 @@
     0% { background-color: rgba(242,183,67,0.35); box-shadow: 0 0 0 4px rgba(242,183,67,0.35); }
     100% { background-color: transparent; box-shadow: 0 0 0 4px rgba(242,183,67,0); }
   }
+
+  /* Filter sidebar */
+  .filter-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: #4E5C72; margin-bottom: 0.6rem; display: block;
+  }
+  .filter-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+    width: 100%; text-align: left; padding: 0.5rem 0.75rem; border-radius: 8px;
+    font-size: 0.9rem; color: #4E5C72; border-left: 3px solid transparent;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .filter-item:hover { color: #173A63; background: rgba(34,84,145,0.05); }
+  .filter-item:focus-visible { outline: 2px solid #225491; outline-offset: -2px; border-radius: 6px; }
+  .filter-item.is-active { color: #173A63; font-weight: 600; background: rgba(34,84,145,0.07); border-left-color: #F2B743; }
+  .filter-item .count { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: #9AA6B8; }
+  .filter-item.is-active .count { color: #B9800C; }
+
+  .filter-group + .filter-group { margin-top: 1.75rem; padding-top: 1.75rem; border-top: 1px solid rgba(24,36,55,0.08); }
+
+  .author-search-wrap { position: relative; }
+  .author-search {
+    width: 100%; padding: 0.55rem 2.25rem 0.55rem 0.75rem; border-radius: 8px;
+    border: 1.5px solid rgba(24,36,55,0.12); background: #F6F8FB; font-size: 0.85rem; color: #182437;
+  }
+  .author-search:focus { outline: none; border-color: #225491; background: #fff; box-shadow: 0 0 0 3px rgba(34,84,145,0.1); }
+  .author-search::placeholder { color: #9AA6B8; }
+  .author-search-clear {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%); color: #9AA6B8; padding: 4px; border-radius: 999px;
+    display: flex; transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .author-search-clear:hover { color: #173A63; background: rgba(24,36,55,0.08); }
+  .author-search-clear[hidden] { display: none; }
+
+  .section-heading-row { display: flex; align-items: center; justify-content: space-between; }
+  .empty-state { padding: 2.5rem 1rem; text-align: center; color: #9AA6B8; font-size: 0.9rem; }
+  .empty-state[hidden] { display: none; }
+  .no-results-note { padding: 1.5rem; text-align: center; color: #9AA6B8; font-size: 0.85rem; }
 </style>
 </head>
 <body class="antialiased">
@@ -218,7 +257,7 @@
         <a href="publications.html" class="nav-link is-active">Publications</a>
         <a href="index.html#events" class="nav-link">Events</a>
         <a href="index.html#research" class="nav-link">Research</a>
-        <a href="index.html#who-we-are" class="nav-link">About</a>
+        <a href="about.html" class="nav-link">About</a>
       </nav>
 
       <div class="hidden md:flex items-center gap-2">
@@ -253,7 +292,7 @@
       <a href="publications.html" class="nav-link is-active">Publications</a>
       <a href="index.html#events" class="nav-link">Events</a>
       <a href="index.html#research" class="nav-link">Research</a>
-      <a href="index.html#who-we-are" class="nav-link">About</a>
+      <a href="about.html" class="nav-link">About</a>
       <a href="index.html#join" class="btn btn-gold shadow-gold w-full mt-1">Join the network</a>
     </div>
   </div>
@@ -266,274 +305,400 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
       ICRH Europe
     </a>
-    <span class="tag tag-gold inline-block mb-6" style="background:rgba(242,183,67,0.16); color:#F2B743;">2026 edition</span>
+    <span class="tag tag-gold inline-block mb-6" style="background:rgba(242,183,67,0.16); color:#F2B743;">Updated for 2026</span>
     <h1 class="text-4xl sm:text-5xl font-bold text-white leading-[1.05] mb-6">Publications</h1>
     <p class="text-lg text-powder max-w-2xl" style="line-height:1.7;">
-      A list of publications by practitioners and researchers based in Europe in 2026
+      A list of publications by practitioners and researchers based in Europe. Filter by year or author using the panel on the left.
     </p>
   </div>
 </section>
 
-<!-- Books -->
-<section id="books" class="max-w-5xl mx-auto px-6 py-14 md:py-16 scroll-mt-20">
-  <div class="flex items-center gap-4 mb-8">
-    <div class="w-11 h-11 rounded-lg bg-navy/10 flex items-center justify-center shrink-0">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H14v18H6.5A2.5 2.5 0 0 1 4 18.5v-13Z"/><path d="M14 3h3.5A2.5 2.5 0 0 1 20 5.5v13a2.5 2.5 0 0 1-2.5 2.5H14"/></svg>
-    </div>
-    <h2 class="text-2xl md:text-3xl font-semibold text-navydeep">Books</h2>
-  </div>
+<!-- Filterable content -->
+<div class="max-w-7xl mx-auto px-6 py-14 md:py-16 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10 lg:gap-14">
 
-  <div class="card shadow-elevated p-6 md:p-8">
-    <div id="books-1" class="pub-entry py-6 first:pt-0 last:pb-0 flex items-center gap-6 scroll-mt-24">
-      <img src="assets/img/books/heide-communicative-organizations.jpg" alt="Cover of Communicative organizations: how to create better relationships and trust" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
-      <div>
-        <a href="https://www.liber.se/webshop/product/kommunikativa-organisationer-sa-skapas-battre-relationer-och-fortroende-9789147157259" target="_blank" rel="noopener" class="book-title-link mb-1.5">Communicative organizations: how to create better relationships and trust</a>
-        <p class="text-sm text-inksoft">Heide, M., Simonsson, C., and Andersson, R. – 2026</p>
-        <p class="text-sm text-inksoft italic">Liber</p>
+  <!-- Sidebar -->
+  <aside class="lg:sticky lg:top-28 self-start">
+    <div class="card shadow-elevated p-5">
+      <div class="flex items-center justify-between mb-1">
+        <h3 class="font-display font-semibold text-navydeep text-sm">Filter</h3>
+        <button id="clearFilters" class="text-xs font-medium text-navy hover:text-golddeep transition-colors" hidden>Clear all</button>
       </div>
-    </div>
-    <div id="books-2" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24">
-      <img src="assets/img/books/miller-successful-change-communication.jpg" alt="Cover of Successful Change Communication: How to Inform, Involve and Inspire Employees" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
-      <div>
-        <a href="https://www.koganpage.com/marketing-communications/successful-change-communication-9781398624894" target="_blank" rel="noopener" class="book-title-link mb-1.5">Successful Change Communication: How to Inform, Involve and Inspire Employees</a>
-        <p class="text-sm text-inksoft">Miller, R. – 2026</p>
-        <p class="text-sm text-inksoft italic">Kogan Page</p>
-      </div>
-    </div>
-    <div id="books-3" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24">
-      <img src="assets/img/books/odea-philips-digital-communications-at-work.jpg" alt="Cover of Digital Communications at Work: Designing Channels for Employee Engagement and Experience" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
-      <div>
-        <a href="https://www.koganpage.com/marketing-communications/digital-communications-at-work-9781398626072" target="_blank" rel="noopener" class="book-title-link mb-1.5">Digital Communications at Work: Designing Channels for Employee Engagement and Experience</a>
-        <p class="text-sm text-inksoft">O'Dea, S. and Philips, J. – 2026</p>
-        <p class="text-sm text-inksoft italic">Kogan Page</p>
-      </div>
-    </div>
-    <div id="books-4" class="pub-entry py-6 last:pb-0 flex items-center gap-6 scroll-mt-24">
-      <img src="assets/img/books/ruck-flegg-exploring-internal-communication.jpg" alt="Cover of Exploring Internal Communication: Towards Dialogue in the Workplace" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
-      <div>
-        <a href="https://www.routledge.com/Exploring-Internal-Communication-Towards-Dialogue-in-the-Workplace/Ruck-Flegg/p/book/9781041069997" target="_blank" rel="noopener" class="book-title-link mb-1.5">Exploring Internal Communication: Towards Dialogue in the Workplace</a>
-        <p class="text-sm text-inksoft">Ruck, K. and Flegg, M. – 2026</p>
-        <p class="text-sm text-inksoft italic">5th Edition, Routledge</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- Reports -->
-<section id="reports" class="bg-white border-y border-ink/5">
-  <div class="max-w-5xl mx-auto px-6 py-14 md:py-16 scroll-mt-20">
-    <div class="flex items-center gap-4 mb-8">
-      <div class="w-11 h-11 rounded-lg bg-navy/10 flex items-center justify-center shrink-0">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>
-      </div>
-      <h2 class="text-2xl md:text-3xl font-semibold text-navydeep">Reports</h2>
-    </div>
-
-    <div class="card shadow-elevated p-5 md:p-6 border-l-4 text-sm text-inksoft mb-8" style="border-left-color:#F2B743;">
-      Reports listed are those that are freely available. Further reports are available exclusively to members of institutes such as CIPR and IoIC.
-    </div>
-
-    <div class="card shadow-elevated p-6 md:p-8">
-      <div id="reports-1" class="pub-entry py-6 first:pt-0 last:pb-0 flex items-center gap-6 scroll-mt-24">
-        <img src="assets/img/reports/gallagher.jpg" alt="Cover of The Definitive Annual Report on Employee Experience and Internal Comms Trends" class="w-20 sm:w-24 object-contain rounded-md shadow-elevated shrink-0 border border-ink/5" style="aspect-ratio: 800 / 565;">
-        <div>
-          <a href="https://www.ajg.com/employeeexperience/state-of-the-sector/" target="_blank" rel="noopener" class="book-title-link mb-1.5">The Definitive Annual Report on Employee Experience and Internal Comms Trends</a>
-          <p class="text-sm text-inksoft">Gallagher – 2026</p>
+      <div class="filter-group mt-4">
+        <span class="filter-label">Year</span>
+        <div id="yearFilters" class="flex flex-col gap-0.5">
+          <button class="filter-item is-active" data-filter-year="all">All years</button>
+          <button class="filter-item" data-filter-year="2026">2026</button>
+          <button class="filter-item" data-filter-year="2025">2025</button>
         </div>
       </div>
-      <div id="reports-2" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24">
-        <img src="assets/img/reports/ioic-ic-index-2026.jpg" alt="Cover of IC Index 2026: The reality check" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
-        <div>
-          <a href="https://www.ioic.org.uk/resource-report/ic-index-2026-the-reality-check.html" target="_blank" rel="noopener" class="book-title-link mb-1.5">IC Index 2026: The reality check</a>
-          <p class="text-sm text-inksoft">IoIC – 2026</p>
-        </div>
-      </div>
-      <div id="reports-3" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24">
-        <img src="assets/img/reports/ioic-future-of-ic.jpg" alt="Cover of The future of Internal Communication report" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
-        <div>
-          <a href="https://www.ioic.org.uk/resource-report/the-future-of-internal-communication-exploring-opportunity-for-internal-communicators-in-the-future-of-work.html" target="_blank" rel="noopener" class="book-title-link mb-1.5">The future of Internal Communication: Opportunity for internal communicators in the future of work</a>
-          <p class="text-sm text-inksoft">IoIC – 2026</p>
-        </div>
-      </div>
-      <div id="reports-4" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24">
-        <img src="assets/img/reports/resonans-partners.jpg" alt="Cover of Internal Communication in Denmark report" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
-        <div>
-          <a href="https://resonans-partners.dk/home/ic26" target="_blank" rel="noopener" class="book-title-link mb-1.5">Internal Communication in Denmark – where does the profession stand today, and where is it heading?</a>
-          <p class="text-sm text-inksoft">Resonans Partners – 2026</p>
-        </div>
-      </div>
-      <div id="reports-5" class="pub-entry py-6 last:pb-0 flex items-center gap-6 scroll-mt-24">
-        <img src="assets/img/reports/oak-engage.svg" alt="OAK Engage logo" class="w-20 sm:w-24 object-contain rounded-md shadow-elevated shrink-0 border border-ink/5 p-3 bg-white" style="aspect-ratio: 800 / 565;">
-        <div>
-          <a href="https://www.oak.com/newsroom/new-research-reveals-credibility-gap-in-internal-comms-94-say-its-respected-but-only-30-can-prove-business-impact" target="_blank" rel="noopener" class="book-title-link mb-1.5">Credibility Gap</a>
-          <p class="text-sm text-inksoft">OAK Engage – 2026</p>
+
+      <div class="filter-group">
+        <span class="filter-label">Author</span>
+        <div class="author-search-wrap">
+          <input id="authorSearch" type="text" placeholder="Search author…" class="author-search" autocomplete="off">
+          <button id="authorSearchClear" aria-label="Clear author search" class="author-search-clear" hidden>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </aside>
 
-<!-- Journal articles -->
-<section id="journal-articles" class="max-w-5xl mx-auto px-6 py-14 md:py-16 scroll-mt-20">
-  <div class="flex items-center gap-4 mb-8">
-    <div class="w-11 h-11 rounded-lg bg-navy/10 flex items-center justify-center shrink-0">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
-    </div>
-    <h2 class="text-2xl md:text-3xl font-semibold text-navydeep">Journal articles</h2>
-  </div>
+  <!-- Results -->
+  <main>
 
-  <p class="text-inksoft max-w-3xl mb-6" style="line-height:1.7;">The following list of academic journal articles emphasises the increasing volume of research being conducted in Europe. Articles are shown in alphabetical order of authors.</p>
+    <!-- Books -->
+    <section id="books" class="mb-14 scroll-mt-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-11 h-11 rounded-lg bg-navy/10 flex items-center justify-center shrink-0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H14v18H6.5A2.5 2.5 0 0 1 4 18.5v-13Z"/><path d="M14 3h3.5A2.5 2.5 0 0 1 20 5.5v13a2.5 2.5 0 0 1-2.5 2.5H14"/></svg>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-semibold text-navydeep">Books</h2>
+      </div>
 
-  <div class="card shadow-elevated p-5 md:p-6 border-l-4 text-sm text-inksoft mb-8" style="border-left-color:#F2B743;">
-    Journal articles are often only freely available to people who have access via universities. The links shown will provide a summary only of the research and findings.
-  </div>
+      <div class="card shadow-elevated p-6 md:p-8">
+        <div id="books-1" class="pub-entry py-6 first:pt-0 flex items-center gap-6 scroll-mt-24" data-year="2026" data-authors="heide simonsson andersson">
+          <img src="assets/img/books/heide-communicative-organizations.jpg" alt="Cover of Communicative organizations: how to create better relationships and trust" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.liber.se/webshop/product/kommunikativa-organisationer-sa-skapas-battre-relationer-och-fortroende-9789147157259" target="_blank" rel="noopener" class="book-title-link mb-1.5">Communicative organizations: how to create better relationships and trust</a>
+            <p class="text-sm text-inksoft">Heide, M., Simonsson, C., and Andersson, R. – 2026</p>
+            <p class="text-sm text-inksoft italic">Liber</p>
+          </div>
+        </div>
+        <div id="books-2" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2026" data-authors="miller">
+          <img src="assets/img/books/miller-successful-change-communication.jpg" alt="Cover of Successful Change Communication: How to Inform, Involve and Inspire Employees" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.koganpage.com/marketing-communications/successful-change-communication-9781398624894" target="_blank" rel="noopener" class="book-title-link mb-1.5">Successful Change Communication: How to Inform, Involve and Inspire Employees</a>
+            <p class="text-sm text-inksoft">Miller, R. – 2026</p>
+            <p class="text-sm text-inksoft italic">Kogan Page</p>
+          </div>
+        </div>
+        <div id="books-3" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2026" data-authors="odea philips">
+          <img src="assets/img/books/odea-philips-digital-communications-at-work.jpg" alt="Cover of Digital Communications at Work: Designing Channels for Employee Engagement and Experience" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.koganpage.com/marketing-communications/digital-communications-at-work-9781398626072" target="_blank" rel="noopener" class="book-title-link mb-1.5">Digital Communications at Work: Designing Channels for Employee Engagement and Experience</a>
+            <p class="text-sm text-inksoft">O'Dea, S. and Philips, J. – 2026</p>
+            <p class="text-sm text-inksoft italic">Kogan Page</p>
+          </div>
+        </div>
+        <div id="books-4" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2026" data-authors="ruck flegg">
+          <img src="assets/img/books/ruck-flegg-exploring-internal-communication.jpg" alt="Cover of Exploring Internal Communication: Towards Dialogue in the Workplace" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.routledge.com/Exploring-Internal-Communication-Towards-Dialogue-in-the-Workplace/Ruck-Flegg/p/book/9781041069997" target="_blank" rel="noopener" class="book-title-link mb-1.5">Exploring Internal Communication: Towards Dialogue in the Workplace</a>
+            <p class="text-sm text-inksoft">Ruck, K. and Flegg, M. – 2026</p>
+            <p class="text-sm text-inksoft italic">5th Edition, Routledge</p>
+          </div>
+        </div>
+        <div id="books-5" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2025" data-authors="riemers hamel-nelis">
+          <img src="assets/img/books/riemers-hamelnelis-accessible-communications.jpg" alt="Cover of Accessible Communications: Create Impact, Avoid Missteps and Build Trust" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.koganpage.com/marketing-communications/accessible-communications-9781398621848" target="_blank" rel="noopener" class="book-title-link mb-1.5">Accessible Communications: Create Impact, Avoid Missteps and Build Trust</a>
+            <p class="text-sm text-inksoft">Riemers, L. and Hamel-Nelis, M. – 2025</p>
+            <p class="text-sm text-inksoft italic">Kogan Page</p>
+          </div>
+        </div>
+        <div id="books-6" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2025" data-authors="madsen">
+          <img src="assets/img/books/madsen-employees-and-internal-social-media.jpg" alt="Cover of Employees and Internal Social Media: The Voice of Coworkers in an Organization" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.routledge.com/Employees-and-Internal-Social-Media-The-Voice-of-Coworkers-in-an-Organization/Madsen/p/book/9781032939230" target="_blank" rel="noopener" class="book-title-link mb-1.5">Employees and Internal Social Media: The Voice of Coworkers in an Organization</a>
+            <p class="text-sm text-inksoft">Madsen, V. T. – 2025</p>
+            <p class="text-sm text-inksoft italic">Routledge</p>
+          </div>
+        </div>
+        <div id="books-7" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2025" data-authors="arnot">
+          <img src="assets/img/books/arnot-internal-communication-in-times-of-crisis.jpg" alt="Cover of Internal Communication in Times of Crisis" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.koganpage.com/marketing-communications/internal-communication-in-times-of-crisis-9781398620599" target="_blank" rel="noopener" class="book-title-link mb-1.5">Internal Communication in Times of Crisis: How to Secure Employee Trust, Support and Advocacy in Crisis Situations</a>
+            <p class="text-sm text-inksoft">Arnot, A. – 2025</p>
+            <p class="text-sm text-inksoft italic">Kogan Page</p>
+          </div>
+        </div>
+        <div id="books-8" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2025" data-authors="smith bridger">
+          <img src="assets/img/books/smith-bridger-people-centric-internal-communication.jpg" alt="Cover of People-Centric Internal Communication" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.koganpage.com/hr-learning-development/people-centric-internal-communication-9781398623064" target="_blank" rel="noopener" class="book-title-link mb-1.5">People-Centric Internal Communication: Improving Engagement and Retention in the Workforce</a>
+            <p class="text-sm text-inksoft">Smith, L. and Bridger, E. – 2025</p>
+            <p class="text-sm text-inksoft italic">Kogan Page</p>
+          </div>
+        </div>
+        <div id="books-9" class="pub-entry py-6 last:pb-0 flex items-center gap-6 scroll-mt-24" data-year="2025" data-authors="kim buzzanell mazzei">
+          <img src="assets/img/books/kim-buzzanell-mazzei-kim-routledge-handbook-employee-communication.jpg" alt="Cover of The Routledge Handbook of Employee Communication and Organizational Processes" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.routledge.com/The-Routledge-Handbook-of-Employee-Communication-and-Organizational-Processes/Kim-Buzzanell-Mazzei-Kim/p/book/9781032541907" target="_blank" rel="noopener" class="book-title-link mb-1.5">The Routledge Handbook of Employee Communication and Organizational Processes</a>
+            <p class="text-sm text-inksoft">Kim, S., Buzzanell, P. M., Mazzei, A. and Kim, J-N. (eds.) – 2025</p>
+            <p class="text-sm text-inksoft italic">Routledge</p>
+          </div>
+        </div>
+      </div>
 
-  <div class="flex flex-wrap gap-2 mb-10">
-    <span class="theme-pill">Appreciation</span>
-    <span class="theme-pill">Digital Communication</span>
-    <span class="theme-pill">Diversity Communication</span>
-    <span class="theme-pill">Employee Activism</span>
-    <span class="theme-pill">Informal Communication</span>
-    <span class="theme-pill">Internal Communication Satisfaction</span>
-    <span class="theme-pill">Internal Social Media</span>
-    <span class="theme-pill">Storytelling</span>
-    <span class="theme-pill">Voice</span>
-  </div>
+      <p class="no-results-note" data-empty-for="books" hidden>No books match these filters.</p>
+    </section>
 
-  <div class="card shadow-elevated p-6 md:p-8">
+    <!-- Reports -->
+    <section id="reports" class="mb-14 scroll-mt-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-11 h-11 rounded-lg bg-navy/10 flex items-center justify-center shrink-0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-semibold text-navydeep">Reports</h2>
+      </div>
 
-    <div id="articles-1" class="pub-entry py-5 first:pt-0 scroll-mt-24">
-      <a href="https://www.emerald.com/ccij/article/31/7/62/1384603/Does-more-say-more-Organizational-heritage" target="_blank" rel="noopener" class="article-title-link mb-1">Does more say more? Organizational heritage storytelling and the amount of historic information</a>
-      <p class="text-sm text-inksoft">Brugman, B. C. and Groten, M. – 2026</p>
-      <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
-    </div>
-    <div id="articles-2" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.tandfonline.com/doi/full/10.1080/1553118X.2026.2622333" target="_blank" rel="noopener" class="article-title-link mb-1">Perspectives and Challenges of Internal Communication: Insights from Senior Management</a>
-      <p class="text-sm text-inksoft">Cuenca-Fontbona, J., Estanyol, E. and Echaburu-Mulet, B. – 2026</p>
-      <p class="text-sm text-inksoft italic">International Journal of Strategic Communication</p>
-    </div>
-    <div id="articles-3" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.emerald.com/ccij/article-abstract/31/3/348/1342734/The-development-of-internal-communication-in" target="_blank" rel="noopener" class="article-title-link mb-1">The development of internal communication in Norway, 1960–1990: from organised to extended liberal (late) modernity</a>
-      <p class="text-sm text-inksoft">Dahlen, O. P. – 2026</p>
-      <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
-    </div>
-    <div id="articles-4" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://doi.org/10.1108/CCIJ-03-2025-0060" target="_blank" rel="noopener" class="article-title-link mb-1">Communication managers' perspective on informal communication: risks, opportunities and challenges of remote work environments</a>
-      <p class="text-sm text-inksoft">Denner, N., Liebold, C., Viererbl, B and Koch, T. – 2026</p>
-      <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
-    </div>
-    <div id="articles-5" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://journals.sagepub.com/doi/full/10.1177/23294884261460018" target="_blank" rel="noopener" class="article-title-link mb-1">Puzzlements, Proposals, and Questions: Constructing Communicative Coworkership on Internal Social Media</a>
-      <p class="text-sm text-inksoft">Gode, H. E. and Madsen, V. T. – 2026</p>
-      <p class="text-sm text-inksoft italic">International Journal of Business Communication</p>
-    </div>
-    <div id="articles-6" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.sciencedirect.com/org/science/article/pii/S1363254X25000240" target="_blank" rel="noopener" class="article-title-link mb-1">Communicating appreciation in the workplace: importance and perception of appreciation from managers and co-workers and its effects on organisational citizenship behaviour</a>
-      <p class="text-sm text-inksoft">Hagelstein, J., Wahl, I., Stranzl, J., Einwiller, S. and Ruppel, C. – 2026</p>
-      <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
-    </div>
-    <div id="articles-7" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.emerald.com/ccij/article/doi/10.1108/CCIJ-03-2026-0102/1391570/Informal-communication-in-hybrid-working-life-a" target="_blank" rel="noopener" class="article-title-link mb-1">Informal communication in hybrid working life: a blind spot in internal communication</a>
-      <p class="text-sm text-inksoft">Heide, M. and Simonsson, C. – 2026</p>
-      <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
-    </div>
-    <div id="articles-8" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.emerald.com/ccij/article/31/7/125/1391571/Shouting-straight-into-space-enablers-and-barriers" target="_blank" rel="noopener" class="article-title-link mb-1">"Shouting straight into space": enablers and barriers of voicing in digital meetings</a>
-      <p class="text-sm text-inksoft">Holster, E., Nikolic, M. and Heide, M. – 2026</p>
-      <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
-    </div>
-    <div id="articles-9" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.sciencedirect.com/org/science/article/abs/pii/S1363254X26000052" target="_blank" rel="noopener" class="article-title-link mb-1">Perceptions of informal communication in the workplace: why chatty colleagues seem friendly but less competent</a>
-      <p class="text-sm text-inksoft">Koch, T., Haber, S., Denner, N. and Viererbl, B. – 2026</p>
-      <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
-    </div>
-    <div id="articles-10" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.tandfonline.com/doi/full/10.1080/1553118X.2026.2633612" target="_blank" rel="noopener" class="article-title-link mb-1">Nordic Values in Organizational Communication Maturity: Conceptualization and Measurement</a>
-      <p class="text-sm text-inksoft">Miller, V. D., Shank, S. E., Jr, Johansson, C. and Grandien, C. – 2026</p>
-      <p class="text-sm text-inksoft italic">International Journal of Strategic Communication</p>
-    </div>
-    <div id="articles-11" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.tandfonline.com/doi/full/10.1080/13527266.2026.2705918" target="_blank" rel="noopener" class="article-title-link mb-1">Employee activism: A situational and communicative perspective</a>
-      <p class="text-sm text-inksoft">Ned, N-S., Wahl, I. and Einwiller, S. A. – 2026</p>
-      <p class="text-sm text-inksoft italic">Journal Of Marketing Communications</p>
-    </div>
-    <div id="articles-12" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.sciencedirect.com/org/science/article/abs/pii/S1363254X25000148" target="_blank" rel="noopener" class="article-title-link mb-1">Seeking social change from the inside out: a cross-country study on employee activism</a>
-      <p class="text-sm text-inksoft">Ravazzani, S., Jin, Y., Conti, S., Rachwalski, A. and Robinson, S. G. – 2026</p>
-      <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
-    </div>
-    <div id="articles-13" class="pub-entry py-5 scroll-mt-24">
-      <p class="article-title-link mb-1" style="color:#182437;">Bouncing Along: Exploring dynamic internal narratives and interactions that enhance organisational resilience in a permacrisis world</p>
-      <p class="text-sm text-inksoft">Ruck, K., Madsen, V. and Borucka, A. – 2026</p>
-      <p class="text-sm text-inksoft italic">EUPREA Congress Short-Length Paper. Available from the authors.</p>
-    </div>
-    <div id="articles-14" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://doi.org/10.1108/IJOTB-01-2026-0023" target="_blank" rel="noopener" class="article-title-link mb-1">From process to outcomes: rethinking the effectiveness of internal communication</a>
-      <p class="text-sm text-inksoft">Sinitsyna, E. and Argade, P. – 2026</p>
-      <p class="text-sm text-inksoft italic">International Journal of Organization Theory &amp; Behavior</p>
-    </div>
-    <div id="articles-15" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.sciencedirect.com/org/science/article/pii/S1363254X26000027" target="_blank" rel="noopener" class="article-title-link mb-1">"It leaves a bitter aftertaste": uncovering the tensions of employees' communication engagement and impression vulnerability on social media</a>
-      <p class="text-sm text-inksoft">Sossini, A. – 2026</p>
-      <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
-    </div>
-    <div id="articles-16" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://portal.research.lu.se/en/publications/appreciation-from-a-management-perspective-exploring-the-complexi/" target="_blank" rel="noopener" class="article-title-link mb-1">Appreciation From a Management Perspective: Exploring the Complexity of Managers Communication Responsibility Through a Diary Study</a>
-      <p class="text-sm text-inksoft">Stranzl, J., Mazzei, A., Simonsson, C. and Verčič, A. T. – 2026</p>
-    </div>
-    <div id="articles-17" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.sciencedirect.com/science/article/abs/pii/S0363811126000834" target="_blank" rel="noopener" class="article-title-link mb-1">Internal communication satisfaction: Introducing the ICSQ short-form scale (ICSQ-S)</a>
-      <p class="text-sm text-inksoft">Verčič, A. T. and Vokić, N. P. – 2026</p>
-      <p class="text-sm text-inksoft italic">Public Relations Review</p>
-    </div>
-    <div id="articles-18" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://instituteforpr.org/how-do-digital-tools-change-the-way-employees-communicate-at-work/" target="_blank" rel="noopener" class="article-title-link mb-1">How Do Digital Tools Change the Way Employees Communicate at Work?</a>
-      <p class="text-sm text-inksoft">Verčič, A. T. and Verčič, D. – 2026</p>
-      <p class="text-sm text-inksoft italic">Institute for Public Relations (IPR)</p>
-    </div>
-    <div id="articles-19" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.tandfonline.com/doi/full/10.1080/1062726X.2026.2630048" target="_blank" rel="noopener" class="article-title-link mb-1">Internal Communication Satisfaction, Engagement, and Life Satisfaction: A Process Model</a>
-      <p class="text-sm text-inksoft">Verčič, A. T. and Verčič, D. – 2026</p>
-      <p class="text-sm text-inksoft italic">Journal of Public Relations Research</p>
-    </div>
-    <div id="articles-20" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.sciencedirect.com/science/article/pii/S0363811126000408" target="_blank" rel="noopener" class="article-title-link mb-1">DEI communication and climate for inclusion in Germany and the U.S.: The mediating role of managerial integrity</a>
-      <p class="text-sm text-inksoft">Wahl, I. and Einwiller, S. A. – 2026</p>
-      <p class="text-sm text-inksoft italic">Public Relations Review</p>
-    </div>
-    <div id="articles-21" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.emerald.com/jcom/article/doi/10.1108/JCOM-07-2025-0156/1347481/Comparing-employee-appreciation-in-Germany-and-the" target="_blank" rel="noopener" class="article-title-link mb-1">Comparing employee appreciation in Germany and the US</a>
-      <p class="text-sm text-inksoft">Wahl, I. and Einwiller, S. A. – 2026</p>
-      <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
-    </div>
-    <div id="articles-22" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://journals.sagepub.com/doi/10.1177/08933189251361810" target="_blank" rel="noopener" class="article-title-link mb-1">Fostering Employees' Organizational Identification and Organizational Citizenship Behavior Through Diversity Communication</a>
-      <p class="text-sm text-inksoft">Wahl, I., Einwiller, S. A. and Bartels, J. – 2026</p>
-      <p class="text-sm text-inksoft italic">Management Communication Quarterly</p>
-    </div>
-    <div id="articles-23" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://journals.sagepub.com/doi/full/10.1177/23294884261464146" target="_blank" rel="noopener" class="article-title-link mb-1">How to Measure the Appreciation Climate in an Organization: Development and Validation of the Organizational Appreciation Climate Scale (OACS)</a>
-      <p class="text-sm text-inksoft">Wahl, I., Einwiller, S. A. and Johansen, W. – 2026</p>
-      <p class="text-sm text-inksoft italic">International Journal of Business Communication</p>
-    </div>
-    <div id="articles-24" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://journals.sagepub.com/doi/10.1177/23294884241255620" target="_blank" rel="noopener" class="article-title-link mb-1">Blind Spots in Employee Communication Research Regarding LGBT+ and Guidance for Future Research: A Scoping Review of Quantitative Research</a>
-      <p class="text-sm text-inksoft">Wahl, I., Siegel, M. and Einwiller, S. – 2026</p>
-      <p class="text-sm text-inksoft italic">International Journal of Business Communication</p>
-    </div>
-    <div id="articles-25" class="pub-entry py-5 scroll-mt-24">
-      <a href="https://www.sciencedirect.com/org/science/article/pii/S1363254X2600026X" target="_blank" rel="noopener" class="article-title-link mb-1">Generative AI risks: are European communication professionals ready? A study on individual and organizational readiness</a>
-      <p class="text-sm text-inksoft">Wang, Y., Ravazzani, S. and Anton, A. – 2026</p>
-      <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
-    </div>
-    <div id="articles-26" class="pub-entry py-5 last:pb-0 scroll-mt-24">
-      <a href="https://journals.sagepub.com/doi/pdf/10.1177/23294884251411516" target="_blank" rel="noopener" class="article-title-link mb-1">A matrix approach to developing a digital internal communication strategy</a>
-      <p class="text-sm text-inksoft">Wuersch, L., Neher, A., Peter, M.K., Maley, J.F. and Wong, A. – 2026</p>
-      <p class="text-sm text-inksoft italic">International Journal of Business Communication</p>
-    </div>
+      <div class="card shadow-elevated p-5 md:p-6 border-l-4 text-sm text-inksoft mb-8" style="border-left-color:#F2B743;">
+        Reports listed are those that are freely available. Further reports are available exclusively to members of institutes such as CIPR and IoIC.
+      </div>
 
-  </div>
-</section>
+      <div class="card shadow-elevated p-6 md:p-8">
+        <div id="reports-1" class="pub-entry py-6 first:pt-0 flex items-center gap-6 scroll-mt-24" data-year="2026" data-authors="gallagher">
+          <img src="assets/img/reports/gallagher.jpg" alt="Cover of The Definitive Annual Report on Employee Experience and Internal Comms Trends" class="w-20 sm:w-24 object-contain rounded-md shadow-elevated shrink-0 border border-ink/5" style="aspect-ratio: 800 / 565;">
+          <div>
+            <a href="https://www.ajg.com/employeeexperience/state-of-the-sector/" target="_blank" rel="noopener" class="book-title-link mb-1.5">The Definitive Annual Report on Employee Experience and Internal Comms Trends</a>
+            <p class="text-sm text-inksoft">Gallagher – 2026</p>
+          </div>
+        </div>
+        <div id="reports-2" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2026" data-authors="ioic">
+          <img src="assets/img/reports/ioic-ic-index-2026.jpg" alt="Cover of IC Index 2026: The reality check" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.ioic.org.uk/resource-report/ic-index-2026-the-reality-check.html" target="_blank" rel="noopener" class="book-title-link mb-1.5">IC Index 2026: The reality check</a>
+            <p class="text-sm text-inksoft">IoIC – 2026</p>
+          </div>
+        </div>
+        <div id="reports-3" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2026" data-authors="ioic">
+          <img src="assets/img/reports/ioic-future-of-ic.jpg" alt="Cover of The future of Internal Communication report" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://www.ioic.org.uk/resource-report/the-future-of-internal-communication-exploring-opportunity-for-internal-communicators-in-the-future-of-work.html" target="_blank" rel="noopener" class="book-title-link mb-1.5">The future of Internal Communication: Opportunity for internal communicators in the future of work</a>
+            <p class="text-sm text-inksoft">IoIC – 2026</p>
+          </div>
+        </div>
+        <div id="reports-4" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2026" data-authors="resonans partners">
+          <img src="assets/img/reports/resonans-partners.jpg" alt="Cover of Internal Communication in Denmark report" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://resonans-partners.dk/home/ic26" target="_blank" rel="noopener" class="book-title-link mb-1.5">Internal Communication in Denmark – where does the profession stand today, and where is it heading?</a>
+            <p class="text-sm text-inksoft">Resonans Partners – 2026</p>
+          </div>
+        </div>
+        <div id="reports-5" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2026" data-authors="oak engage">
+          <img src="assets/img/reports/oak-engage.svg" alt="OAK Engage logo" class="w-20 sm:w-24 object-contain rounded-md shadow-elevated shrink-0 border border-ink/5 p-3 bg-white" style="aspect-ratio: 800 / 565;">
+          <div>
+            <a href="https://www.oak.com/newsroom/new-research-reveals-credibility-gap-in-internal-comms-94-say-its-respected-but-only-30-can-prove-business-impact" target="_blank" rel="noopener" class="book-title-link mb-1.5">Credibility Gap</a>
+            <p class="text-sm text-inksoft">OAK Engage – 2026</p>
+          </div>
+        </div>
+        <div id="reports-6" class="pub-entry py-6 flex items-center gap-6 scroll-mt-24" data-year="2025" data-authors="gallagher">
+          <img src="assets/img/reports/gallagher-2025.jpg" alt="Cover of Employee Communications Report, Global edition" class="w-20 sm:w-24 object-contain rounded-md shadow-elevated shrink-0 border border-ink/5" style="aspect-ratio: 800 / 565;">
+          <div>
+            <a href="https://www.ajg.com/employeeexperience/-/media/files/gallaghercomms/gcommssite/employee-communications-report-2025.pdf" target="_blank" rel="noopener" class="book-title-link mb-1.5">Employee Communications Report: Featuring findings and insights from the State of the Sector 2024-25 survey. Global edition</a>
+            <p class="text-sm text-inksoft">Gallagher – 2025</p>
+          </div>
+        </div>
+        <div id="reports-7" class="pub-entry py-6 last:pb-0 flex items-center gap-6 scroll-mt-24" data-year="2025" data-authors="ioic ipsos">
+          <img src="assets/img/reports/ioic-ic-index-2025-closer-look.png" alt="Cover of IC Index 2025" class="w-20 sm:w-24 aspect-[2/3] object-cover rounded-md shadow-elevated shrink-0 border border-ink/5">
+          <div>
+            <a href="https://ipsoskarianandbox.com/insights/1/reports" target="_blank" rel="noopener" class="book-title-link mb-1.5">IC Index 2025: Leading with care and connection</a>
+            <p class="text-sm text-inksoft">Ipsos Karian and Box and IoIC – 2025</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="no-results-note" data-empty-for="reports" hidden>No reports match these filters.</p>
+    </section>
+
+    <!-- Journal articles -->
+    <section id="journal-articles" class="scroll-mt-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-11 h-11 rounded-lg bg-navy/10 flex items-center justify-center shrink-0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-semibold text-navydeep">Journal articles</h2>
+      </div>
+
+      <p class="text-inksoft max-w-3xl mb-6" style="line-height:1.7;">The following list of academic journal articles emphasises the increasing volume of research being conducted in Europe. Articles are shown in alphabetical order of authors.</p>
+
+      <div class="card shadow-elevated p-5 md:p-6 border-l-4 text-sm text-inksoft mb-8" style="border-left-color:#F2B743;">
+        Journal articles are often only freely available to people who have access via universities. The links shown will provide a summary only of the research and findings.
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-10">
+        <span class="theme-pill">Appreciation</span>
+        <span class="theme-pill">Digital Communication</span>
+        <span class="theme-pill">Diversity Communication</span>
+        <span class="theme-pill">Employee Activism</span>
+        <span class="theme-pill">Informal Communication</span>
+        <span class="theme-pill">Internal Communication Satisfaction</span>
+        <span class="theme-pill">Internal Social Media</span>
+        <span class="theme-pill">Storytelling</span>
+        <span class="theme-pill">Voice</span>
+      </div>
+
+      <div class="card shadow-elevated p-6 md:p-8">
+
+        <div id="articles-1" class="pub-entry py-5 first:pt-0 scroll-mt-24" data-year="2026" data-authors="brugman groten">
+          <a href="https://www.emerald.com/ccij/article/31/7/62/1384603/Does-more-say-more-Organizational-heritage" target="_blank" rel="noopener" class="article-title-link mb-1">Does more say more? Organizational heritage storytelling and the amount of historic information</a>
+          <p class="text-sm text-inksoft">Brugman, B. C. and Groten, M. – 2026</p>
+          <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
+        </div>
+        <div id="articles-2" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="cuenca-fontbona estanyol echaburu-mulet">
+          <a href="https://www.tandfonline.com/doi/full/10.1080/1553118X.2026.2622333" target="_blank" rel="noopener" class="article-title-link mb-1">Perspectives and Challenges of Internal Communication: Insights from Senior Management</a>
+          <p class="text-sm text-inksoft">Cuenca-Fontbona, J., Estanyol, E. and Echaburu-Mulet, B. – 2026</p>
+          <p class="text-sm text-inksoft italic">International Journal of Strategic Communication</p>
+        </div>
+        <div id="articles-3" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="dahlen">
+          <a href="https://www.emerald.com/ccij/article-abstract/31/3/348/1342734/The-development-of-internal-communication-in" target="_blank" rel="noopener" class="article-title-link mb-1">The development of internal communication in Norway, 1960–1990: from organised to extended liberal (late) modernity</a>
+          <p class="text-sm text-inksoft">Dahlen, O. P. – 2026</p>
+          <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
+        </div>
+        <div id="articles-4" class="pub-entry py-5 scroll-mt-24" data-year="2025" data-authors="denner koch viererbl ernst">
+          <a href="https://doi.org/10.1108/JCOM-06-2024-0085" target="_blank" rel="noopener" class="article-title-link mb-1">Feeling connected and informed through informal communication: a quantitative survey on the perceived functions of informal communication in organizations</a>
+          <p class="text-sm text-inksoft">Denner, N., Koch, T., Viererbl, B. and Ernst, A. – 2025</p>
+          <p class="text-sm text-inksoft italic">Journal of Communication Management, Vol. 29 No. 1, pp. 71-93</p>
+        </div>
+        <div id="articles-5" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="denner liebold viererbl koch">
+          <a href="https://doi.org/10.1108/CCIJ-03-2025-0060" target="_blank" rel="noopener" class="article-title-link mb-1">Communication managers' perspective on informal communication: risks, opportunities and challenges of remote work environments</a>
+          <p class="text-sm text-inksoft">Denner, N., Liebold, C., Viererbl, B and Koch, T. – 2026</p>
+          <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
+        </div>
+        <div id="articles-6" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="gode madsen">
+          <a href="https://journals.sagepub.com/doi/full/10.1177/23294884261460018" target="_blank" rel="noopener" class="article-title-link mb-1">Puzzlements, Proposals, and Questions: Constructing Communicative Coworkership on Internal Social Media</a>
+          <p class="text-sm text-inksoft">Gode, H. E. and Madsen, V. T. – 2026</p>
+          <p class="text-sm text-inksoft italic">International Journal of Business Communication</p>
+        </div>
+        <div id="articles-7" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="hagelstein wahl stranzl einwiller ruppel">
+          <a href="https://www.sciencedirect.com/org/science/article/pii/S1363254X25000240" target="_blank" rel="noopener" class="article-title-link mb-1">Communicating appreciation in the workplace: importance and perception of appreciation from managers and co-workers and its effects on organisational citizenship behaviour</a>
+          <p class="text-sm text-inksoft">Hagelstein, J., Wahl, I., Stranzl, J., Einwiller, S. and Ruppel, C. – 2026</p>
+          <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
+        </div>
+        <div id="articles-8" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="heide simonsson">
+          <a href="https://www.emerald.com/ccij/article/doi/10.1108/CCIJ-03-2026-0102/1391570/Informal-communication-in-hybrid-working-life-a" target="_blank" rel="noopener" class="article-title-link mb-1">Informal communication in hybrid working life: a blind spot in internal communication</a>
+          <p class="text-sm text-inksoft">Heide, M. and Simonsson, C. – 2026</p>
+          <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
+        </div>
+        <div id="articles-9" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="holster nikolic heide">
+          <a href="https://www.emerald.com/ccij/article/31/7/125/1391571/Shouting-straight-into-space-enablers-and-barriers" target="_blank" rel="noopener" class="article-title-link mb-1">"Shouting straight into space": enablers and barriers of voicing in digital meetings</a>
+          <p class="text-sm text-inksoft">Holster, E., Nikolic, M. and Heide, M. – 2026</p>
+          <p class="text-sm text-inksoft italic">Corporate Communications: An International Journal</p>
+        </div>
+        <div id="articles-10" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="koch haber denner viererbl">
+          <a href="https://www.sciencedirect.com/org/science/article/abs/pii/S1363254X26000052" target="_blank" rel="noopener" class="article-title-link mb-1">Perceptions of informal communication in the workplace: why chatty colleagues seem friendly but less competent</a>
+          <p class="text-sm text-inksoft">Koch, T., Haber, S., Denner, N. and Viererbl, B. – 2026</p>
+          <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
+        </div>
+        <div id="articles-11" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="miller shank johansson grandien">
+          <a href="https://www.tandfonline.com/doi/full/10.1080/1553118X.2026.2633612" target="_blank" rel="noopener" class="article-title-link mb-1">Nordic Values in Organizational Communication Maturity: Conceptualization and Measurement</a>
+          <p class="text-sm text-inksoft">Miller, V. D., Shank, S. E., Jr, Johansson, C. and Grandien, C. – 2026</p>
+          <p class="text-sm text-inksoft italic">International Journal of Strategic Communication</p>
+        </div>
+        <div id="articles-12" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="ned wahl einwiller">
+          <a href="https://www.tandfonline.com/doi/full/10.1080/13527266.2026.2705918" target="_blank" rel="noopener" class="article-title-link mb-1">Employee activism: A situational and communicative perspective</a>
+          <p class="text-sm text-inksoft">Ned, N-S., Wahl, I. and Einwiller, S. A. – 2026</p>
+          <p class="text-sm text-inksoft italic">Journal Of Marketing Communications</p>
+        </div>
+        <div id="articles-13" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="ravazzani jin conti rachwalski robinson">
+          <a href="https://www.sciencedirect.com/org/science/article/abs/pii/S1363254X25000148" target="_blank" rel="noopener" class="article-title-link mb-1">Seeking social change from the inside out: a cross-country study on employee activism</a>
+          <p class="text-sm text-inksoft">Ravazzani, S., Jin, Y., Conti, S., Rachwalski, A. and Robinson, S. G. – 2026</p>
+          <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
+        </div>
+        <div id="articles-14" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="ruck madsen borucka">
+          <p class="article-title-link mb-1" style="color:#182437;">Bouncing Along: Exploring dynamic internal narratives and interactions that enhance organisational resilience in a permacrisis world</p>
+          <p class="text-sm text-inksoft">Ruck, K., Madsen, V. and Borucka, A. – 2026</p>
+          <p class="text-sm text-inksoft italic">EUPREA Congress Short-Length Paper. Available from the authors.</p>
+        </div>
+        <div id="articles-15" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="sinitsyna argade">
+          <a href="https://doi.org/10.1108/IJOTB-01-2026-0023" target="_blank" rel="noopener" class="article-title-link mb-1">From process to outcomes: rethinking the effectiveness of internal communication</a>
+          <p class="text-sm text-inksoft">Sinitsyna, E. and Argade, P. – 2026</p>
+          <p class="text-sm text-inksoft italic">International Journal of Organization Theory &amp; Behavior</p>
+        </div>
+        <div id="articles-16" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="sossini">
+          <a href="https://www.sciencedirect.com/org/science/article/pii/S1363254X26000027" target="_blank" rel="noopener" class="article-title-link mb-1">"It leaves a bitter aftertaste": uncovering the tensions of employees' communication engagement and impression vulnerability on social media</a>
+          <p class="text-sm text-inksoft">Sossini, A. – 2026</p>
+          <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
+        </div>
+        <div id="articles-17" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="stranzl mazzei simonsson vercic">
+          <a href="https://portal.research.lu.se/en/publications/appreciation-from-a-management-perspective-exploring-the-complexi/" target="_blank" rel="noopener" class="article-title-link mb-1">Appreciation From a Management Perspective: Exploring the Complexity of Managers Communication Responsibility Through a Diary Study</a>
+          <p class="text-sm text-inksoft">Stranzl, J., Mazzei, A., Simonsson, C. and Verčič, A. T. – 2026</p>
+        </div>
+        <div id="articles-28" class="pub-entry py-5 scroll-mt-24" data-year="2025" data-authors="stranzl ruppel">
+          <a href="https://doi.org/10.1108/JCOM-12-2023-0133" target="_blank" rel="noopener" class="article-title-link mb-1">Co-creating an appreciative working climate: discussing reasons for appreciation, forms and roles from a communication perspective</a>
+          <p class="text-sm text-inksoft">Stranzl, J. and Ruppel, C. – 2025</p>
+          <p class="text-sm text-inksoft italic">Journal of Communication Management, Vol. 29 No. 2, pp. 274-296</p>
+        </div>
+        <div id="articles-29" class="pub-entry py-5 scroll-mt-24" data-year="2025" data-authors="svingstedt heide">
+          <a href="https://doi.org/10.1108/JCOM-06-2024-0098" target="_blank" rel="noopener" class="article-title-link mb-1">Service logic – the key to strategic listening: introducing the framework of strategic listening for value creation</a>
+          <p class="text-sm text-inksoft">Svingstedt, A. and Heide, M. – 2025</p>
+          <p class="text-sm text-inksoft italic">Journal of Communication Management, Vol. 29 No. 5, pp. 18-38</p>
+        </div>
+        <div id="articles-30" class="pub-entry py-5 scroll-mt-24" data-year="2025" data-authors="tkalac vercic einwiller tench">
+          <a href="https://journals.sagepub.com/doi/10.1177/23294884251322492" target="_blank" rel="noopener" class="article-title-link mb-1">Developing the Digital Communication Acceptance Scale (DICAS) for Measuring Employee Acceptance of Digital Communication Technologies in the Workplace</a>
+          <p class="text-sm text-inksoft">Tkalac Verčič, A., Einwiller, S., Tench, R. and Verčič, D. – 2025</p>
+          <p class="text-sm text-inksoft italic">International Journal of Business Communication</p>
+        </div>
+        <div id="articles-31" class="pub-entry py-5 scroll-mt-24" data-year="2025" data-authors="tkalac vercic">
+          <a href="https://doi.org/10.1016/j.pubrev.2025.102587" target="_blank" rel="noopener" class="article-title-link mb-1">The internal communication paradox: Balancing digital convenience with face-to-face satisfaction</a>
+          <p class="text-sm text-inksoft">Tkalac Verčič, A. and Verčič, D. – 2025</p>
+          <p class="text-sm text-inksoft italic">Public Relations Review, Vol. 51, Issue 3, 102587</p>
+        </div>
+        <div id="articles-32" class="pub-entry py-5 scroll-mt-24" data-year="2025" data-authors="tkalac vercic gerdina">
+          <a href="https://www.sciencedirect.com/science/article/pii/S0363811125000700" target="_blank" rel="noopener" class="article-title-link mb-1">Situational dependence of internal communication channels</a>
+          <p class="text-sm text-inksoft">Tkalac Verčič, A., Verčič, D. and Gerdina, S. – 2025</p>
+          <p class="text-sm text-inksoft italic">Public Relations Review, 51(4)</p>
+        </div>
+        <div id="articles-18" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="vercic vokic">
+          <a href="https://www.sciencedirect.com/science/article/abs/pii/S0363811126000834" target="_blank" rel="noopener" class="article-title-link mb-1">Internal communication satisfaction: Introducing the ICSQ short-form scale (ICSQ-S)</a>
+          <p class="text-sm text-inksoft">Verčič, A. T. and Vokić, N. P. – 2026</p>
+          <p class="text-sm text-inksoft italic">Public Relations Review</p>
+        </div>
+        <div id="articles-19" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="vercic">
+          <a href="https://instituteforpr.org/how-do-digital-tools-change-the-way-employees-communicate-at-work/" target="_blank" rel="noopener" class="article-title-link mb-1">How Do Digital Tools Change the Way Employees Communicate at Work?</a>
+          <p class="text-sm text-inksoft">Verčič, A. T. and Verčič, D. – 2026</p>
+          <p class="text-sm text-inksoft italic">Institute for Public Relations (IPR)</p>
+        </div>
+        <div id="articles-20" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="vercic">
+          <a href="https://www.tandfonline.com/doi/full/10.1080/1062726X.2026.2630048" target="_blank" rel="noopener" class="article-title-link mb-1">Internal Communication Satisfaction, Engagement, and Life Satisfaction: A Process Model</a>
+          <p class="text-sm text-inksoft">Verčič, A. T. and Verčič, D. – 2026</p>
+          <p class="text-sm text-inksoft italic">Journal of Public Relations Research</p>
+        </div>
+        <div id="articles-21" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="wahl einwiller">
+          <a href="https://www.sciencedirect.com/science/article/pii/S0363811126000408" target="_blank" rel="noopener" class="article-title-link mb-1">DEI communication and climate for inclusion in Germany and the U.S.: The mediating role of managerial integrity</a>
+          <p class="text-sm text-inksoft">Wahl, I. and Einwiller, S. A. – 2026</p>
+          <p class="text-sm text-inksoft italic">Public Relations Review</p>
+        </div>
+        <div id="articles-22" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="wahl einwiller">
+          <a href="https://www.emerald.com/jcom/article/doi/10.1108/JCOM-07-2025-0156/1347481/Comparing-employee-appreciation-in-Germany-and-the" target="_blank" rel="noopener" class="article-title-link mb-1">Comparing employee appreciation in Germany and the US</a>
+          <p class="text-sm text-inksoft">Wahl, I. and Einwiller, S. A. – 2026</p>
+          <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
+        </div>
+        <div id="articles-23" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="wahl einwiller bartels">
+          <a href="https://journals.sagepub.com/doi/10.1177/08933189251361810" target="_blank" rel="noopener" class="article-title-link mb-1">Fostering Employees' Organizational Identification and Organizational Citizenship Behavior Through Diversity Communication</a>
+          <p class="text-sm text-inksoft">Wahl, I., Einwiller, S. A. and Bartels, J. – 2026</p>
+          <p class="text-sm text-inksoft italic">Management Communication Quarterly</p>
+        </div>
+        <div id="articles-24" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="wahl einwiller johansen">
+          <a href="https://journals.sagepub.com/doi/full/10.1177/23294884261464146" target="_blank" rel="noopener" class="article-title-link mb-1">How to Measure the Appreciation Climate in an Organization: Development and Validation of the Organizational Appreciation Climate Scale (OACS)</a>
+          <p class="text-sm text-inksoft">Wahl, I., Einwiller, S. A. and Johansen, W. – 2026</p>
+          <p class="text-sm text-inksoft italic">International Journal of Business Communication</p>
+        </div>
+        <div id="articles-25" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="wahl siegel einwiller">
+          <a href="https://journals.sagepub.com/doi/10.1177/23294884241255620" target="_blank" rel="noopener" class="article-title-link mb-1">Blind Spots in Employee Communication Research Regarding LGBT+ and Guidance for Future Research: A Scoping Review of Quantitative Research</a>
+          <p class="text-sm text-inksoft">Wahl, I., Siegel, M. and Einwiller, S. – 2026</p>
+          <p class="text-sm text-inksoft italic">International Journal of Business Communication</p>
+        </div>
+        <div id="articles-26" class="pub-entry py-5 scroll-mt-24" data-year="2026" data-authors="wang ravazzani anton">
+          <a href="https://www.sciencedirect.com/org/science/article/pii/S1363254X2600026X" target="_blank" rel="noopener" class="article-title-link mb-1">Generative AI risks: are European communication professionals ready? A study on individual and organizational readiness</a>
+          <p class="text-sm text-inksoft">Wang, Y., Ravazzani, S. and Anton, A. – 2026</p>
+          <p class="text-sm text-inksoft italic">Journal of Communication Management</p>
+        </div>
+        <div id="articles-27" class="pub-entry py-5 last:pb-0 scroll-mt-24" data-year="2026" data-authors="wuersch neher peter maley wong">
+          <a href="https://journals.sagepub.com/doi/pdf/10.1177/23294884251411516" target="_blank" rel="noopener" class="article-title-link mb-1">A matrix approach to developing a digital internal communication strategy</a>
+          <p class="text-sm text-inksoft">Wuersch, L., Neher, A., Peter, M.K., Maley, J.F. and Wong, A. – 2026</p>
+          <p class="text-sm text-inksoft italic">International Journal of Business Communication</p>
+        </div>
+
+      </div>
+
+      <p class="no-results-note" data-empty-for="journal-articles" hidden>No journal articles match these filters.</p>
+    </section>
+
+  </main>
+</div>
 
 <!-- Join / Newsletter -->
 <section id="join" class="max-w-4xl mx-auto px-6 py-20 md:py-24 text-center scroll-mt-20">
@@ -561,7 +726,7 @@
           <li><a href="publications.html" class="text-powder hover:text-white transition-colors">Publications</a></li>
           <li><a href="index.html#events" class="text-powder hover:text-white transition-colors">Events</a></li>
           <li><a href="index.html#research" class="text-powder hover:text-white transition-colors">Research</a></li>
-          <li><a href="index.html#who-we-are" class="text-powder hover:text-white transition-colors">About</a></li>
+          <li><a href="about.html" class="text-powder hover:text-white transition-colors">About</a></li>
         </ul>
       </div>
 
@@ -594,5 +759,65 @@
   }));
 </script>
 <script src="assets/js/search.js"></script>
+
+<!-- Publications filter -->
+<script>
+  const entries = Array.from(document.querySelectorAll('.pub-entry'));
+  let activeYear = 'all';
+  let authorQuery = '';
+
+  function applyFilters() {
+    entries.forEach(entry => {
+      const matchesYear = activeYear === 'all' || entry.dataset.year === activeYear;
+      const matchesAuthor = !authorQuery || (entry.dataset.authors || '').includes(authorQuery);
+      entry.hidden = !(matchesYear && matchesAuthor);
+    });
+
+    document.querySelectorAll('main > section').forEach(section => {
+      const total = section.querySelectorAll('.pub-entry').length;
+      const visible = section.querySelectorAll('.pub-entry:not([hidden])').length;
+      const note = section.querySelector('.no-results-note');
+      if (note) note.hidden = !(total > 0 && visible === 0);
+    });
+
+    const clearBtn = document.getElementById('clearFilters');
+    clearBtn.hidden = activeYear === 'all' && !authorQuery;
+  }
+
+  function setYear(year) {
+    activeYear = year;
+    document.querySelectorAll('[data-filter-year]').forEach(b => b.classList.toggle('is-active', b.dataset.filterYear === year));
+    applyFilters();
+  }
+
+  document.querySelectorAll('[data-filter-year]').forEach(btn => {
+    btn.addEventListener('click', () => setYear(btn.dataset.filterYear));
+  });
+
+  const authorSearch = document.getElementById('authorSearch');
+  const authorSearchClear = document.getElementById('authorSearchClear');
+  authorSearch.addEventListener('input', (e) => {
+    authorQuery = e.target.value.trim().toLowerCase();
+    authorSearchClear.hidden = !authorQuery;
+    applyFilters();
+  });
+  authorSearchClear.addEventListener('click', () => {
+    authorSearch.value = '';
+    authorQuery = '';
+    authorSearchClear.hidden = true;
+    authorSearch.focus();
+    applyFilters();
+  });
+
+  document.getElementById('clearFilters').addEventListener('click', () => {
+    setYear('all');
+    authorSearch.value = '';
+    authorQuery = '';
+    authorSearchClear.hidden = true;
+    applyFilters();
+  });
+
+  applyFilters();
+</script>
 </body>
 </html>

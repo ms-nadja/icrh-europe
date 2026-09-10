@@ -1,6 +1,7 @@
 const SEARCH_INDEX = [
   { title: 'Home', meta: 'A cross-border network for internal communication research', badge: 'Page', url: 'index.html' },
   { title: 'Publications', meta: 'Books, industry reports and academic journal articles', badge: 'Page', url: 'publications.html' },
+  { title: 'About', meta: 'The Internal Communication Research Hub, its leadership and the ICRH-Europe volunteers', badge: 'Page', url: 'about.html' },
 
   { title: 'Who we are', meta: 'Academics and practitioners working on internal communication', badge: 'About', url: 'index.html#who-we-are' },
   { title: 'Publications', meta: 'Books, journal articles and industry reports from across the network', badge: 'What we do', url: 'index.html#publications' },
@@ -10,6 +11,30 @@ const SEARCH_INDEX = [
   { title: 'Supporters', meta: 'PR Academy and allthingsIC', badge: 'About', url: 'index.html#supporters' },
   { title: 'Valuing Internal Communication', meta: 'Featured report, free to download', badge: 'Featured report', url: 'index.html#report' },
   { title: 'Join the network', meta: 'Get publications, event invitations and research updates by email', badge: 'Newsletter', url: 'index.html#join' },
+
+  { title: 'Dr Kevin Ruck', meta: 'Lead, ICRH-Europe · UK', badge: 'Leadership', url: 'about.html#kevin-ruck' },
+  { title: 'Linjuan Rita Men', meta: 'Public Relations Professor, ICRH · University of Florida, USA', badge: 'Leadership', url: 'about.html#linjuan-rita-men' },
+
+  { title: 'Edyta Blachowska', meta: 'Director of Internal Communication, Bank Gospodarstwa Krajowego · Warsaw, Poland', badge: 'Team', url: 'about.html#edyta-blachowska' },
+  { title: 'Ada Borucka', meta: 'Founder & Managing Partner, iComms/PinPoint · Poznań, Poland', badge: 'Team', url: 'about.html#ada-borucka' },
+  { title: 'Nora Denner', meta: 'Interim Professor for Strategic Communication, LMU München · München, Germany', badge: 'Team', url: 'about.html#nora-denner' },
+  { title: 'Sabine Einwiller', meta: 'Professor of Public Relations Research, University of Vienna · Vienna, Austria', badge: 'Team', url: 'about.html#sabine-einwiller' },
+  { title: 'Elisenda Estanyol i Casals', meta: 'Academic Director, UOC · Barcelona, Spain', badge: 'Team', url: 'about.html#elisenda-estanyol-i-casals' },
+  { title: 'Jenni Field', meta: 'Founder and CEO, Redefining Communications · UK', badge: 'Team', url: 'about.html#jenni-field' },
+  { title: 'Juan Cuenca Fontbona', meta: 'Profesor Titular, Universidad Ramon Llull · Barcelona, Spain', badge: 'Team', url: 'about.html#juan-cuenca-fontbona' },
+  { title: 'Mats Heide', meta: 'Professor, Department of Strategic Communication, Lund University · Lund, Sweden', badge: 'Team', url: 'about.html#mats-heide' },
+  { title: 'Jeanne Link', meta: 'Research Associate, Universität Leipzig · Leipzig, Germany', badge: 'Team', url: 'about.html#jeanne-link' },
+  { title: 'Vibeke Thøis Madsen', meta: 'Senior Associate Professor, DMJX · Aarhus, Denmark', badge: 'Team', url: 'about.html#vibeke-thois-madsen' },
+  { title: 'Rachel Miller', meta: 'Founder, All Things IC · UK', badge: 'Team', url: 'about.html#rachel-miller' },
+  { title: 'Begoña Echaburu Mulet', meta: 'Research Team Manager, MIK Research Center-Mondragon University · Basque Country, Spain', badge: 'Team', url: 'about.html#begona-echaburu-mulet' },
+  { title: 'Louis de Schorlemer', meta: 'Managing Partner, Corporate Diplomat & Lecturer, Luxembourg School of Business · Luxembourg', badge: 'Team', url: 'about.html#louis-de-schorlemer' },
+  { title: 'Holger Sievert', meta: 'Study Dean and Professor, Macromedia University · Cologne, Germany', badge: 'Team', url: 'about.html#holger-sievert' },
+  { title: 'Charlotte Simonsson', meta: 'Associate Professor, Lund University · Lund, Sweden', badge: 'Team', url: 'about.html#charlotte-simonsson' },
+  { title: 'Elena Sinitsyna', meta: 'PhD Candidate, HSE University · Moscow, Russia', badge: 'Team', url: 'about.html#elena-sinitsyna' },
+  { title: 'Julia Stranzl', meta: 'Assistant Professor, University of Vienna · Vienna, Austria', badge: 'Team', url: 'about.html#julia-stranzl' },
+  { title: 'Ana Tkalac Verčič', meta: 'Professor, University of Zagreb · Zagreb, Croatia', badge: 'Team', url: 'about.html#ana-tkalac-vercic' },
+  { title: 'Christopher Wade', meta: 'VP Internal & Employee Engagement Communications, Fresenius Medical Care · Berlin, Germany', badge: 'Team', url: 'about.html#christopher-wade' },
+  { title: 'Ingrid Wahl', meta: 'Senior Researcher, University of Vienna · Vienna, Austria', badge: 'Team', url: 'about.html#ingrid-wahl' },
 
   { title: 'Books', meta: '4 books from across the network', badge: 'Publications', url: 'publications.html#books' },
   { title: 'Reports', meta: 'Freely available industry reports', badge: 'Publications', url: 'publications.html#reports' },
