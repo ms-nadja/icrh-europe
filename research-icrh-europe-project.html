@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ICRH Europe – A cross-border network for internal communication research</title>
+<title>ICRH-Europe Research Project – ICRH Europe</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,49 +90,24 @@
   .nav-link:hover { color: #173A63; }
   .nav-link:hover::after { transform: scaleX(1); }
   .nav-link:focus-visible { outline: 2px solid #225491; outline-offset: 4px; border-radius: 2px; }
+  .nav-link.is-active { color: #173A63; }
+  .nav-link.is-active::after { transform: scaleX(1); background: #F2B743; }
 
   .card {
     background: #fff; border-radius: 18px; border: 1px solid rgba(24,36,55,0.06);
     transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring);
   }
-  .card:hover { transform: translateY(-4px); }
 
   .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 999px; }
   .tag-navy { background: rgba(34,84,145,0.1); color: #225491; }
   .tag-gold { background: rgba(242,183,67,0.18); color: #B9800C; }
   .tag-slate { background: rgba(124,146,190,0.16); color: #4E5C72; }
 
-  .img-treat { position: relative; overflow: hidden; }
-  .img-treat img { transition: transform 0.6s var(--ease-spring); }
-  .img-treat:hover img { transform: scale(1.04); }
-  .img-treat::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(23,58,99,0.55), rgba(23,58,99,0.05) 55%);
-    mix-blend-mode: multiply;
-  }
-  .img-treat::before {
-    content: ''; position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(to top, rgba(23,58,99,0.35), transparent 45%);
-  }
-
-  input:focus-visible, a:focus-visible, button:focus-visible { outline-offset: 2px; }
-
-  .field {
-    font-family: 'Inter'; font-size: 0.95rem; padding: 0.8rem 1rem; border-radius: 10px;
-    border: 1.5px solid rgba(24,36,55,0.14); background: #fff; color: #182437;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-  .field:focus { outline: none; border-color: #225491; box-shadow: 0 0 0 4px rgba(34,84,145,0.12); }
-  .field::placeholder { color: #9AA6B8; }
-
   .mobile-panel { transition: opacity 0.3s var(--ease-spring), transform 0.3s var(--ease-spring); }
   .mobile-panel[data-open="false"] { opacity: 0; transform: translateY(-8px); pointer-events: none; }
   .mobile-panel[data-open="true"] { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-  .play-btn { transition: transform 0.35s var(--ease-spring), background-color 0.25s ease; }
-  .play-btn:hover { transform: scale(1.08); }
-
-  .divider-dot { width: 4px; height: 4px; border-radius: 999px; background: currentColor; opacity: 0.5; }
+  input:focus-visible, a:focus-visible, button:focus-visible { outline-offset: 2px; }
 
   .search-icon-btn {
     width: 2.75rem; height: 2.75rem; border-radius: 999px; display: flex; align-items: center; justify-content: center;
@@ -186,6 +161,30 @@
     0% { background-color: rgba(242,183,67,0.35); box-shadow: 0 0 0 4px rgba(242,183,67,0.35); }
     100% { background-color: transparent; box-shadow: 0 0 0 4px rgba(242,183,67,0); }
   }
+
+  .question-card { display: flex; gap: 1rem; align-items: flex-start; }
+  .question-mark {
+    width: 2rem; height: 2rem; border-radius: 8px; background: rgba(34,84,145,0.1);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.15rem;
+  }
+
+  .country-pill {
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500;
+    padding: 0.5rem 1.05rem; border-radius: 999px;
+    background: rgba(34,84,145,0.07); color: #225491;
+    border: 1px solid rgba(34,84,145,0.14);
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.3s var(--ease-spring);
+  }
+  .country-pill:hover { background: rgba(242,183,67,0.18); color: #B9800C; border-color: rgba(185,128,12,0.25); transform: translateY(-1px); }
+
+  .stat-card { text-align: center; }
+  .stat-num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2.5rem; color: #173A63; letter-spacing: -0.02em; line-height: 1; }
+
+  .pdf-frame-wrap {
+    position: relative; border-radius: 16px; overflow: hidden; background: #2C3B52;
+    border: 1px solid rgba(24,36,55,0.1);
+  }
+  .pdf-frame-wrap iframe { display: block; width: 100%; height: 78vh; min-height: 520px; border: 0; background: #2C3B52; }
 </style>
 </head>
 <body class="antialiased">
@@ -194,15 +193,15 @@
 <header class="sticky top-0 z-50 bg-paper/90 backdrop-blur-md border-b border-ink/5">
   <div class="max-w-7xl mx-auto px-6">
     <div class="flex items-center justify-between h-20">
-      <a href="#" class="flex items-center gap-3 group">
+      <a href="index.html" class="flex items-center gap-3 group">
         <img src="assets/img/icrh-logo.png" alt="ICRH Europe" class="h-11 w-11 transition-transform duration-300" style="transition-timing-function: var(--ease-spring);">
         <span class="font-display font-semibold text-lg text-navydeep">ICRH <span class="text-navy">Europe</span></span>
       </a>
 
       <nav class="hidden md:flex items-center gap-9">
         <a href="publications.html" class="nav-link">Publications</a>
-        <a href="#events" class="nav-link">Events</a>
-        <a href="research.html" class="nav-link">Research</a>
+        <a href="index.html#events" class="nav-link">Events</a>
+        <a href="research.html" class="nav-link is-active">Research</a>
         <a href="about.html" class="nav-link">About</a>
       </nav>
 
@@ -219,7 +218,7 @@
           </button>
           <div id="searchResults" class="search-results" data-open="false"></div>
         </div>
-        <a href="#join" class="btn btn-gold shadow-gold">Join the network</a>
+        <a href="index.html#join" class="btn btn-gold shadow-gold">Join the network</a>
       </div>
 
       <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden p-2 -mr-2 text-navydeep">
@@ -236,186 +235,138 @@
       </div>
       <div id="mobileSearchResults" class="search-results-mobile"></div>
       <a href="publications.html" class="nav-link">Publications</a>
-      <a href="#events" class="nav-link">Events</a>
-      <a href="research.html" class="nav-link">Research</a>
+      <a href="index.html#events" class="nav-link">Events</a>
+      <a href="research.html" class="nav-link is-active">Research</a>
       <a href="about.html" class="nav-link">About</a>
-      <a href="#join" class="btn btn-gold shadow-gold w-full mt-1">Join the network</a>
+      <a href="index.html#join" class="btn btn-gold shadow-gold w-full mt-1">Join the network</a>
     </div>
   </div>
 </header>
 
 <!-- Hero -->
 <section class="bg-grain relative overflow-hidden" style="background: radial-gradient(120% 140% at 15% -10%, #2C63A8 0%, #173A63 55%, #14294A 100%);">
-  <div class="max-w-7xl mx-auto px-6 pt-20 pb-28 md:pt-28 md:pb-36 relative z-10">
-    <div class="grid md:grid-cols-2 gap-16 items-center">
-      <div>
-        <span class="tag tag-gold inline-block mb-6" style="background:rgba(242,183,67,0.16); color:#F2B743;">A cross-border network</span>
-        <h1 class="text-4xl sm:text-5xl md:text-[3.4rem] font-bold text-white leading-[1.05] mb-6">
-          Where internal communication research meets practice.
-        </h1>
-        <p class="text-lg text-powder max-w-xl mb-10" style="line-height:1.7;">
-          ICRH Europe connects researchers and practitioners across borders – sharing evidence, sparking dialogue, and shaping how organisations communicate with the people inside them.
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <a href="#join" class="btn btn-gold shadow-gold">Join the network</a>
-          <a href="research.html" class="btn btn-outline">See the research</a>
-        </div>
-      </div>
+  <div class="max-w-5xl mx-auto px-6 pt-16 pb-20 md:pt-20 md:pb-24 relative z-10">
+    <a href="research.html" class="inline-flex items-center gap-2 text-sm text-powder/80 hover:text-white transition-colors mb-6">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Research
+    </a>
+    <span class="tag tag-gold inline-block mb-6" style="background:rgba(242,183,67,0.16); color:#F2B743;">Europe-wide fieldwork</span>
+    <h1 class="text-4xl sm:text-5xl font-bold text-white leading-[1.05] mb-6">Internal Communication and Organisational Resilience</h1>
+    <p class="text-lg text-powder max-w-2xl" style="line-height:1.7;">
+      The ICRH-Europe research project. Resilience is increasingly essential for organisations in a permacrisis world – this project explores the dynamic internal narratives and interactions that help organisations "bounce forward".
+    </p>
+  </div>
+</section>
 
-      <div class="relative">
-        <div class="img-treat rounded-2xl shadow-floating">
-          <img src="https://placehold.co/720x560/1c4577/C4CEE2?text=ICRH+Europe" alt="Researchers and practitioners in dialogue at an ICRH Europe event" class="w-full h-full object-cover">
-        </div>
-        <a href="#report" class="hidden sm:flex absolute -bottom-8 -left-8 bg-white rounded-xl shadow-floating p-5 max-w-[15rem] items-start gap-3 card">
-          <span class="tag tag-gold shrink-0 mt-0.5">New</span>
-          <span class="text-sm font-medium text-navydeep leading-snug">Valuing Internal Communication – read the full report</span>
-        </a>
-      </div>
+<!-- Stats -->
+<section class="max-w-7xl mx-auto px-6 -mt-10 md:-mt-14 relative z-10">
+  <div class="grid grid-cols-3 gap-4 md:gap-8">
+    <div class="stat-card card shadow-elevated p-5 md:p-8">
+      <div class="stat-num">12</div>
+      <p class="text-sm text-inksoft mt-2">European countries</p>
+    </div>
+    <div class="stat-card card shadow-elevated p-5 md:p-8">
+      <div class="stat-num">48</div>
+      <p class="text-sm text-inksoft mt-2">Practitioner interviews</p>
+    </div>
+    <div class="stat-card card shadow-elevated p-5 md:p-8">
+      <div class="stat-num">1</div>
+      <p class="text-sm text-inksoft mt-2">Focus group per country</p>
     </div>
   </div>
 </section>
 
-<!-- Who we are -->
-<section id="who-we-are" class="max-w-7xl mx-auto px-6 py-24 md:py-32 scroll-mt-20">
-  <div class="grid md:grid-cols-[1fr_1.3fr] gap-14 items-start">
-    <div>
-      <span class="tag tag-navy inline-block mb-4">Overview</span>
-      <h2 class="text-3xl md:text-4xl font-semibold text-navydeep mb-2">Who we are</h2>
-    </div>
-    <div>
-      <p class="text-lg text-ink mb-8" style="line-height:1.7;">
-        ICRH Europe is a community of academics and practitioners working on internal communication, employee engagement, and organisational dialogue. We're part of the wider ICRH community, extending its work across European borders and languages.
-      </p>
-      <div class="flex flex-wrap gap-3">
-        <span class="tag tag-navy">Cross-border</span>
-        <span class="tag tag-gold">Evidence-based</span>
-        <span class="tag tag-slate">Open to all</span>
-      </div>
-    </div>
-  </div>
+<!-- Project description -->
+<section class="max-w-4xl mx-auto px-6 py-20 md:py-24">
+  <span class="tag tag-navy inline-block mb-4">Project description</span>
+  <h2 class="text-3xl md:text-4xl font-semibold text-navydeep mb-6">From bouncing back to bouncing forward</h2>
+  <p class="text-lg text-ink mb-5" style="line-height:1.7;">
+    As an understanding of organisational resilience evolves beyond "bouncing back" from a setback to continuous adaptation and "bouncing forward", the processes and systems that underpin ongoing organisational resilience are increasingly coming more to the fore.
+  </p>
+  <p class="text-lg text-ink" style="line-height:1.7;">
+    This project sets out to explore dynamic internal narratives and interactions that may support organisational resilience. In particular, it takes a closer look at internal communication practitioner experiences and practices related to communicating with employees in times of frequent change.
+  </p>
 </section>
 
-<!-- What we do -->
+<!-- Research questions -->
 <section class="bg-white border-y border-ink/5">
-  <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
-    <div class="max-w-2xl mb-16">
-      <span class="tag tag-navy inline-block mb-4">Overview</span>
-      <h2 class="text-3xl md:text-4xl font-semibold text-navydeep mb-4">What we do</h2>
-      <p class="text-lg text-inksoft" style="line-height:1.7;">Three ways the network keeps evidence moving between research and practice.</p>
-    </div>
+  <div class="max-w-4xl mx-auto px-6 py-20 md:py-24">
+    <span class="tag tag-navy inline-block mb-4">Leading questions</span>
+    <h2 class="text-3xl md:text-4xl font-semibold text-navydeep mb-12">What the research is asking</h2>
 
-    <div class="grid md:grid-cols-3 gap-8">
-      <div id="publications" class="card shadow-elevated p-8 scroll-mt-20">
-        <div class="w-11 h-11 rounded-lg bg-navy/10 flex items-center justify-center mb-6">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H14v18H6.5A2.5 2.5 0 0 1 4 18.5v-13Z"/><path d="M14 3h3.5A2.5 2.5 0 0 1 20 5.5v13a2.5 2.5 0 0 1-2.5 2.5H14"/></svg>
-        </div>
-        <h3 class="text-xl font-semibold text-navydeep mb-3">Publications</h3>
-        <p class="text-inksoft mb-5" style="line-height:1.7;">Books, journal articles, and industry reports from across the network, with titles, author details, and links through to publishers and full text.</p>
-        <div class="flex items-center justify-between gap-3">
-          <span class="tag tag-slate">2026</span>
-          <a href="publications.html" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors">
-            View all
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
+    <div class="flex flex-col gap-7">
+      <div class="question-card">
+        <span class="question-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="2"><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 4M12 17h.01"/></svg></span>
+        <p class="text-lg text-ink" style="line-height:1.7;">How is resilience understood by senior leaders?</p>
       </div>
-
-      <div id="events" class="card shadow-elevated p-8 scroll-mt-20">
-        <div class="w-11 h-11 rounded-lg bg-navy/10 flex items-center justify-center mb-6">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>
-        </div>
-        <h3 class="text-xl font-semibold text-navydeep mb-3">Events</h3>
-        <p class="text-inksoft mb-5" style="line-height:1.7;">Live and recorded webinars – upcoming sessions to register for, and a growing archive of past talks to watch back.</p>
-        <span class="tag tag-slate">Webinars &amp; replays</span>
+      <div class="question-card">
+        <span class="question-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="2"><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 4M12 17h.01"/></svg></span>
+        <p class="text-lg text-ink" style="line-height:1.7;">How does internal communication help organisations to become more resilient?</p>
       </div>
-
-      <div id="research" class="card shadow-elevated p-8 scroll-mt-20">
-        <div class="w-11 h-11 rounded-lg bg-navy/10 flex items-center justify-center mb-6">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
-        </div>
-        <h3 class="text-xl font-semibold text-navydeep mb-3">Research</h3>
-        <p class="text-inksoft mb-5" style="line-height:1.7;">Two active programmes – the Global Excellence Study and Organisational Resilience – with named research leads and published schedules.</p>
-        <div class="flex items-center justify-between gap-3">
-          <span class="tag tag-slate">Ongoing studies</span>
-          <a href="research.html" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-golddeep transition-colors">
-            View all
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
+      <div class="question-card">
+        <span class="question-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="2"><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 4M12 17h.01"/></svg></span>
+        <p class="text-lg text-ink" style="line-height:1.7;">What role do internal narratives play in times of multiple change programmes?</p>
+      </div>
+      <div class="question-card">
+        <span class="question-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="2"><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2.5 2-2.5 4M12 17h.01"/></svg></span>
+        <p class="text-lg text-ink" style="line-height:1.7;">What role do personal interactions between senior leaders and employees play in times of multiple change programmes?</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Wider ICRH Community -->
-<section id="community" class="relative overflow-hidden scroll-mt-20">
-  <div class="absolute inset-0" style="background: radial-gradient(90% 120% at 85% 20%, #3A305D 0%, #225491 60%, #173A63 100%);"></div>
-  <div class="bg-grain absolute inset-0"></div>
-  <div class="max-w-7xl mx-auto px-6 py-24 md:py-28 relative z-10">
-    <div class="grid md:grid-cols-[1fr_1.3fr] gap-14 items-start">
+<!-- Methodology / countries -->
+<section class="max-w-4xl mx-auto px-6 py-20 md:py-24">
+  <span class="tag tag-navy inline-block mb-4">Methodology</span>
+  <h2 class="text-3xl md:text-4xl font-semibold text-navydeep mb-6">Where the fieldwork is happening</h2>
+  <p class="text-lg text-ink mb-8" style="line-height:1.7;">
+    To answer these research questions, the team is conducting interview and focus group studies with internal communication practitioners across Europe – 48 interviews and one focus group in each of the following countries.
+  </p>
+  <div class="flex flex-wrap gap-2.5">
+    <span class="country-pill">Austria</span>
+    <span class="country-pill">Czech Republic</span>
+    <span class="country-pill">Denmark</span>
+    <span class="country-pill">France</span>
+    <span class="country-pill">Germany</span>
+    <span class="country-pill">Italy</span>
+    <span class="country-pill">Netherlands</span>
+    <span class="country-pill">Poland</span>
+    <span class="country-pill">Spain</span>
+    <span class="country-pill">Switzerland</span>
+    <span class="country-pill">UK</span>
+    <span class="country-pill">Ukraine</span>
+  </div>
+</section>
+
+<!-- Presentation -->
+<section class="bg-white border-y border-ink/5">
+  <div class="max-w-5xl mx-auto px-6 py-20 md:py-24">
+    <div class="flex flex-wrap items-end justify-between gap-4 mb-4">
       <div>
-        <span class="tag inline-block mb-4" style="background:rgba(242,183,67,0.16); color:#F2B743;">Beyond Europe</span>
-        <h2 class="text-3xl md:text-4xl font-semibold text-white mb-2">Wider ICRH community</h2>
+        <span class="tag tag-gold inline-block mb-4">EUPRERA Congress 2026</span>
+        <h2 class="text-3xl md:text-4xl font-semibold text-navydeep">Bouncing Along</h2>
       </div>
-      <div>
-        <p class="text-lg text-powder mb-8" style="line-height:1.7;">
-          ICRH Europe sits inside the broader ICRH community – a global network sharing research, events, and ideas beyond Europe's borders. Membership is open, and current members are listed on our About page.
-        </p>
-        <a href="#join" class="btn btn-outline">Explore the global network</a>
-      </div>
+      <a href="assets/reports/ICRH-Europe_BouncingAlong_EUPRERA2026.pdf" target="_blank" rel="noopener" class="btn btn-navy">
+        Open in new tab
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>
+      </a>
     </div>
-  </div>
-</section>
-
-<!-- Supporters -->
-<section id="supporters" class="max-w-7xl mx-auto px-6 py-20 md:py-24 scroll-mt-20">
-  <div class="text-center mb-12">
-    <span class="tag tag-navy inline-block mb-4">Thank you</span>
-    <h2 class="text-2xl md:text-3xl font-semibold text-navydeep mb-3">Supporters</h2>
-    <p class="text-inksoft max-w-lg mx-auto">ICRH Europe's work is made possible by our supporting partners.</p>
-  </div>
-  <div class="flex flex-wrap items-center justify-center gap-x-16 gap-y-10">
-    <img src="assets/img/pr-academy-logo.png" alt="PR Academy" class="h-9 md:h-10 w-auto grayscale opacity-70 hover:opacity-100 hover:grayscale-0 transition duration-300" style="transition-timing-function: var(--ease-spring);">
-    <span class="font-display font-semibold text-2xl text-inksoft/70 hover:text-navy transition-colors duration-300 select-none">all<span class="font-normal">things</span>IC:</span>
-  </div>
-</section>
-
-<!-- Featured report + video -->
-<section id="report" class="bg-white border-y border-ink/5 scroll-mt-20">
-  <div class="max-w-7xl mx-auto px-6 py-24 md:py-28">
-    <div class="grid md:grid-cols-2 gap-8">
-
-      <div class="card shadow-elevated p-9 flex flex-col justify-between">
-        <div>
-          <span class="tag tag-gold inline-block mb-5">Featured report</span>
-          <h3 class="text-2xl font-semibold text-navydeep mb-4">Valuing Internal Communication</h3>
-          <p class="text-inksoft mb-8" style="line-height:1.7;">Our latest research report, free to download, brings together evidence on how organisations measure and communicate the value of internal communication.</p>
-        </div>
-        <a href="#" class="btn btn-navy self-start">Download the report</a>
-      </div>
-
-      <div class="img-treat rounded-2xl shadow-elevated group">
-        <img src="https://placehold.co/720x520/173A63/7C92BE?text=ICRH+Europe+Webinar" alt="Preview of an ICRH Europe webinar recording" class="w-full h-full object-cover">
-        <button aria-label="Play video" class="play-btn absolute inset-0 z-10 m-auto w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="#173A63"><path d="M8 5v14l12-7-12-7Z"/></svg>
-        </button>
-        <span class="absolute bottom-5 left-5 z-10 text-white font-medium">Watch: inside the research</span>
-      </div>
-
+    <p class="text-inksoft max-w-2xl mb-8" style="line-height:1.7;">
+      The project's early findings were presented as "Bouncing Along: Exploring dynamic internal narratives and interactions that enhance organisational resilience in a permacrisis world" at the EUPRERA Congress, September 2026, co-authored by Kevin Ruck, Vibeke Thøis Madsen and Ada Borucka. Scroll through the full presentation below.
+    </p>
+    <div class="pdf-frame-wrap shadow-floating">
+      <iframe src="assets/reports/ICRH-Europe_BouncingAlong_EUPRERA2026.pdf" title="Bouncing Along – EUPRERA Congress 2026 presentation"></iframe>
     </div>
+    <p class="text-sm text-inksoft mt-4">Related publication: <a href="publications.html#articles-14" class="pub-link" style="color:#225491; font-weight:600; text-decoration:underline; text-decoration-color:rgba(34,84,145,0.3); text-underline-offset:3px;">the EUPRERA Congress short-length paper on Publications</a>.</p>
   </div>
 </section>
 
-<!-- Join / Newsletter -->
-<section id="join" class="max-w-4xl mx-auto px-6 py-24 md:py-28 text-center scroll-mt-20">
-  <span class="tag tag-navy inline-block mb-5">Stay connected</span>
-  <h2 class="text-3xl md:text-4xl font-semibold text-navydeep mb-4">Join the network</h2>
-  <p class="text-lg text-inksoft max-w-xl mx-auto mb-10" style="line-height:1.7;">Get new publications, event invitations, and research updates from ICRH Europe in your inbox.</p>
-  <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-    <label for="email" class="sr-only">Email address</label>
-    <input id="email" type="email" required placeholder="name@example.eu" class="field flex-1">
-    <button type="submit" class="btn btn-gold shadow-gold whitespace-nowrap">Sign up</button>
-  </form>
+<!-- Related -->
+<section class="max-w-4xl mx-auto px-6 py-20 md:py-24 text-center">
+  <span class="tag tag-navy inline-block mb-5">Also underway</span>
+  <h2 class="text-2xl md:text-3xl font-semibold text-navydeep mb-4">ICRH Global Excellence Study</h2>
+  <p class="text-inksoft max-w-xl mx-auto mb-8" style="line-height:1.7;">A global benchmark of excellence in internal communication, running alongside this Europe-focused project.</p>
+  <a href="research-global-excellence-study.html" class="btn btn-navy">Read about the study</a>
 </section>
 
 <!-- Footer -->
@@ -423,7 +374,7 @@
   <div class="max-w-7xl mx-auto px-6 py-16 relative z-10">
     <div class="grid md:grid-cols-[1.4fr_1fr_1fr] gap-12 mb-14">
       <div>
-        <a href="#" class="flex items-center gap-3 mb-5">
+        <a href="index.html" class="flex items-center gap-3 mb-5">
           <img src="assets/img/icrh-logo.png" alt="ICRH Europe" class="h-10 w-10">
           <span class="font-display font-semibold text-lg text-white">ICRH <span class="text-powder">Europe</span></span>
         </a>
@@ -434,7 +385,7 @@
         <div class="tag tag-gold inline-block mb-5" style="background:rgba(242,183,67,0.16); color:#F2B743;">Explore</div>
         <ul class="flex flex-col gap-3">
           <li><a href="publications.html" class="text-powder hover:text-white transition-colors">Publications</a></li>
-          <li><a href="#events" class="text-powder hover:text-white transition-colors">Events</a></li>
+          <li><a href="index.html#events" class="text-powder hover:text-white transition-colors">Events</a></li>
           <li><a href="research.html" class="text-powder hover:text-white transition-colors">Research</a></li>
           <li><a href="about.html" class="text-powder hover:text-white transition-colors">About</a></li>
         </ul>
