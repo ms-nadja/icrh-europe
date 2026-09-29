@@ -276,9 +276,14 @@
         <a href="index.html#join" class="btn btn-gold shadow-gold">Join the network</a>
       </div>
 
-      <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden p-2 -mr-2 text-navydeep">
-        <svg id="menuIcon" width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
+      <div class="flex items-center gap-1 md:hidden -mr-2">
+        <button id="mobileSearchBtn" aria-label="Search the site" class="p-2 text-navydeep">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+        </button>
+        <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" class="p-2 text-navydeep">
+          <svg id="menuIcon" width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -748,10 +753,17 @@
 <script>
   const menuBtn = document.getElementById('menuBtn');
   const panel = document.getElementById('mobilePanel');
+  const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+  const mobileSearchInput = document.getElementById('mobileSearchInput');
   menuBtn.addEventListener('click', () => {
     const open = panel.getAttribute('data-open') === 'true';
     panel.setAttribute('data-open', String(!open));
     menuBtn.setAttribute('aria-expanded', String(!open));
+  });
+  mobileSearchBtn.addEventListener('click', () => {
+    panel.setAttribute('data-open', 'true');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    window.requestAnimationFrame(() => mobileSearchInput.focus());
   });
   panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
     panel.setAttribute('data-open', 'false');

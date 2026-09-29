@@ -180,18 +180,34 @@
   .stat-card { text-align: center; }
   .stat-num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2.5rem; color: #173A63; letter-spacing: -0.02em; line-height: 1; }
 
-  .pdf-frame-wrap {
+  .slides-frame-wrap {
     position: relative; border-radius: 16px; overflow: hidden; background: #2C3B52;
     border: 1px solid rgba(24,36,55,0.1);
-    height: 620px;
   }
-  .pdf-frame-wrap iframe { display: block; width: 100%; height: 100%; border: 0; background: #2C3B52; }
-  @media (max-width: 1023px) {
-    .pdf-frame-wrap { height: 520px; }
+  .slides-viewport { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #2C3B52; touch-action: pan-y; }
+  .slides-viewport img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block;
+    opacity: 0; transition: opacity 0.3s ease;
   }
-  @media (max-width: 640px) {
-    .pdf-frame-wrap { height: 400px; }
+  .slides-viewport img.is-visible { opacity: 1; }
+  .slides-controls {
+    display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem;
+    background: #173A63; border-top: 1px solid rgba(255,255,255,0.08);
   }
+  .slides-btn {
+    width: 2.75rem; height: 2.75rem; flex-shrink: 0; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+    color: #fff; background: rgba(255,255,255,0.08);
+    transition: background-color 0.25s ease, transform 0.3s var(--ease-spring), opacity 0.2s ease;
+  }
+  .slides-btn:hover:not(:disabled) { background: rgba(255,255,255,0.18); transform: translateY(-1px); }
+  .slides-btn:active:not(:disabled) { transform: scale(0.94); }
+  .slides-btn:focus-visible { outline: 2px solid #F2B743; outline-offset: 2px; }
+  .slides-btn:disabled { opacity: 0.3; }
+  .slides-indicator {
+    color: #C4CEE2; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.02em;
+    min-width: 4.5rem; text-align: center;
+  }
+  .slides-controls-spacer { flex: 1 1 auto; }
 </style>
 </head>
 <body class="antialiased">
@@ -228,9 +244,14 @@
         <a href="../index.html#join" class="btn btn-gold shadow-gold">Join the network</a>
       </div>
 
-      <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden p-2 -mr-2 text-navydeep">
-        <svg id="menuIcon" width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
+      <div class="flex items-center gap-1 md:hidden -mr-2">
+        <button id="mobileSearchBtn" aria-label="Search the site" class="p-2 text-navydeep">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+        </button>
+        <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" class="p-2 text-navydeep">
+          <svg id="menuIcon" width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -361,8 +382,23 @@
     <p class="text-inksoft max-w-2xl mb-8" style="line-height:1.7;">
       The project's early findings were presented as "Bouncing Along: Exploring dynamic internal narratives and interactions that enhance organisational resilience in a permacrisis world" at the EUPRERA Congress, September 2026, co-authored by Kevin Ruck, Vibeke Thøis Madsen and Ada Borucka. Scroll through the full presentation below.
     </p>
-    <div class="pdf-frame-wrap shadow-floating">
-      <iframe src="../assets/js/vendor/pdfjs-viewer/web/viewer.html?file=%2Fassets%2Freports%2FICRH-Europe_BouncingAlong_EUPRERA2026.pdf" title="Bouncing Along – EUPRERA Congress 2026 presentation"></iframe>
+    <div class="slides-frame-wrap shadow-floating" data-slides data-slide-count="13" data-slide-base="../assets/img/bouncing-along-slides/slide-" role="group" aria-roledescription="carousel" aria-label="Bouncing Along – EUPRERA Congress 2026 presentation slides" tabindex="0">
+      <div class="slides-viewport">
+        <img class="slides-img is-visible" src="../assets/img/bouncing-along-slides/slide-01.jpg" alt="Slide 1 of 13" width="1920" height="1080">
+      </div>
+      <div class="slides-controls">
+        <button type="button" class="slides-btn slides-prev" aria-label="Previous slide" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="slides-indicator">1 / 13</span>
+        <button type="button" class="slides-btn slides-next" aria-label="Next slide">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <div class="slides-controls-spacer"></div>
+        <a href="../assets/reports/ICRH-Europe_BouncingAlong_EUPRERA2026.pdf" target="_blank" rel="noopener" class="slides-btn" aria-label="Open full PDF in a new tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>
+        </a>
+      </div>
     </div>
     <p class="text-sm text-inksoft mt-4">Related publication: <a href="../publications.html#articles-14" class="pub-link" style="color:#225491; font-weight:600; text-decoration:underline; text-decoration-color:rgba(34,84,145,0.3); text-underline-offset:3px;">the EUPRERA Congress short-length paper on Publications</a>.</p>
   </div>
@@ -416,10 +452,17 @@
 <script>
   const menuBtn = document.getElementById('menuBtn');
   const panel = document.getElementById('mobilePanel');
+  const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+  const mobileSearchInput = document.getElementById('mobileSearchInput');
   menuBtn.addEventListener('click', () => {
     const open = panel.getAttribute('data-open') === 'true';
     panel.setAttribute('data-open', String(!open));
     menuBtn.setAttribute('aria-expanded', String(!open));
+  });
+  mobileSearchBtn.addEventListener('click', () => {
+    panel.setAttribute('data-open', 'true');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    window.requestAnimationFrame(() => mobileSearchInput.focus());
   });
   panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
     panel.setAttribute('data-open', 'false');
@@ -427,5 +470,76 @@
   }));
 </script>
 <script src="../assets/js/search.js"></script>
+<script>
+  (function () {
+    const root = document.querySelector('[data-slides]');
+    if (!root) return;
+
+    const count = parseInt(root.dataset.slideCount, 10);
+    const base = root.dataset.slideBase;
+    const img = root.querySelector('.slides-img');
+    const prevBtn = root.querySelector('.slides-prev');
+    const nextBtn = root.querySelector('.slides-next');
+    const indicator = root.querySelector('.slides-indicator');
+
+    function slideUrl(n) {
+      return base + String(n).padStart(2, '0') + '.jpg';
+    }
+
+    function preload(n) {
+      if (n < 1 || n > count) return;
+      const preloadImg = new Image();
+      preloadImg.src = slideUrl(n);
+    }
+
+    let current = 1;
+    preload(2);
+
+    function goTo(n) {
+      n = Math.min(Math.max(n, 1), count);
+      if (n === current) return;
+      current = n;
+      img.classList.remove('is-visible');
+      const swap = new Image();
+      swap.onload = () => {
+        img.src = swap.src;
+        img.alt = `Slide ${current} of ${count}`;
+        requestAnimationFrame(() => img.classList.add('is-visible'));
+      };
+      swap.src = slideUrl(current);
+      indicator.textContent = `${current} / ${count}`;
+      prevBtn.disabled = current <= 1;
+      nextBtn.disabled = current >= count;
+      preload(current + 1);
+      preload(current - 1);
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+    });
+
+    let touchStartX = null;
+    let touchStartY = null;
+    const viewport = root.querySelector('.slides-viewport');
+    viewport.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    viewport.addEventListener('touchend', (e) => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        dx < 0 ? goTo(current + 1) : goTo(current - 1);
+      }
+      touchStartX = null;
+      touchStartY = null;
+    }, { passive: true });
+  })();
+</script>
 </body>
 </html>
