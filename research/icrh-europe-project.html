@@ -186,15 +186,21 @@
     display: flex; flex-direction: column;
   }
   .pdf-canvas-scroll {
-    position: relative; height: 78vh; min-height: 420px; max-height: 760px; overflow: auto;
-    display: flex; justify-content: center; padding: 1.75rem; background: #2C3B52; touch-action: pan-y;
+    position: relative; height: 420px; min-height: 200px; max-height: 82vh; overflow: auto;
+    display: flex; justify-content: center; align-items: flex-start; padding: 1.75rem; background: #2C3B52; touch-action: pan-y;
+    transition: height 0.4s var(--ease-spring);
   }
-  .pdf-canvas-scroll canvas { display: block; border-radius: 6px; box-shadow: 0 10px 28px -10px rgba(0,0,0,0.5); background: #fff; }
+  .pdf-canvas-scroll canvas {
+    display: block; border-radius: 6px; box-shadow: 0 10px 28px -10px rgba(0,0,0,0.5); background: #fff;
+    transform: translateZ(0); -webkit-transform: translateZ(0);
+  }
   .pdf-status {
-    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center;
-    padding: 2rem; color: rgba(255,255,255,0.75); font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; letter-spacing: 0.02em;
+    position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; text-align: center;
+    padding: 2rem; color: rgba(255,255,255,0.85); background: rgba(23,58,99,0.97);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; letter-spacing: 0.02em; line-height: 1.6;
   }
   .pdf-status a { color: #F2B743; text-decoration: underline; text-underline-offset: 3px; }
+  .pdf-fallback-frame { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
   .pdf-controls {
     display: flex; align-items: center; gap: 0.4rem; padding: 0.75rem 1rem;
     background: #173A63; border-top: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap;
@@ -214,7 +220,7 @@
   }
   .pdf-controls-spacer { flex: 1 1 auto; }
   @media (max-width: 640px) {
-    .pdf-canvas-scroll { height: 62vh; min-height: 360px; padding: 1rem 0.6rem; }
+    .pdf-canvas-scroll { max-height: 72vh; padding: 1rem 0.6rem; }
     .pdf-controls { padding: 0.6rem 0.6rem; gap: 0.3rem; }
     .pdf-page-indicator { min-width: 4.5rem; font-size: 0.7rem; }
   }
@@ -473,8 +479,16 @@
 </script>
 <script src="../assets/js/search.js"></script>
 <script type="module">
-  import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/6.3.289/pdf.min.mjs';
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/6.3.289/pdf.worker.min.mjs';
+  import * as pdfjsLib from '../assets/js/vendor/pdfjs/pdf.min.mjs';
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '../assets/js/vendor/pdfjs/pdf.worker.min.mjs';
+
+  function withTimeout(promise, ms) {
+    let timer;
+    const timeout = new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error('timed out')), ms);
+    });
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+  }
 
   async function initPdfViewer(root) {
     const src = root.dataset.pdfSrc;
@@ -494,9 +508,23 @@
     let rendering = false;
     let queuedPage = null;
 
-    function setStatus(text) {
-      statusEl.hidden = !text;
-      statusEl.textContent = text || '';
+    function setStatus(html) {
+      statusEl.hidden = !html;
+      statusEl.innerHTML = html || '';
+    }
+
+    function fallbackToNativeEmbed(message) {
+      canvas.hidden = true;
+      scrollEl.style.height = '70vh';
+      scrollEl.style.padding = '0';
+      const frame = document.createElement('iframe');
+      frame.className = 'pdf-fallback-frame';
+      frame.src = src;
+      frame.title = root.getAttribute('aria-label') || 'PDF presentation';
+      scrollEl.appendChild(frame);
+      setStatus('');
+      pageIndicator.textContent = message || 'Preview';
+      [prevBtn, nextBtn, zoomInBtn, zoomOutBtn].forEach(btn => { btn.hidden = true; });
     }
 
     async function renderPage(num) {
@@ -514,6 +542,11 @@
       canvas.height = Math.floor(viewport.height * dpr);
       canvas.style.width = viewport.width + 'px';
       canvas.style.height = viewport.height + 'px';
+
+      // Size the frame to the page itself (landscape slides stay short; portrait pages stay tall,
+      // clamped by the CSS min/max-height, which then falls back to internal scrolling).
+      const padY = parseFloat(getComputedStyle(scrollEl).paddingTop) + parseFloat(getComputedStyle(scrollEl).paddingBottom);
+      scrollEl.style.height = Math.ceil(viewport.height + padY) + 'px';
 
       await page.render({ canvasContext: ctx, viewport, transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : undefined }).promise;
 
@@ -577,10 +610,10 @@
     try {
       setStatus('Loading presentation…');
       const absoluteUrl = new URL(src, document.baseURI).href;
-      pdfDoc = await pdfjsLib.getDocument({ url: absoluteUrl }).promise;
-      await renderPage(1);
+      pdfDoc = await withTimeout(pdfjsLib.getDocument({ url: absoluteUrl }).promise, 12000);
+      await withTimeout(renderPage(1), 12000);
     } catch (err) {
-      setStatus('Unable to load the presentation preview here — use "Open in new tab" above instead.');
+      fallbackToNativeEmbed('Preview');
     }
   }
 
