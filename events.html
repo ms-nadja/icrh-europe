@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Events – ICRH Europe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: '#225491',
+          navydeep: '#173A63',
+          gold: '#F2B743',
+          golddeep: '#B9800C',
+          slateblue: '#7C92BE',
+          powder: '#C4CEE2',
+          indigo: '#3A305D',
+          paper: '#F6F8FB',
+          ink: '#182437',
+          inksoft: '#4E5C72',
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          sans: ['Inter', 'sans-serif'],
+          mono: ['"IBM Plex Mono"', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  :root { --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: #182437; background: #F6F8FB; }
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+  p { line-height: 1.7; }
+
+  .bg-grain { position: relative; isolation: isolate; }
+  .bg-grain::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .shadow-elevated {
+    box-shadow: 0 1px 2px rgba(23,58,99,0.06), 0 8px 20px -8px rgba(34,84,145,0.22);
+  }
+  .shadow-floating {
+    box-shadow: 0 4px 10px -2px rgba(23,58,99,0.10), 0 24px 56px -16px rgba(23,58,99,0.35);
+  }
+  .shadow-gold {
+    box-shadow: 0 6px 16px -4px rgba(185,128,12,0.45);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.95rem;
+    padding: 0.85rem 1.6rem; border-radius: 999px;
+    transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-spring), background-color 0.25s ease;
+    will-change: transform;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-gold { background: #F2B743; color: #173A63; }
+  .btn-gold:hover { background: #F7C666; transform: translateY(-2px); box-shadow: 0 10px 24px -6px rgba(185,128,12,0.5); }
+  .btn-gold:focus-visible { outline: 2px solid #B9800C; outline-offset: 3px; }
+
+  .btn-outline { border: 1.5px solid rgba(255,255,255,0.55); color: #fff; }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); border-color: #fff; }
+  .btn-outline:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  .btn-navy { background: #225491; color: #fff; }
+  .btn-navy:hover { background: #1c4577; transform: translateY(-2px); box-shadow: 0 10px 24px -6px rgba(34,84,145,0.45); }
+  .btn-navy:focus-visible { outline: 2px solid #225491; outline-offset: 3px; }
+
+  .nav-link { position: relative; color: #4E5C72; font-weight: 500; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px;
+    background: #F2B743; transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s var(--ease-spring);
+  }
+  .nav-link:hover { color: #173A63; }
+  .nav-link:hover::after { transform: scaleX(1); }
+  .nav-link:focus-visible { outline: 2px solid #225491; outline-offset: 4px; border-radius: 2px; }
+  .nav-link.is-active { color: #173A63; }
+  .nav-link.is-active::after { transform: scaleX(1); background: #F2B743; }
+
+  .card {
+    background: #fff; border-radius: 18px; border: 1px solid rgba(24,36,55,0.06);
+    transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring);
+  }
+  .card:hover { transform: translateY(-4px); }
+
+  .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 999px; }
+  .tag-navy { background: rgba(34,84,145,0.1); color: #225491; }
+  .tag-gold { background: rgba(242,183,67,0.18); color: #B9800C; }
+  .tag-slate { background: rgba(124,146,190,0.16); color: #4E5C72; }
+
+  .mobile-panel { transition: opacity 0.3s var(--ease-spring), transform 0.3s var(--ease-spring); }
+  .mobile-panel[data-open="false"] { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+  .mobile-panel[data-open="true"] { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  input:focus-visible, a:focus-visible, button:focus-visible { outline-offset: 2px; }
+
+  .search-icon-btn {
+    width: 2.75rem; height: 2.75rem; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+    color: #173A63; transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  .search-icon-btn:hover { background: rgba(24,36,55,0.06); }
+  .search-icon-btn:focus-visible { outline: 2px solid #225491; outline-offset: 2px; }
+
+  .search-box {
+    position: relative; transition: width 0.35s var(--ease-spring), opacity 0.3s var(--ease-spring); overflow: hidden;
+  }
+  .search-box[data-open="false"] { width: 0; opacity: 0; pointer-events: none; }
+  .search-box[data-open="true"] { width: 280px; opacity: 1; pointer-events: auto; }
+
+  .search-input {
+    width: 280px; padding: 0.65rem 2.5rem 0.65rem 1rem; border-radius: 999px;
+    border: 1.5px solid rgba(24,36,55,0.14); background: #fff; font-size: 0.9rem; color: #182437; font-family: 'Inter', sans-serif;
+  }
+  .search-input:focus { outline: none; border-color: #225491; box-shadow: 0 0 0 4px rgba(34,84,145,0.12); }
+  .search-input::placeholder { color: #9AA6B8; }
+
+  .search-close-btn {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%); color: #9AA6B8; padding: 5px; border-radius: 999px;
+    display: flex; transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .search-close-btn:hover { color: #173A63; background: rgba(24,36,55,0.06); }
+  .search-close-btn:focus-visible { outline: 2px solid #225491; outline-offset: 2px; }
+
+  .search-results {
+    position: absolute; top: calc(100% + 10px); right: 0; width: 380px; max-height: 26rem; overflow-y: auto;
+    background: #fff; border-radius: 14px; border: 1px solid rgba(24,36,55,0.08);
+    opacity: 0; transform: translateY(-6px); pointer-events: none;
+    transition: opacity 0.25s var(--ease-spring), transform 0.25s var(--ease-spring); z-index: 60;
+  }
+  .search-results[data-open="true"] {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+    box-shadow: 0 4px 10px -2px rgba(23,58,99,0.10), 0 24px 56px -16px rgba(23,58,99,0.35);
+  }
+  .search-result { display: block; padding: 0.75rem 1rem; border-bottom: 1px solid rgba(24,36,55,0.05); transition: background-color 0.2s ease; }
+  .search-result:last-child { border-bottom: none; }
+  .search-result:hover, .search-result:focus-visible { background: rgba(34,84,145,0.06); outline: none; }
+  .search-result-title { display: block; font-weight: 600; font-size: 0.86rem; color: #173A63; line-height: 1.35; }
+  .search-result-meta { display: block; font-size: 0.75rem; color: #4E5C72; margin-top: 2px; }
+  .search-empty { padding: 1.25rem 1rem; font-size: 0.85rem; color: #4E5C72; text-align: center; }
+
+  .search-results-mobile { max-height: 16rem; overflow-y: auto; border-radius: 14px; border: 1px solid rgba(24,36,55,0.08); background: #fff; }
+  .search-results-mobile:empty { display: none; border: none; }
+
+  .search-target-highlight { animation: search-highlight-flash 1.8s ease-out; border-radius: 18px; }
+  @keyframes search-highlight-flash {
+    0% { background-color: rgba(242,183,67,0.35); box-shadow: 0 0 0 4px rgba(242,183,67,0.35); }
+    100% { background-color: transparent; box-shadow: 0 0 0 4px rgba(242,183,67,0); }
+  }
+
+  .text-link {
+    display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.92rem;
+    color: #225491; border-radius: 4px; transition: color 0.25s ease;
+  }
+  .text-link svg { transition: transform 0.35s var(--ease-spring); }
+  .text-link:hover { color: #B9800C; }
+  .text-link:hover svg { transform: translate(2px, -2px); }
+  .text-link:focus-visible { outline: 2px solid #225491; outline-offset: 3px; }
+  .text-link:active { color: #173A63; }
+
+
+  .index-link {
+    display: flex; align-items: baseline; gap: 0.85rem; padding: 0.85rem 1rem; border-radius: 12px;
+    font-weight: 500; color: #173A63; line-height: 1.4; transition: background-color 0.25s ease, transform 0.35s var(--ease-spring);
+  }
+  .index-link:hover { background: rgba(34,84,145,0.06); transform: translateX(3px); }
+  .index-link:focus-visible { outline: 2px solid #225491; outline-offset: 2px; }
+  .index-link:active { transform: translateX(1px); }
+
+  .webinar { padding: 1.25rem; }
+  @media (min-width: 640px) { .webinar { padding: 1.75rem; } }
+  .webinar:hover { transform: none; }
+  @media (min-width: 768px) { .webinar { padding: 2.75rem; } }
+
+  .player {
+    position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; isolation: isolate;
+    background: radial-gradient(90% 120% at 85% 10%, #3A305D 0%, #225491 55%, #173A63 100%);
+    box-shadow: 0 4px 10px -2px rgba(23,58,99,0.10), 0 24px 56px -16px rgba(23,58,99,0.35);
+  }
+  .player::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.06; mix-blend-mode: overlay;
+  }
+  .player::after {
+    content: ''; position: absolute; width: 55%; aspect-ratio: 1; right: -12%; top: -30%; border-radius: 999px;
+    background: radial-gradient(circle, rgba(242,183,67,0.28), transparent 65%); pointer-events: none; z-index: 0;
+  }
+  .player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 2; }
+  .player-facade {
+    position: absolute; inset: 0; z-index: 1; width: 100%; display: flex; align-items: flex-end; justify-content: flex-start; gap: 0.9rem;
+    padding: 1rem 1.1rem; text-align: left; cursor: pointer;
+  }
+  @media (min-width: 640px) { .player-facade { padding: 1.25rem 1.4rem; } }
+  .player-facade:focus-visible { outline: 3px solid #F2B743; outline-offset: -3px; border-radius: 16px; }
+  .player-play {
+    position: relative; flex: none; width: 3.25rem; height: 3.25rem; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center; background: #F2B743; color: #173A63; padding-left: 3px;
+    box-shadow: 0 10px 28px -6px rgba(185,128,12,0.6);
+    transition: transform 0.35s var(--ease-spring);
+  }
+  @media (min-width: 640px) {
+    .player-play { position: absolute; left: 50%; top: 50%; width: 4.25rem; height: 4.25rem; margin: -2.125rem 0 0 -2.125rem; }
+  }
+  .player-facade:hover .player-play { transform: scale(1.1); }
+  .player-facade:active .player-play { transform: scale(0.96); }
+  .player-caption { position: relative; }
+  .player-status { font-size: 0.82rem; color: #4E5C72; margin-top: 0.6rem; min-height: 0; }
+  .player-status:empty { display: none; }
+
+  .clip-list { display: grid; gap: 0.6rem; }
+  @media (min-width: 640px) { .clip-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .clip {
+    display: flex; align-items: center; gap: 0.75rem; width: 100%; height: 100%; text-align: left;
+    padding: 0.8rem 0.9rem; border-radius: 12px; background: #fff; border: 1px solid rgba(24,36,55,0.08);
+    transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-spring), border-color 0.25s ease;
+  }
+  button.clip { cursor: pointer; box-shadow: 0 1px 2px rgba(23,58,99,0.06), 0 8px 20px -10px rgba(34,84,145,0.22); }
+  button.clip:hover { transform: translateY(-2px); border-color: rgba(34,84,145,0.3); }
+  button.clip:active { transform: scale(0.98); }
+  button.clip:focus-visible { outline: 2px solid #225491; outline-offset: 2px; }
+  button.clip[aria-pressed="true"] { border-color: #F2B743; box-shadow: 0 0 0 3px rgba(242,183,67,0.25); }
+  .clip-pending { background: #F6F8FB; border-style: dashed; border-color: rgba(124,146,190,0.55); }
+  .clip-thumb {
+    flex: none; width: 2.25rem; height: 2.25rem; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+    background: rgba(34,84,145,0.1); color: #225491; padding-left: 2px;
+  }
+  .clip-pending .clip-thumb { background: rgba(124,146,190,0.14); color: #7C92BE; }
+  .clip-text { display: flex; flex-direction: column; min-width: 0; }
+  .clip-title { font-weight: 600; font-size: 0.88rem; color: #173A63; line-height: 1.35; }
+  .clip-pending .clip-title { color: #4E5C72; }
+  .clip-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: #4E5C72; margin-top: 2px; }
+
+  .briefing { background: #F6F8FB; border: 1px solid rgba(24,36,55,0.06); border-radius: 16px; padding: 1.25rem; }
+  @media (min-width: 768px) { .briefing { padding: 1.9rem; } }
+  .briefing-body h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: #225491; font-size: 1.05rem; margin: 1.4rem 0 0.6rem; }
+  .briefing-body > h4:first-child { margin-top: 0; }
+  .briefing-body p { color: #182437; font-size: 0.95rem; margin-bottom: 0.85rem; }
+  .briefing-body ul { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 0.55rem; }
+  .briefing-body li { position: relative; padding-left: 1.2rem; font-size: 0.95rem; line-height: 1.6; }
+  .briefing-body li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 6px; height: 6px; border-radius: 999px; background: #F2B743; }
+  .briefing-body .source { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: #4E5C72; margin-top: 1.1rem; padding-top: 0.85rem; border-top: 1px solid #C4CEE2; }
+  .briefing-more summary {
+    display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer; list-style: none; border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.92rem; color: #225491; transition: color 0.25s ease;
+  }
+  .briefing-more summary::-webkit-details-marker { display: none; }
+  .briefing-more summary::after {
+    content: ''; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg); transition: transform 0.35s var(--ease-spring);
+  }
+  .briefing-more[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+  .briefing-more summary:hover { color: #B9800C; }
+  .briefing-more summary:focus-visible { outline: 2px solid #225491; outline-offset: 3px; }
+  .briefing-more summary:active { color: #173A63; }
+  .briefing-more[open] summary { margin-bottom: 1rem; }
+  .briefing-more[open] .briefing-rest { animation: briefing-in 0.4s var(--ease-spring); }
+  @keyframes briefing-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-paper/90 backdrop-blur-md border-b border-ink/5">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between h-20">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <img src="assets/img/icrh-logo.png" alt="ICRH Europe" class="h-11 w-11 transition-transform duration-300" style="transition-timing-function: var(--ease-spring);">
+        <span class="font-display font-semibold text-lg text-navydeep">ICRH <span class="text-navy">Europe</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-9">
+        <a href="publications.html" class="nav-link">Publications</a>
+        <a href="events.html" class="nav-link is-active" aria-current="page">Events</a>
+        <a href="research.html" class="nav-link">Research</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-2">
+        <div id="searchWrap" class="relative flex items-center">
+          <div id="searchBox" data-open="false" class="search-box">
+            <input id="searchInput" type="text" placeholder="Search the site…" class="search-input" autocomplete="off">
+            <button id="searchClose" aria-label="Close search" class="search-close-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          </div>
+          <button id="searchToggle" aria-label="Search the site" aria-expanded="false" class="search-icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+          </button>
+          <div id="searchResults" class="search-results" data-open="false"></div>
+        </div>
+        <a href="index.html#join" class="btn btn-gold shadow-gold">Join the network</a>
+      </div>
+
+      <div class="flex items-center gap-1 md:hidden -mr-2">
+        <button id="mobileSearchBtn" aria-label="Search the site" class="p-2 text-navydeep">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+        </button>
+        <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" class="p-2 text-navydeep">
+          <svg id="menuIcon" width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 8h18M4 13h18M4 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mobilePanel" data-open="false" class="mobile-panel md:hidden absolute top-20 left-0 right-0 bg-paper border-b border-ink/5 shadow-elevated">
+    <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-5">
+      <div class="relative">
+        <input id="mobileSearchInput" type="text" placeholder="Search the site…" class="search-input" autocomplete="off" style="width:100%;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA6B8" stroke-width="2" style="position:absolute; right:14px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+      </div>
+      <div id="mobileSearchResults" class="search-results-mobile"></div>
+      <a href="publications.html" class="nav-link">Publications</a>
+      <a href="events.html" class="nav-link is-active" aria-current="page">Events</a>
+      <a href="research.html" class="nav-link">Research</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="index.html#join" class="btn btn-gold shadow-gold w-full mt-1">Join the network</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="bg-grain relative overflow-hidden" style="background: radial-gradient(120% 140% at 15% -10%, #2C63A8 0%, #173A63 55%, #14294A 100%);">
+  <div class="max-w-5xl mx-auto px-6 pt-16 pb-20 md:pt-20 md:pb-24 relative z-10">
+    <a href="index.html" class="flex w-fit items-center gap-2 text-sm text-powder/80 hover:text-white transition-colors mb-6">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      ICRH Europe
+    </a>
+    <span class="tag tag-gold inline-block mb-6" style="background:rgba(242,183,67,0.16); color:#F2B743;">Webinars &amp; replays</span>
+    <h1 class="text-4xl sm:text-5xl font-bold text-white leading-[1.05] mb-6">Events</h1>
+    <p class="text-lg text-powder max-w-2xl mb-10" style="line-height:1.7;">
+      Recordings from the ICRH Europe webinar series. Watch a full replay, read a short briefing on what each session covered, or download it to share with colleagues.
+    </p>
+    <div class="flex flex-wrap gap-4">
+      <a href="#archive" class="btn btn-gold shadow-gold">Browse the webinar archive</a>
+      <a href="#upcoming" class="btn btn-outline">Upcoming events</a>
+    </div>
+  </div>
+</section>
+
+<!-- Upcoming -->
+<section id="upcoming" class="max-w-7xl mx-auto px-6 pt-16 md:pt-20 scroll-mt-20" aria-labelledby="upcoming-title">
+  <div class="grid md:grid-cols-[1fr_1.6fr] gap-8 md:gap-14 items-start">
+    <div>
+      <span class="tag tag-navy inline-block mb-4">Upcoming</span>
+      <h2 id="upcoming-title" class="text-3xl md:text-4xl font-semibold text-navydeep">Upcoming events</h2>
+    </div>
+
+    <!-- When an event is announced, replace the card below with one card per event:
+         <article class="card shadow-elevated p-7 md:p-8">
+           <span class="tag tag-gold">Date to be confirmed</span>   (only change to the date once it is confirmed)
+           <h3 class="text-xl font-semibold text-navydeep mt-4 mb-2">EVENT TITLE</h3>
+           <p class="font-mono text-xs text-inksoft mb-3">DATE · TIME (CET) · Online</p>
+           <p class="text-inksoft mb-6">SHORT DESCRIPTION</p>
+           <a href="REGISTRATION_URL" class="btn btn-navy">Register for EVENT TITLE</a>
+         </article> -->
+    <div class="card shadow-elevated p-7 md:p-8 flex flex-col sm:flex-row gap-6 sm:items-center">
+      <div class="w-12 h-12 shrink-0 rounded-xl bg-navy/10 flex items-center justify-center" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#225491" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>
+      </div>
+      <div class="flex-1">
+        <p class="font-display font-semibold text-lg text-navydeep mb-1">No upcoming events currently scheduled</p>
+        <p class="text-inksoft">New webinars are announced by email when dates are confirmed. In the meantime, the recordings below are free to watch.</p>
+      </div>
+      <a href="index.html#join" class="btn btn-gold shadow-gold whitespace-nowrap self-start sm:self-center">Get event invitations</a>
+    </div>
+  </div>
+</section>
+
+<!-- Archive -->
+<section id="archive" class="max-w-7xl mx-auto px-6 py-16 md:py-24 scroll-mt-20" aria-labelledby="archive-title">
+  <div class="grid md:grid-cols-[1fr_1.6fr] gap-8 md:gap-14 items-start mb-12 md:mb-16">
+    <div>
+      <span class="tag tag-navy inline-block mb-4">Archive</span>
+      <h2 id="archive-title" class="text-3xl md:text-4xl font-semibold text-navydeep mb-4">Webinar archive</h2>
+      <p class="text-inksoft">Six past sessions. Each has a full replay, a one-page briefing and space for short highlight clips.</p>
+    </div>
+    <nav aria-label="Webinars in this archive" class="card shadow-elevated p-3 md:p-4">
+      <ol class="grid sm:grid-cols-2 gap-x-2">
+          <li><a href="#internal-communication-professionalism" class="index-link"><span class="font-mono text-xs text-slateblue">01</span><span>Internal Communication Professionalism</span></a></li>
+          <li><a href="#perspectives-and-challenges-of-internal-communication" class="index-link"><span class="font-mono text-xs text-slateblue">02</span><span>Perspectives and Challenges of Internal Communication</span></a></li>
+          <li><a href="#transforming-internal-communication-with-internal-social-media-and-ai" class="index-link"><span class="font-mono text-xs text-slateblue">03</span><span>Transforming Internal Communication with Internal Social Media and AI</span></a></li>
+          <li><a href="#valuing-internal-communication" class="index-link"><span class="font-mono text-xs text-slateblue">04</span><span>Valuing Internal Communication</span></a></li>
+          <li><a href="#developing-an-appreciative-working-climate" class="index-link"><span class="font-mono text-xs text-slateblue">05</span><span>Developing an Appreciative Working Climate</span></a></li>
+          <li><a href="#informal-internal-communication" class="index-link"><span class="font-mono text-xs text-slateblue">06</span><span>Informal Internal Communication</span></a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="flex flex-col gap-10 md:gap-12">
+    <!-- Webinar 1: Internal Communication Professionalism -->
+    <article id="internal-communication-professionalism" class="webinar card shadow-elevated scroll-mt-24" aria-labelledby="internal-communication-professionalism-title">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <span class="tag tag-navy">Webinar 01</span>
+        <span class="tag tag-slate">Recording</span>
+      </div>
+      <h3 id="internal-communication-professionalism-title" class="text-2xl md:text-[1.75rem] font-semibold text-navydeep leading-tight mb-8">Internal Communication Professionalism</h3>
+
+      <div class="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-10">
+        <div>
+          <div class="player" data-player>
+            <button type="button" class="player-facade" data-vimeo="1211321688" data-label="Full replay: Internal Communication Professionalism">
+              <span class="player-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="player-caption">
+                <span class="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-gold">Full replay</span>
+                <span class="block font-display font-semibold text-white text-lg leading-snug mt-1">Play the full replay<span class="sr-only"> of Internal Communication Professionalism</span></span>
+              </span>
+            </button>
+          </div>
+          <p class="player-status" data-player-status aria-live="polite"></p>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4">
+            <a href="https://vimeo.com/1211321688" target="_blank" rel="noopener" class="text-link">
+              Watch the full replay on Vimeo<span class="sr-only">: Internal Communication Professionalism (opens in a new tab)</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            </a>
+            <span class="text-xs text-inksoft">Video loads only when you press play. Captions, where available, are under the CC button in the player.</span>
+          </div>
+
+          <h4 class="text-base font-semibold text-navydeep mt-9 mb-4">Highlight clips</h4>
+          <!-- To publish a clip, replace a pending <li> with:
+               <li><button type="button" class="clip" data-vimeo="VIMEO_ID" data-label="Clip: TITLE">
+                 <span class="clip-thumb" aria-hidden="true">(play icon)</span>
+                 <span class="clip-text"><span class="clip-title">TITLE</span><span class="clip-meta">M:SS</span></span>
+               </button></li> -->
+          <ol class="clip-list">
+            <!-- Sample clips for testing: descriptive titles to be confirmed; durations from Vimeo -->
+            <li><button type="button" class="clip" data-vimeo="1236142918" data-label="Highlight 1 from Internal Communication Professionalism">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight 1</span><span class="clip-meta"><span class="sr-only">Duration </span>1:03</span></span>
+            </button></li>
+            <li><button type="button" class="clip" data-vimeo="1236143464" data-label="Highlight 2 from Internal Communication Professionalism">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight 2</span><span class="clip-meta"><span class="sr-only">Duration </span>1:04</span></span>
+            </button></li>
+            <li><button type="button" class="clip" data-vimeo="1236143556" data-label="Highlight 3 from Internal Communication Professionalism">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight 3</span><span class="clip-meta"><span class="sr-only">Duration </span>1:03</span></span>
+            </button></li>
+          </ol>
+        </div>
+
+        <div class="briefing">
+          <div class="flex items-center justify-between gap-3 mb-5">
+            <span class="tag tag-gold">Briefing</span>
+            <span class="font-mono text-xs text-inksoft">1 page · PDF</span>
+          </div>
+          <div class="briefing-body">
+            <h4>From organizational history to professional practice</h4>
+            <p>Internal communication has a longer and more complex history than a simple story of newsletters evolving into digital channels. The webinar draws on historical research tracing organized communication with employees from the late nineteenth century to the present. Its central argument is that internal communication has repeatedly changed in response to wider social, economic and management shifts. Organizations have used it to address practical challenges such as workforce stability, changing expectations of employees, organizational objectives and culture.</p>
+            <details class="briefing-more">
+              <summary>Read the full briefing<span class="sr-only">: Internal Communication Professionalism</span></summary>
+              <div class="briefing-rest">
+                <p>The historical account also challenges easy origin stories. For example, the presenter cautions against describing <em>The Lowell Offering</em> as the first company magazine: it was not produced by a company for its employees. The broader lesson is to define internal communication carefully and verify historical claims against evidence.</p>
+                <p>The discussion then turns to whether internal communication is a profession, or a field still undergoing professionalization. The speakers describe a substantial practitioner community, but point to comparatively low participation in professional bodies, formal qualifications and structured continuing development. They also identify a gap between what professional bodies define as good practice and what employers and recruiters know to look for.</p>
+                <h4>What this means for practice</h4>
+                <ul><li>Understand the organizational need behind communication work and explain how the function contributes to it.</li><li>Treat professional development, shared standards and clearer recruitment expectations as part of strengthening the field.</li><li>Use history to question assumptions about the role, rather than treating current channels or titles as inevitable.</li></ul>
+                <p>The webinar presents internal communication as both a response to organizational needs and a practice whose future depends on practitioners making its contribution understood.</p>
+                <p class="source">Source: “History of Internal Communication and what it means for current and future practice” transcript.</p>
+              </div>
+            </details>
+          </div>
+          <a href="assets/briefings/internal-communication-professionalism.pdf" download class="btn btn-navy mt-7 w-full sm:w-auto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> <span>Download briefing<span class="sr-only">: Internal Communication Professionalism,</span> (PDF)</span>
+          </a>
+        </div>
+      </div>
+    </article>
+    <!-- Webinar 2: Perspectives and Challenges of Internal Communication -->
+    <article id="perspectives-and-challenges-of-internal-communication" class="webinar card shadow-elevated scroll-mt-24" aria-labelledby="perspectives-and-challenges-of-internal-communication-title">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <span class="tag tag-navy">Webinar 02</span>
+        <span class="tag tag-slate">Recording</span>
+      </div>
+      <h3 id="perspectives-and-challenges-of-internal-communication-title" class="text-2xl md:text-[1.75rem] font-semibold text-navydeep leading-tight mb-8">Perspectives and Challenges of Internal Communication</h3>
+
+      <div class="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-10">
+        <div>
+          <div class="player" data-player>
+            <button type="button" class="player-facade" data-vimeo="1202044030" data-label="Full replay: Perspectives and Challenges of Internal Communication">
+              <span class="player-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="player-caption">
+                <span class="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-gold">Full replay</span>
+                <span class="block font-display font-semibold text-white text-lg leading-snug mt-1">Play the full replay<span class="sr-only"> of Perspectives and Challenges of Internal Communication</span></span>
+              </span>
+            </button>
+          </div>
+          <p class="player-status" data-player-status aria-live="polite"></p>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4">
+            <a href="https://vimeo.com/1202044030" target="_blank" rel="noopener" class="text-link">
+              Watch the full replay on Vimeo<span class="sr-only">: Perspectives and Challenges of Internal Communication (opens in a new tab)</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            </a>
+            <span class="text-xs text-inksoft">Video loads only when you press play. Captions, where available, are under the CC button in the player.</span>
+          </div>
+
+          <h4 class="text-base font-semibold text-navydeep mt-9 mb-4">Highlight clips</h4>
+          <!-- To publish a clip, replace a pending <li> with:
+               <li><button type="button" class="clip" data-vimeo="VIMEO_ID" data-label="Clip: TITLE">
+                 <span class="clip-thumb" aria-hidden="true">(play icon)</span>
+                 <span class="clip-text"><span class="clip-title">TITLE</span><span class="clip-meta">M:SS</span></span>
+               </button></li> -->
+          <ol class="clip-list">
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 1</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 2</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 3</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="briefing">
+          <div class="flex items-center justify-between gap-3 mb-5">
+            <span class="tag tag-gold">Briefing</span>
+            <span class="font-mono text-xs text-inksoft">1 page · PDF</span>
+          </div>
+          <div class="briefing-body">
+            <h4>What senior leaders expect</h4>
+            <p>This session explores how senior managers understand the role of internal communication and what they expect it to contribute. The research discussed in the webinar highlights a function increasingly seen as strategic: helping people understand organizational direction, prepare for change, stay connected and contribute to shared objectives.</p>
+            <details class="briefing-more">
+              <summary>Read the full briefing<span class="sr-only">: Perspectives and Challenges of Internal Communication</span></summary>
+              <div class="briefing-rest">
+                <p>Several dimensions recur in leaders’ accounts: transparency, cohesion, proximity between leaders and employees, two-way communication, attention to workforce diversity, digital channels and employee wellbeing. In uncertain environments, clear and transparent communication can help people understand what is changing and why. Listening matters too: employee voice can strengthen belonging and help people feel ownership of organizational work.</p>
+                <p>The session also considers pressures reshaping the function, including digital transformation and AI, sustainability and ESG expectations, cultural change, multigenerational workforces, talent attraction and retention, and mental health. These demands make internal communication more than the production and distribution of messages.</p>
+                <p>The practitioner perspective emphasizes that leaders are not simply buying communication outputs; they need sound judgment and advice. Communication can influence decisions before they are made, but practitioners need to work with the leaders and relationships available to them. Trust and confidence are central, and communication problems can sometimes reflect leadership or operational issues that communication alone cannot fix.</p>
+                <h4>What this means for practice</h4>
+                <ul><li>Connect communication plans to organizational decisions and outcomes, not just channel activity.</li><li>Make space for employee questions and feedback, then show how that input is handled.</li><li>Adapt messages and channels for different groups without losing transparency or consistency.</li><li>Use curiosity and advice to build influence; recognize when the underlying issue is not a communication output problem.</li></ul>
+                <p>The findings reflect the research presented in the webinar and should be read in that context, rather than assumed to represent every senior leader or organization.</p>
+                <p class="source">Source: “ICRH-Europe webinar on 16 June 2026” transcript.</p>
+              </div>
+            </details>
+          </div>
+          <a href="assets/briefings/perspectives-and-challenges-of-internal-communication.pdf" download class="btn btn-navy mt-7 w-full sm:w-auto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> <span>Download briefing<span class="sr-only">: Perspectives and Challenges of Internal Communication,</span> (PDF)</span>
+          </a>
+        </div>
+      </div>
+    </article>
+    <!-- Webinar 3: Transforming Internal Communication with Internal Social Media and AI -->
+    <article id="transforming-internal-communication-with-internal-social-media-and-ai" class="webinar card shadow-elevated scroll-mt-24" aria-labelledby="transforming-internal-communication-with-internal-social-media-and-ai-title">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <span class="tag tag-navy">Webinar 03</span>
+        <span class="tag tag-slate">Recording</span>
+      </div>
+      <h3 id="transforming-internal-communication-with-internal-social-media-and-ai-title" class="text-2xl md:text-[1.75rem] font-semibold text-navydeep leading-tight mb-8">Transforming Internal Communication with Internal Social Media and AI</h3>
+
+      <div class="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-10">
+        <div>
+          <div class="player" data-player>
+            <button type="button" class="player-facade" data-vimeo="1159242487" data-label="Full replay: Transforming Internal Communication with Internal Social Media and AI">
+              <span class="player-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="player-caption">
+                <span class="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-gold">Full replay</span>
+                <span class="block font-display font-semibold text-white text-lg leading-snug mt-1">Play the full replay<span class="sr-only"> of Transforming Internal Communication with Internal Social Media and AI</span></span>
+              </span>
+            </button>
+          </div>
+          <p class="player-status" data-player-status aria-live="polite"></p>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4">
+            <a href="https://vimeo.com/1159242487" target="_blank" rel="noopener" class="text-link">
+              Watch the full replay on Vimeo<span class="sr-only">: Transforming Internal Communication with Internal Social Media and AI (opens in a new tab)</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            </a>
+            <span class="text-xs text-inksoft">Video loads only when you press play. Captions, where available, are under the CC button in the player.</span>
+          </div>
+
+          <h4 class="text-base font-semibold text-navydeep mt-9 mb-4">Highlight clips</h4>
+          <!-- To publish a clip, replace a pending <li> with:
+               <li><button type="button" class="clip" data-vimeo="VIMEO_ID" data-label="Clip: TITLE">
+                 <span class="clip-thumb" aria-hidden="true">(play icon)</span>
+                 <span class="clip-text"><span class="clip-title">TITLE</span><span class="clip-meta">M:SS</span></span>
+               </button></li> -->
+          <ol class="clip-list">
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 1</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 2</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 3</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="briefing">
+          <div class="flex items-center justify-between gap-3 mb-5">
+            <span class="tag tag-gold">Briefing</span>
+            <span class="font-mono text-xs text-inksoft">1 page · PDF</span>
+          </div>
+          <div class="briefing-body">
+            <h4>Listening across the organization</h4>
+            <p>Internal social media can create a shared communication space where employees see one another’s contributions, respond to colleagues and build on ideas over time. The webinar illustrates how a discussion thread can surface a need that might otherwise stay local: employees exchange observations about products for younger customers, colleagues add further perspectives, and managers invite contributors to help develop a response. The example shows the potential of visible, persistent employee discussion to support listening and participation.</p>
+            <details class="briefing-more">
+              <summary>Read the full briefing<span class="sr-only">: Transforming Internal Communication with Internal Social Media and AI</span></summary>
+              <div class="briefing-rest">
+                <p>The academic presentation describes internal social media as one part of a broader listening architecture. Listening is not simply collecting comments: employees need respectful responses. A routine reply that redirects a concern into a process without addressing it can feel like “pseudo listening”; a response that acknowledges the concern and explains what is known can show respect even when there is no immediate solution.</p>
+                <p>The practitioner presentation demonstrates possible uses of AI with internal social media, including summarizing discussions, identifying themes, preparing executive briefs and informing change planning. These demonstrations used a constructed example thread, so they illustrate possible workflows rather than prove results from a live organization.</p>
+                <h4>What this means for practice</h4>
+                <ul><li>Make employee participation easy and ensure contributions receive meaningful responses.</li><li>Use AI-generated summaries as prompts for investigation, not as a complete or neutral account of employee opinion. A small number of active posters may not represent everyone.</li><li>Compare platform signals with other evidence, such as surveys and direct conversations.</li><li>Establish clear expectations for privacy, trust, access and responsible AI use. The webinar raises ethical questions but does not examine them in depth.</li></ul>
+                <p>The opportunity is to use digital discussion and AI to improve organizational understanding while keeping human judgment and respectful listening at the center.</p>
+                <p class="source">Source: “Using AI and internal social media for dialogue” transcript.</p>
+              </div>
+            </details>
+          </div>
+          <a href="assets/briefings/transforming-internal-communication-with-internal-social-media-and-ai.pdf" download class="btn btn-navy mt-7 w-full sm:w-auto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> <span>Download briefing<span class="sr-only">: Transforming Internal Communication with Internal Social Media and AI,</span> (PDF)</span>
+          </a>
+        </div>
+      </div>
+    </article>
+    <!-- Webinar 4: Valuing Internal Communication -->
+    <article id="valuing-internal-communication" class="webinar card shadow-elevated scroll-mt-24" aria-labelledby="valuing-internal-communication-title">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <span class="tag tag-navy">Webinar 04</span>
+        <span class="tag tag-slate">Recording</span>
+      </div>
+      <h3 id="valuing-internal-communication-title" class="text-2xl md:text-[1.75rem] font-semibold text-navydeep leading-tight mb-8">Valuing Internal Communication</h3>
+
+      <div class="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-10">
+        <div>
+          <div class="player" data-player>
+            <button type="button" class="player-facade" data-vimeo="1134528678" data-label="Full replay: Valuing Internal Communication">
+              <span class="player-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="player-caption">
+                <span class="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-gold">Full replay</span>
+                <span class="block font-display font-semibold text-white text-lg leading-snug mt-1">Play the full replay<span class="sr-only"> of Valuing Internal Communication</span></span>
+              </span>
+            </button>
+          </div>
+          <p class="player-status" data-player-status aria-live="polite"></p>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4">
+            <a href="https://vimeo.com/1134528678" target="_blank" rel="noopener" class="text-link">
+              Watch the full replay on Vimeo<span class="sr-only">: Valuing Internal Communication (opens in a new tab)</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            </a>
+            <span class="text-xs text-inksoft">Video loads only when you press play. Captions, where available, are under the CC button in the player.</span>
+          </div>
+
+          <h4 class="text-base font-semibold text-navydeep mt-9 mb-4">Highlight clips</h4>
+          <!-- To publish a clip, replace a pending <li> with:
+               <li><button type="button" class="clip" data-vimeo="VIMEO_ID" data-label="Clip: TITLE">
+                 <span class="clip-thumb" aria-hidden="true">(play icon)</span>
+                 <span class="clip-text"><span class="clip-title">TITLE</span><span class="clip-meta">M:SS</span></span>
+               </button></li> -->
+          <ol class="clip-list">
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 1</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 2</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 3</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="briefing">
+          <div class="flex items-center justify-between gap-3 mb-5">
+            <span class="tag tag-gold">Briefing</span>
+            <span class="font-mono text-xs text-inksoft">1 page · PDF</span>
+          </div>
+          <div class="briefing-body">
+            <h4>How communication creates value</h4>
+            <p>Drawing on a review of more than 60 research and industry reports, this webinar considers how internal communication creates value for organizations and employees. The evidence discussed links effective internal communication with organizational performance, alignment, culture, engagement and change. It can help people understand priorities, coordinate work, contribute to innovation and navigate change. It also shapes relationships, trust and employees’ experience of the organization.</p>
+            <details class="briefing-more">
+              <summary>Read the full briefing<span class="sr-only">: Valuing Internal Communication</span></summary>
+              <div class="briefing-rest">
+                <p>The session cautions against reducing value to the volume of content produced or to a single productivity measure. Communication contributes alongside leadership, operations and other organizational factors; it should not claim sole responsibility for outcomes. The practitioner discussion illustrates the value of connecting communication to decisions and measurable outcomes, such as whether a change is understood and implemented with fewer obstacles.</p>
+                <p>Planning, measurement and evaluation are recurring themes. Practitioners may need to look across several indicators and consider broader patterns rather than relying on one survey question or channel metric. The report also frames internal communication as relationship-building, not only channel management and content distribution.</p>
+                <h4>What this means for practice</h4>
+                <ul><li>Start with the organizational or employee outcome communication is intended to support.</li><li>Explain the contribution of communication without overstating causality.</li><li>Evaluate a combination of relevant indicators, including understanding, behavior, employee experience and operational outcomes where appropriate.</li><li>Include employee value, such as feeling informed, engaged and empowered, alongside organizational value.</li></ul>
+                <p>The webinar’s message is that value is strongest when communication is planned around a real purpose and evaluated with evidence, rather than assumed from activity alone.</p>
+                <p class="source">Source: “Valuing Internal Communication” transcript.</p>
+              </div>
+            </details>
+          </div>
+          <a href="assets/briefings/valuing-internal-communication.pdf" download class="btn btn-navy mt-7 w-full sm:w-auto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> <span>Download briefing<span class="sr-only">: Valuing Internal Communication,</span> (PDF)</span>
+          </a>
+        </div>
+      </div>
+    </article>
+    <!-- Webinar 5: Developing an Appreciative Working Climate -->
+    <article id="developing-an-appreciative-working-climate" class="webinar card shadow-elevated scroll-mt-24" aria-labelledby="developing-an-appreciative-working-climate-title">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <span class="tag tag-navy">Webinar 05</span>
+        <span class="tag tag-slate">Recording</span>
+      </div>
+      <h3 id="developing-an-appreciative-working-climate-title" class="text-2xl md:text-[1.75rem] font-semibold text-navydeep leading-tight mb-8">Developing an Appreciative Working Climate</h3>
+
+      <div class="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-10">
+        <div>
+          <div class="player" data-player>
+            <button type="button" class="player-facade" data-vimeo="1141063372" data-label="Full replay: Developing an Appreciative Working Climate">
+              <span class="player-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="player-caption">
+                <span class="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-gold">Full replay</span>
+                <span class="block font-display font-semibold text-white text-lg leading-snug mt-1">Play the full replay<span class="sr-only"> of Developing an Appreciative Working Climate</span></span>
+              </span>
+            </button>
+          </div>
+          <p class="player-status" data-player-status aria-live="polite"></p>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4">
+            <a href="https://vimeo.com/1141063372" target="_blank" rel="noopener" class="text-link">
+              Watch the full replay on Vimeo<span class="sr-only">: Developing an Appreciative Working Climate (opens in a new tab)</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            </a>
+            <span class="text-xs text-inksoft">Video loads only when you press play. Captions, where available, are under the CC button in the player.</span>
+          </div>
+
+          <h4 class="text-base font-semibold text-navydeep mt-9 mb-4">Highlight clips</h4>
+          <!-- To publish a clip, replace a pending <li> with:
+               <li><button type="button" class="clip" data-vimeo="VIMEO_ID" data-label="Clip: TITLE">
+                 <span class="clip-thumb" aria-hidden="true">(play icon)</span>
+                 <span class="clip-text"><span class="clip-title">TITLE</span><span class="clip-meta">M:SS</span></span>
+               </button></li> -->
+          <ol class="clip-list">
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 1</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 2</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 3</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="briefing">
+          <div class="flex items-center justify-between gap-3 mb-5">
+            <span class="tag tag-gold">Briefing</span>
+            <span class="font-mono text-xs text-inksoft">1 page · PDF</span>
+          </div>
+          <div class="briefing-body">
+            <h4>Appreciation as part of organizational culture</h4>
+            <p>This webinar brings together research and practitioner experience to examine how appreciation is experienced at work and how organizations can make it part of everyday culture. Appreciation is not limited to formal awards or praise from senior leaders. It can come from managers, colleagues, organizational leaders and customers, and can be communicated through recognition, respect, trust, meaningful work and opportunities to contribute.</p>
+            <details class="briefing-more">
+              <summary>Read the full briefing<span class="sr-only">: Developing an Appreciative Working Climate</span></summary>
+              <div class="briefing-rest">
+                <p>The research presented includes a survey of employees working in Germany. On a seven-point scale, 55.6% of respondents rated appreciation from their manager at the top end of the scale, and 58.8% did so for appreciation from colleagues. The presenters also note that more than 40% did not regularly receive appreciation from a manager or coworker. These findings describe the surveyed group, not all employees.</p>
+                <p>The session reports that manager appreciation is associated with job satisfaction and some forms of contribution beyond formal duties; appreciation from coworkers is associated with organizational identification and helping colleagues. Employees also value some contributions, such as willingness to take responsibility, more than they feel those contributions are recognized. Appreciation therefore needs to be sincere and aligned with what employees actually value.</p>
+                <h4>What this means for practice</h4>
+                <ul><li>Make recognition part of regular routines: feedback conversations, team meetings and acknowledgement of everyday contributions.</li><li>Equip managers to listen, show respect and recognize contributions fairly.</li><li>Reinforce appreciation through organizational stories, structures and reward practices, not campaigns alone.</li><li>Address working conditions and power dynamics that prevent people from contributing or feeling seen.</li></ul>
+                <p>Using a cultural framework, the webinar argues that an appreciative climate is built through repeated practices and organizational choices. Communication can support that work, but cannot substitute for it.</p>
+                <p class="source">Source: “Developing an Appreciative Working Climate” transcript.</p>
+              </div>
+            </details>
+          </div>
+          <a href="assets/briefings/developing-an-appreciative-working-climate.pdf" download class="btn btn-navy mt-7 w-full sm:w-auto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> <span>Download briefing<span class="sr-only">: Developing an Appreciative Working Climate,</span> (PDF)</span>
+          </a>
+        </div>
+      </div>
+    </article>
+    <!-- Webinar 6: Informal Internal Communication -->
+    <article id="informal-internal-communication" class="webinar card shadow-elevated scroll-mt-24" aria-labelledby="informal-internal-communication-title">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <span class="tag tag-navy">Webinar 06</span>
+        <span class="tag tag-slate">Recording</span>
+      </div>
+      <h3 id="informal-internal-communication-title" class="text-2xl md:text-[1.75rem] font-semibold text-navydeep leading-tight mb-8">Informal Internal Communication</h3>
+
+      <div class="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-10">
+        <div>
+          <div class="player" data-player>
+            <button type="button" class="player-facade" data-vimeo="1145271842" data-label="Full replay: Informal Internal Communication">
+              <span class="player-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="player-caption">
+                <span class="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-gold">Full replay</span>
+                <span class="block font-display font-semibold text-white text-lg leading-snug mt-1">Play the full replay<span class="sr-only"> of Informal Internal Communication</span></span>
+              </span>
+            </button>
+          </div>
+          <p class="player-status" data-player-status aria-live="polite"></p>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4">
+            <a href="https://vimeo.com/1145271842" target="_blank" rel="noopener" class="text-link">
+              Watch the full replay on Vimeo<span class="sr-only">: Informal Internal Communication (opens in a new tab)</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            </a>
+            <span class="text-xs text-inksoft">Video loads only when you press play. Captions, where available, are under the CC button in the player.</span>
+          </div>
+
+          <h4 class="text-base font-semibold text-navydeep mt-9 mb-4">Highlight clips</h4>
+          <!-- To publish a clip, replace a pending <li> with:
+               <li><button type="button" class="clip" data-vimeo="VIMEO_ID" data-label="Clip: TITLE">
+                 <span class="clip-thumb" aria-hidden="true">(play icon)</span>
+                 <span class="clip-text"><span class="clip-title">TITLE</span><span class="clip-meta">M:SS</span></span>
+               </button></li> -->
+          <ol class="clip-list">
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 1</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 2</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+            <li class="clip clip-pending">
+              <span class="clip-thumb" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l12-7-12-7Z"/></svg></span>
+              <span class="clip-text"><span class="clip-title">Highlight clip 3</span><span class="clip-meta">Not yet available</span></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="briefing">
+          <div class="flex items-center justify-between gap-3 mb-5">
+            <span class="tag tag-gold">Briefing</span>
+            <span class="font-mono text-xs text-inksoft">1 page · PDF</span>
+          </div>
+          <div class="briefing-body">
+            <h4>The work happening between formal messages</h4>
+            <p>Informal communication includes spontaneous conversations, quick exchanges about work, social connection and digital chats. It is often treated as peripheral to internal communication, yet it can support coordination, relationships and employees’ sense of belonging. The webinar combines research with practitioner experience to challenge the assumption that informal talk is mainly gossip or unrelated to work.</p>
+            <details class="briefing-more">
+              <summary>Read the full briefing<span class="sr-only">: Informal Internal Communication</span></summary>
+              <div class="briefing-rest">
+                <p>The academic study surveyed employees working in Germany and used factor analysis to group nine measured functions into four core functions: information and coordination; belonging and connectedness; stress management and recreation; and building personal relationships. All four were considered relevant, with information and coordination the most pivotal. The researchers report differences across groups: for example, personal relationships were more important to remote workers, while belonging and recreation were more important to younger respondents. These are findings from the study’s sample, not universal rules.</p>
+                <p>Practitioner examples show how informal interaction can help leaders understand how messages are received and help colleagues solve problems. In hybrid and distributed teams, some of these opportunities may need deliberate support, such as creating time and spaces for casual exchange.</p>
+                <h4>What this means for practice</h4>
+                <ul><li>Treat informal communication as a useful complement to formal channels and a possible signal of employee concerns.</li><li>Encourage opportunities for connection, especially for remote or dispersed colleagues.</li><li>Listen with care, but do not try to control ordinary employee conversation.</li><li>Use informal signals alongside other evidence; one conversation or visible online discussion cannot represent the whole workforce.</li></ul>
+                <p>The session’s central challenge for communicators is to make room for informal connection and learn from it without turning it into another managed broadcast channel.</p>
+                <p class="source">Source: “Informal Internal Communication” transcript.</p>
+              </div>
+            </details>
+          </div>
+          <a href="assets/briefings/informal-internal-communication.pdf" download class="btn btn-navy mt-7 w-full sm:w-auto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> <span>Download briefing<span class="sr-only">: Informal Internal Communication,</span> (PDF)</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-grain relative" style="background:#173A63;">
+  <div class="max-w-7xl mx-auto px-6 py-16 relative z-10">
+    <div class="grid md:grid-cols-[1.4fr_1fr_1fr] gap-12 mb-14">
+      <div>
+        <a href="index.html" class="flex items-center gap-3 mb-5">
+          <img src="assets/img/icrh-logo.png" alt="ICRH Europe" class="h-10 w-10">
+          <span class="font-display font-semibold text-lg text-white">ICRH <span class="text-powder">Europe</span></span>
+        </a>
+        <p class="text-powder/80 max-w-xs" style="line-height:1.7;">A cross-border network for internal communication research and practice.</p>
+      </div>
+
+      <div>
+        <div class="tag tag-gold inline-block mb-5" style="background:rgba(242,183,67,0.16); color:#F2B743;">Explore</div>
+        <ul class="flex flex-col gap-3">
+          <li><a href="publications.html" class="text-powder hover:text-white transition-colors">Publications</a></li>
+          <li><a href="events.html" class="text-powder hover:text-white transition-colors">Events</a></li>
+          <li><a href="research.html" class="text-powder hover:text-white transition-colors">Research</a></li>
+          <li><a href="about.html" class="text-powder hover:text-white transition-colors">About</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="tag tag-gold inline-block mb-5" style="background:rgba(242,183,67,0.16); color:#F2B743;">Connect</div>
+        <a href="https://www.linkedin.com/groups/13196156/" target="_blank" rel="noopener" aria-label="ICRH Europe on LinkedIn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-300">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.75h4V23h-4V8.75ZM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.75Z" transform="translate(3)"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 font-mono text-xs text-powder/60">
+      <span>© 2026 ICRH Europe</span>
+      <span>icrh-europe.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobilePanel');
+  const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+  const mobileSearchInput = document.getElementById('mobileSearchInput');
+  menuBtn.addEventListener('click', () => {
+    const open = panel.getAttribute('data-open') === 'true';
+    panel.setAttribute('data-open', String(!open));
+    menuBtn.setAttribute('aria-expanded', String(!open));
+  });
+  mobileSearchBtn.addEventListener('click', () => {
+    panel.setAttribute('data-open', 'true');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    window.requestAnimationFrame(() => mobileSearchInput.focus());
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    panel.setAttribute('data-open', 'false');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+<script>
+  // Lazy-load Vimeo: nothing is fetched until a visitor presses play on the replay or a clip.
+  function vimeoSrc(id) {
+    return 'https://player.vimeo.com/video/' + encodeURIComponent(id) + '?autoplay=1&dnt=1&title=0&byline=0&portrait=0';
+  }
+  function loadIntoPlayer(player, id, label) {
+    let frame = player.querySelector('iframe');
+    if (!frame) {
+      frame = document.createElement('iframe');
+      frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+      frame.setAttribute('allowfullscreen', '');
+      frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      player.appendChild(frame);
+    }
+    frame.title = label;
+    frame.src = vimeoSrc(id);
+    const facade = player.querySelector('.player-facade');
+    if (facade) facade.hidden = true;
+    frame.focus();
+  }
+  // Status line under the player: what is playing, a Vimeo fallback for that video, and a way back to the replay.
+  function setStatus(status, id, label, onReplay) {
+    status.textContent = 'Now playing – ' + label + '. ';
+    const link = document.createElement('a');
+    link.href = 'https://vimeo.com/' + encodeURIComponent(id);
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.className = 'text-link text-[0.82rem]';
+    link.textContent = 'Not playing? Open it on Vimeo';
+    const sr = document.createElement('span');
+    sr.className = 'sr-only';
+    sr.textContent = ' (opens in a new tab)';
+    link.appendChild(sr);
+    status.appendChild(link);
+    if (onReplay) {
+      const back = document.createElement('button');
+      back.type = 'button';
+      back.className = 'text-link text-[0.82rem] ml-4';
+      back.textContent = 'Back to the full replay';
+      back.addEventListener('click', onReplay);
+      status.appendChild(back);
+    }
+  }
+  document.querySelectorAll('.webinar').forEach((article) => {
+    const player = article.querySelector('[data-player]');
+    const facade = article.querySelector('.player-facade');
+    const status = article.querySelector('[data-player-status]');
+    const clips = article.querySelectorAll('button.clip[data-vimeo]');
+    function playReplay() {
+      clips.forEach((c) => c.setAttribute('aria-pressed', 'false'));
+      loadIntoPlayer(player, facade.dataset.vimeo, facade.dataset.label);
+      setStatus(status, facade.dataset.vimeo, facade.dataset.label, null);
+    }
+    facade.addEventListener('click', playReplay);
+    clips.forEach((clip) => {
+      clip.setAttribute('aria-pressed', 'false');
+      clip.addEventListener('click', () => {
+        clips.forEach((c) => c.setAttribute('aria-pressed', String(c === clip)));
+        loadIntoPlayer(player, clip.dataset.vimeo, clip.dataset.label);
+        setStatus(status, clip.dataset.vimeo, clip.dataset.label, playReplay);
+      });
+    });
+  });
+</script>
+<script src="assets/js/search.js"></script>
+</body>
+</html>
